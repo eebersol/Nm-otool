@@ -22,12 +22,12 @@ void nm (char *ptr)
 		printf("It's MAGIC_CIGAM_32\n");
 	}
 	else if (magic_number == FAT_MAGIC) {
-		handle_fat(ptr);
 		printf("It's FAT_MAGIC\n");
+		handle_fat(ptr);
 	}
 	else if (magic_number == FAT_CIGAM) {
-		handle_fat(ptr);
 		printf("It's FAT_CIGAM\n");
+		handle_fat(ptr);
 	}
 	else
 		printf("It's UNKNOW\n");

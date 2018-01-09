@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/01/08 16:52:09 by eebersol         ###   ########.fr        #
+#    Updated: 2018/01/09 12:06:46 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,9 @@ _SRC			= main.c \
 					fat.c \
 					magic.c \
 					swap.c \
+					print.c \
+					get.c \
+					tools.c \
 
 
 INCLUDES		= -I./libft/includes/ -I./includes/
@@ -57,5 +60,8 @@ fclean:	clean
 
 exec : fclean all
 	@./Nm-otool "malloc.o"
+
+fat	: all
+	@./Nm-otool /usr/lib/bundle1.o
 
 re: fclean all

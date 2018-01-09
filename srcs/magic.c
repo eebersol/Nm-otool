@@ -2,10 +2,15 @@
 
 void print_output(int nsyms, int symoff, int stroff, void *ptr)
 {
+	t_base 			*base;
+	t_magic 		*magic;
 	struct nlist_64 *array;
-	int 			i;
 	char 			*stringable;
+	int 			i;
 
+	base 				= recover_base();
+	base->magicBase 	= (t_magic*)malloc(sizeof(t_magic));
+	magic 				= base->magicBase;
 	array 		= ptr + symoff;
 	stringable 	= ptr + stroff;
 	i 			= 0;
@@ -15,29 +20,15 @@ void print_output(int nsyms, int symoff, int stroff, void *ptr)
 		// printf("n_type - > %hhu\n", array[i].n_type);
 		// printf("n_sect - > %hhu\n", array[i].n_sect);
 		// printf("n_desc - > %hu\n", array[i].n_desc);
-
-
-		printf("%s: ", recover_base()->name);
-		if (atoi(ft_itoa(array[i].n_type)) == 15) {
-			printf("%.16llx", array[i].n_value);
-			printf(" T ");
-		}
-		else if (array[i].n_type == N_STAB)
-			printf("N_STAB ");
-		else if (array[i].n_type == N_PEXT)
-			printf("N_PEXT ");
-		else if (array[i].n_type == N_TYPE) {
-			printf("%.16llx", array[i].n_value);
-			printf(" b ");
-		}
-		else if (array[i].n_type == N_EXT) {
-			printf("                 U ");
-		}
-		else
-			printf("%s ", ft_itoa(array[i].n_type));
-
-		printf("%s\n", stringable + array[i].n_un.n_strx);
+		magic->type 		= get_type(array[i].n_type);
+		magic->value 		= get_value(array[i].n_value, magic->type);
+		magic->name_func 	= stringable + array[i].n_un.n_strx;
 		i++;
+		if (i < nsyms)
+		{
+			magic->next 		= (t_magic*)malloc(sizeof(t_magic));
+			magic 				= magic->next;
+		}
 	}
 }
 
@@ -62,6 +53,7 @@ void handle_64 (char *ptr)
 			break;
 		}
 		lc = (void *)lc + lc->cmdsize;
-	}  
+	}
+	print_handle_64();
 
 }
