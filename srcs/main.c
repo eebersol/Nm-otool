@@ -20,7 +20,7 @@ int main(int ac, char **av)
 		fd 			= 0;
 		base->name 	= av[1];
 		if ((fd = open(base->name, O_RDONLY)) < 0){
-			printf("[ERROR] - > Read\n");
+			printf("[ERROR] - > open\n");
 			return 1;
 		}
 		if (fstat(fd, &fileStat) < 0)

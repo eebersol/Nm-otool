@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/01/09 12:06:46 by eebersol         ###   ########.fr        #
+#    Updated: 2018/01/10 10:17:39 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,4 +64,9 @@ exec : fclean all
 fat	: all
 	@./Nm-otool /usr/lib/bundle1.o
 
+perl : all
+	@./Nm-otool /usr/bin/perl
+
+python : all
+	@./Nm-otool /usr/bin/python
 re: fclean all

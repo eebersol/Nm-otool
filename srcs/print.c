@@ -20,7 +20,10 @@ void	print_handle_64()
 	{
 		printf_prg_name();
 		ft_putstr(": ");
-		ft_putstr(magic->value);
+		if (magic->type == 'S' || magic->type == 'T' || magic->type == 't' || magic->type == 'b' || magic->type == 'd' || magic->type == 'D' || magic->type == 's')
+			ft_putstr(magic->value);
+		else
+			ft_putstr("                ");
 		ft_putchar(' ');
 		ft_putchar(magic->type);
 		ft_putchar(' ');

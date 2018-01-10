@@ -1,97 +1,76 @@
-MAGIC NUMBER [4277009103] [4277009103] [3489328638] [25] [26]
-It's MH_MAGIC_64
-/usr/sbin/BootCacheControl: 60 radr://5614542
-/usr/sbin/BootCacheControl: 0000000100000000 T __mh_execute_header
-/usr/sbin/BootCacheControl:                  U _CFDataGetBytes
-/usr/sbin/BootCacheControl:                  U _CFDictionaryGetValue
-/usr/sbin/BootCacheControl:                  U _CFGetTypeID
-/usr/sbin/BootCacheControl:                  U _CFRelease
-/usr/sbin/BootCacheControl:                  U _CFStringCompare
-/usr/sbin/BootCacheControl:                  U _CFStringCreateCopy
-/usr/sbin/BootCacheControl:                  U _CFStringGetTypeID
-/usr/sbin/BootCacheControl:                  U _CoreStorageCopyLVGProperties
-/usr/sbin/BootCacheControl:                  U _CoreStorageCopyVolumeProperties
-/usr/sbin/BootCacheControl:                  U _IOBSDNameMatching
-/usr/sbin/BootCacheControl:                  U _IOMasterPort
-/usr/sbin/BootCacheControl:                  U _IOObjectConformsTo
-/usr/sbin/BootCacheControl:                  U _IOObjectRelease
-/usr/sbin/BootCacheControl:                  U _IORegistryEntryCreateCFProperty
-/usr/sbin/BootCacheControl:                  U _IORegistryEntryFromPath
-/usr/sbin/BootCacheControl:                  U _IOServiceGetMatchingService
-/usr/sbin/BootCacheControl:                  U __NSConcreteGlobalBlock
-/usr/sbin/BootCacheControl:                  U ___CFConstantStringClassReference
-/usr/sbin/BootCacheControl:                  U ___bzero
-/usr/sbin/BootCacheControl:                  U ___error
-/usr/sbin/BootCacheControl:                  U ___snprintf_chk
-/usr/sbin/BootCacheControl:                  U ___sprintf_chk
-/usr/sbin/BootCacheControl:                  U ___stack_chk_fail
-/usr/sbin/BootCacheControl:                  U ___stack_chk_guard
-/usr/sbin/BootCacheControl:                  U ___stderrp
-/usr/sbin/BootCacheControl:                  U ___stdinp
-/usr/sbin/BootCacheControl:                  U ___stdoutp
-/usr/sbin/BootCacheControl:                  U ___strlcpy_chk
-/usr/sbin/BootCacheControl:                  U _bootstrap_port
-/usr/sbin/BootCacheControl:                  U _calloc
-/usr/sbin/BootCacheControl:                  U _close
-/usr/sbin/BootCacheControl:                  U _closedir
-/usr/sbin/BootCacheControl:                  U _dispatch_once
-/usr/sbin/BootCacheControl:                  U _dyld_shared_cache_file_path
-/usr/sbin/BootCacheControl:                  U _err
-/usr/sbin/BootCacheControl:                  U _errx
-/usr/sbin/BootCacheControl:                  U _fclose
-/usr/sbin/BootCacheControl:                  U _fcntl
-/usr/sbin/BootCacheControl:                  U _fflush
-/usr/sbin/BootCacheControl:                  U _fgetc
-/usr/sbin/BootCacheControl:                  U _fgets
-/usr/sbin/BootCacheControl:                  U _fopen
-/usr/sbin/BootCacheControl:                  U _fprintf
-/usr/sbin/BootCacheControl:                  U _fputc
-/usr/sbin/BootCacheControl:                  U _free
-/usr/sbin/BootCacheControl:                  U _fscanf
-/usr/sbin/BootCacheControl:                  U _fstat$INODE64
-/usr/sbin/BootCacheControl:                  U _fstatfs$INODE64
-/usr/sbin/BootCacheControl:                  U _fwrite
-/usr/sbin/BootCacheControl:                  U _getattrlist
-/usr/sbin/BootCacheControl:                  U _getopt
-/usr/sbin/BootCacheControl:                  U _gettimeofday
-/usr/sbin/BootCacheControl:                  U _getxattr
-/usr/sbin/BootCacheControl:                  U _kCFAllocatorDefault
-/usr/sbin/BootCacheControl:                  U _kIOMasterPortDefault
-/usr/sbin/BootCacheControl:                  U _lseek
-/usr/sbin/BootCacheControl:                  U _mach_timebase_info
-/usr/sbin/BootCacheControl:                  U _malloc
-/usr/sbin/BootCacheControl:                  U _memcpy
-/usr/sbin/BootCacheControl:                  U _mkstemp
-/usr/sbin/BootCacheControl:                  U _notify_post
-/usr/sbin/BootCacheControl:                  U _open
-/usr/sbin/BootCacheControl:                  U _opendir$INODE64
-/usr/sbin/BootCacheControl:                  U _optarg
-/usr/sbin/BootCacheControl:                  U _optind
-/usr/sbin/BootCacheControl:                  U _printf
-/usr/sbin/BootCacheControl:                  U _puts
-/usr/sbin/BootCacheControl:                  U _qsort
-/usr/sbin/BootCacheControl:                  U _read
-/usr/sbin/BootCacheControl:                  U _readdir$INODE64
-/usr/sbin/BootCacheControl:                  U _realloc
-/usr/sbin/BootCacheControl:                  U _reallocf
-/usr/sbin/BootCacheControl:                  U _rename
-/usr/sbin/BootCacheControl:                  U _rewinddir$INODE64
-/usr/sbin/BootCacheControl:                  U _sscanf
-/usr/sbin/BootCacheControl:                  U _stat$INODE64
-/usr/sbin/BootCacheControl:                  U _statfs$INODE64
-/usr/sbin/BootCacheControl:                  U _strcmp
-/usr/sbin/BootCacheControl:                  U _strerror
-/usr/sbin/BootCacheControl:                  U _strlen
-/usr/sbin/BootCacheControl:                  U _strncmp
-/usr/sbin/BootCacheControl:                  U _strtol
-/usr/sbin/BootCacheControl:                  U _sysctlbyname
-/usr/sbin/BootCacheControl:                  U _unlink
-/usr/sbin/BootCacheControl:                  U _uuid_clear
-/usr/sbin/BootCacheControl:                  U _uuid_compare
-/usr/sbin/BootCacheControl:                  U _uuid_copy
-/usr/sbin/BootCacheControl:                  U _uuid_is_null
-/usr/sbin/BootCacheControl:                  U _uuid_parse
-/usr/sbin/BootCacheControl:                  U _uuid_unparse
-/usr/sbin/BootCacheControl:                  U _warnx
-/usr/sbin/BootCacheControl:                  U _write
-/usr/sbin/BootCacheControl:                  U dyld_stub_binder
+/usr/bin/perl:                  U _CFStringGetMaximumSizeForEncoding
+/usr/bin/perl:                  U ___CFConstantStringClassReference
+/usr/bin/perl:                  U _CFPropertyListCreateFromXMLData
+/usr/bin/perl:                  U _NSGetNextSearchPathEnumeration
+/usr/bin/perl:                  U _NSStartSearchPathEnumeration
+/usr/bin/perl:                  U _CFDataCreateWithBytesNoCopy
+/usr/bin/perl:                  U _CFDictionaryGetTypeID
+/usr/bin/perl:                  U _CFDictionaryGetValue
+/usr/bin/perl:                  U _CFBooleanGetTypeID
+/usr/bin/perl: 0000000100000000 T __mh_execute_header
+/usr/bin/perl:                  U _CFBooleanGetValue
+/usr/bin/perl:                  U _CFStringGetLength
+/usr/bin/perl:                  U _CFStringGetTypeID
+/usr/bin/perl:                  U ___stack_chk_guard
+/usr/bin/perl:                  U _CFStringGetBytes
+/usr/bin/perl:                  U ___stack_chk_fail
+/usr/bin/perl:                  U _kCFAllocatorNull
+/usr/bin/perl: 0000000100002290 t _searchshortcuts
+/usr/bin/perl:                  U ___memmove_chk
+/usr/bin/perl:                  U ___strlcpy_chk
+/usr/bin/perl:                  U ___strncpy_chk
+/usr/bin/perl: 0000000100001c20 t _boolean_check
+/usr/bin/perl:                  U _fstat$INODE64
+/usr/bin/perl: 0000000100001bd0 t _version_check
+/usr/bin/perl:                  U ___memcpy_chk
+/usr/bin/perl:                  U ___strcat_chk
+/usr/bin/perl:                  U ___strcpy_chk
+/usr/bin/perl: 0000000100002810 t _cmpshortcuts
+/usr/bin/perl:                  U _CFGetTypeID
+/usr/bin/perl: 00000001000026d0 t _cmpstrarray
+/usr/bin/perl:                  U _posix_spawn
+/usr/bin/perl:                  U _posix_spawnattr_setbinpref_np
+/usr/bin/perl:                  U _posix_spawnattr_setflags
+/usr/bin/perl:                  U _realpath$DARWIN_EXTSN
+/usr/bin/perl:                  U _posix_spawnattr_init
+/usr/bin/perl:                  U dyld_stub_binder
+/usr/bin/perl:                  U _proc_pidpath
+/usr/bin/perl: 0000000100003220 d _prefer32cpu
+/usr/bin/perl: 0000000100002350 t _versionargs
+/usr/bin/perl: 0000000100001d10 t _read_plist
+/usr/bin/perl:                  U _strcasecmp
+/usr/bin/perl:                  U _CFRelease
+/usr/bin/perl: 0000000100002bd0 s _plistpath
+/usr/bin/perl: 0000000100003258 b _prefixlen
+/usr/bin/perl: 0000000100003240 S _shortcuts
+/usr/bin/perl: 0000000100002700 t _cfstrdup
+/usr/bin/perl:                  U _getpwuid
+/usr/bin/perl: 0000000100003230 d _versions
+/usr/bin/perl:                  U _bsearch
+/usr/bin/perl:                  U _environ
+/usr/bin/perl:                  U _strncmp
+/usr/bin/perl:                  U _strrchr
+/usr/bin/perl:                  U _access
+/usr/bin/perl:                  U _getenv
+/usr/bin/perl:                  U _getpid
+/usr/bin/perl:                  U _getuid
+/usr/bin/perl:                  U _malloc
+/usr/bin/perl:                  U _munmap
+/usr/bin/perl: 0000000100003260 b _prefix
+/usr/bin/perl:                  U _strchr
+/usr/bin/perl:                  U _strcmp
+/usr/bin/perl:                  U _strdup
+/usr/bin/perl:                  U _strlen
+/usr/bin/perl:                  U _strsep
+/usr/bin/perl:                  U _strspn
+/usr/bin/perl:                  U _strtol
+/usr/bin/perl:                  U _close
+/usr/bin/perl: 0000000100003250 b _debug
+/usr/bin/perl:                  U _errc
+/usr/bin/perl:                  U _errx
+/usr/bin/perl:                  U _free
+/usr/bin/perl: 0000000100000f50 T _main
+/usr/bin/perl:                  U _mmap
+/usr/bin/perl:                  U _open
+/usr/bin/perl:                  U _warn
+/usr/bin/perl:                  U _warnx

@@ -36,8 +36,9 @@ typedef	struct				s_magic
 {
 	char					*name_func;
 	char					type;
-	char					*value;
+	char 					*value;
 	struct s_magic			*next;
+	struct nlist_64			*content;
 }							t_magic;
 
 typedef	struct				s_base
@@ -65,6 +66,7 @@ void 						handle_fat (char *ptr);
 
 void 						print_output(int nsyms, int symoff, int stroff, void *ptr);
 void 						handle_64 (char *ptr);
+void	add_seg (struct load_command *com);
 
 // print.c //
 
@@ -79,8 +81,8 @@ uint64_t					swap_uint64(uint64_t nb);
 
 // get.c //
 
-char 						get_type(uint8_t n_type);
-char 						*get_value(uint64_t n_value, char type);
+char 						get_type(uint8_t n_type, t_magic *magic);
+char 						*get_value(uint64_t n_value, t_magic *magic);
 
 // tools.c //
 void						*smap(size_t len);
