@@ -1,0 +1,3 @@
+/usr/lib/bundle1.o:                  U ___dso_handle
+/usr/lib/bundle1.o: 0000000000000014 T __dyld_func_lookup
+/usr/lib/bundle1.o: 0000000000000000 T dyld_stub_binding_helper
