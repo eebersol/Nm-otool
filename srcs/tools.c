@@ -59,22 +59,18 @@ void pairWiseSwap(t_magic *node)
 		{
 
 			i = 0;
+			if (ft_strcmp(ptr1->next->name_func, "_prefix") == 0 && ft_strcmp(ptr1->name_func, "_prefixlen") == 0) {
+				swapped = 1;
+				swap(ptr1, ptr1->next);
+			}
 			while (ptr1->name_func[i] && ptr1->next->name_func[i])
 			{
 				if (ptr1->name_func[i] > ptr1->next->name_func[i]) {
 					swapped = 1;
 					swap(ptr1, ptr1->next);
 				}
-				else if (ptr1->name_func[i] < ptr1->next->name_func[i]) 
-				{
-					if (ptr1->next->name_func[i++] && !ptr1->next->name_func[i++])
-					{
-						printf("ENTER : %s %s\n", ptr1->name_func, ptr1->next->name_func);
-						swapped = 1;
-						swap(ptr1, ptr1->next);
-					}
+				else if (ptr1->name_func[i] < ptr1->next->name_func[i])
 					break;
-				}
 				else
 					i++;
 			}

@@ -1,76 +1,76 @@
-/usr/bin/perl:                  U _CFStringGetMaximumSizeForEncoding
-/usr/bin/perl:                  U ___CFConstantStringClassReference
-/usr/bin/perl:                  U _CFPropertyListCreateFromXMLData
-/usr/bin/perl:                  U _NSGetNextSearchPathEnumeration
-/usr/bin/perl:                  U _NSStartSearchPathEnumeration
+/usr/bin/perl:                  U _CFBooleanGetTypeID
+/usr/bin/perl:                  U _CFBooleanGetValue
 /usr/bin/perl:                  U _CFDataCreateWithBytesNoCopy
 /usr/bin/perl:                  U _CFDictionaryGetTypeID
 /usr/bin/perl:                  U _CFDictionaryGetValue
-/usr/bin/perl:                  U _CFBooleanGetTypeID
-/usr/bin/perl: 0000000100000000 T __mh_execute_header
-/usr/bin/perl:                  U _CFBooleanGetValue
-/usr/bin/perl:                  U _CFStringGetLength
-/usr/bin/perl:                  U _CFStringGetTypeID
-/usr/bin/perl:                  U ___stack_chk_guard
+/usr/bin/perl:                  U _CFGetTypeID
+/usr/bin/perl:                  U _CFPropertyListCreateFromXMLData
+/usr/bin/perl:                  U _CFRelease
 /usr/bin/perl:                  U _CFStringGetBytes
-/usr/bin/perl:                  U ___stack_chk_fail
-/usr/bin/perl:                  U _kCFAllocatorNull
-/usr/bin/perl: 0000000100002290 t _searchshortcuts
-/usr/bin/perl:                  U ___memmove_chk
-/usr/bin/perl:                  U ___strlcpy_chk
-/usr/bin/perl:                  U ___strncpy_chk
-/usr/bin/perl: 0000000100001c20 t _boolean_check
-/usr/bin/perl:                  U _fstat$INODE64
-/usr/bin/perl: 0000000100001bd0 t _version_check
+/usr/bin/perl:                  U _CFStringGetLength
+/usr/bin/perl:                  U _CFStringGetMaximumSizeForEncoding
+/usr/bin/perl:                  U _CFStringGetTypeID
+/usr/bin/perl:                  U _NSGetNextSearchPathEnumeration
+/usr/bin/perl:                  U _NSStartSearchPathEnumeration
+/usr/bin/perl:                  U ___CFConstantStringClassReference
 /usr/bin/perl:                  U ___memcpy_chk
+/usr/bin/perl:                  U ___memmove_chk
+/usr/bin/perl:                  U ___stack_chk_fail
+/usr/bin/perl:                  U ___stack_chk_guard
 /usr/bin/perl:                  U ___strcat_chk
 /usr/bin/perl:                  U ___strcpy_chk
-/usr/bin/perl: 0000000100002810 t _cmpshortcuts
-/usr/bin/perl:                  U _CFGetTypeID
-/usr/bin/perl: 00000001000026d0 t _cmpstrarray
-/usr/bin/perl:                  U _posix_spawn
-/usr/bin/perl:                  U _posix_spawnattr_setbinpref_np
-/usr/bin/perl:                  U _posix_spawnattr_setflags
-/usr/bin/perl:                  U _realpath$DARWIN_EXTSN
-/usr/bin/perl:                  U _posix_spawnattr_init
-/usr/bin/perl:                  U dyld_stub_binder
-/usr/bin/perl:                  U _proc_pidpath
-/usr/bin/perl: 0000000100003220 d _prefer32cpu
-/usr/bin/perl: 0000000100002350 t _versionargs
-/usr/bin/perl: 0000000100001d10 t _read_plist
-/usr/bin/perl:                  U _strcasecmp
-/usr/bin/perl:                  U _CFRelease
-/usr/bin/perl: 0000000100002bd0 s _plistpath
-/usr/bin/perl: 0000000100003258 b _prefixlen
-/usr/bin/perl: 0000000100003240 S _shortcuts
-/usr/bin/perl: 0000000100002700 t _cfstrdup
-/usr/bin/perl:                  U _getpwuid
-/usr/bin/perl: 0000000100003230 d _versions
-/usr/bin/perl:                  U _bsearch
-/usr/bin/perl:                  U _environ
-/usr/bin/perl:                  U _strncmp
-/usr/bin/perl:                  U _strrchr
+/usr/bin/perl:                  U ___strlcpy_chk
+/usr/bin/perl:                  U ___strncpy_chk
+/usr/bin/perl: 0000000100000000 T __mh_execute_header
 /usr/bin/perl:                  U _access
+/usr/bin/perl: 0000000100001c20 t _boolean_check
+/usr/bin/perl:                  U _bsearch
+/usr/bin/perl: 0000000100002700 t _cfstrdup
+/usr/bin/perl:                  U _close
+/usr/bin/perl: 0000000100002810 t _cmpshortcuts
+/usr/bin/perl: 00000001000026d0 t _cmpstrarray
+/usr/bin/perl: 0000000100003250 b _debug
+/usr/bin/perl:                  U _environ
+/usr/bin/perl:                  U _errc
+/usr/bin/perl:                  U _errx
+/usr/bin/perl:                  U _free
+/usr/bin/perl:                  U _fstat$INODE64
 /usr/bin/perl:                  U _getenv
 /usr/bin/perl:                  U _getpid
+/usr/bin/perl:                  U _getpwuid
 /usr/bin/perl:                  U _getuid
+/usr/bin/perl:                  U _kCFAllocatorNull
+/usr/bin/perl: 0000000100000f50 T _main
 /usr/bin/perl:                  U _malloc
+/usr/bin/perl:                  U _mmap
 /usr/bin/perl:                  U _munmap
+/usr/bin/perl:                  U _open
+/usr/bin/perl: 0000000100002bd0 s _plistpath
+/usr/bin/perl:                  U _posix_spawn
+/usr/bin/perl:                  U _posix_spawnattr_init
+/usr/bin/perl:                  U _posix_spawnattr_setbinpref_np
+/usr/bin/perl:                  U _posix_spawnattr_setflags
+/usr/bin/perl: 0000000100003220 d _prefer32cpu
 /usr/bin/perl: 0000000100003260 b _prefix
+/usr/bin/perl: 0000000100003258 b _prefixlen
+/usr/bin/perl:                  U _proc_pidpath
+/usr/bin/perl: 0000000100001d10 t _read_plist
+/usr/bin/perl:                  U _realpath$DARWIN_EXTSN
+/usr/bin/perl: 0000000100002290 t _searchshortcuts
+/usr/bin/perl: 0000000100003240 S _shortcuts
+/usr/bin/perl:                  U _strcasecmp
 /usr/bin/perl:                  U _strchr
 /usr/bin/perl:                  U _strcmp
 /usr/bin/perl:                  U _strdup
 /usr/bin/perl:                  U _strlen
+/usr/bin/perl:                  U _strncmp
+/usr/bin/perl:                  U _strrchr
 /usr/bin/perl:                  U _strsep
 /usr/bin/perl:                  U _strspn
 /usr/bin/perl:                  U _strtol
-/usr/bin/perl:                  U _close
-/usr/bin/perl: 0000000100003250 b _debug
-/usr/bin/perl:                  U _errc
-/usr/bin/perl:                  U _errx
-/usr/bin/perl:                  U _free
-/usr/bin/perl: 0000000100000f50 T _main
-/usr/bin/perl:                  U _mmap
-/usr/bin/perl:                  U _open
+/usr/bin/perl: 0000000100001bd0 t _version_check
+/usr/bin/perl: 0000000100002350 t _versionargs
+/usr/bin/perl: 0000000100003230 d _versions
 /usr/bin/perl:                  U _warn
 /usr/bin/perl:                  U _warnx
+/usr/bin/perl:                  U dyld_stub_binder
