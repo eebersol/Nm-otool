@@ -8,7 +8,8 @@ int main(int ac, char **av)
 	struct 	stat fileStat;
 	char 	*ptr;
 	int 	fd;
-
+	int 	i;
+	int 	err;
 
 	if (ac < 2) {
 		printf("Nm need argument\n");
@@ -16,29 +17,39 @@ int main(int ac, char **av)
 	}
 	else
 	{
-		base 		= recover_base();
-		fd 			= 0;
-		base->name 	= av[1];
-		if ((fd = open(base->name, O_RDONLY)) < 0){
-			printf("[ERROR] - > open\n");
-			return 1;
-		}
-		if (fstat(fd, &fileStat) < 0)
+		i = 0;
+		err = 0;
+		while (++i < ac)
 		{
-			printf("[ERROR] - > fStats\n");
+			base 			= recover_base();
+			base->magicBase = NULL;
+			base->name 		= av[i];
+			base->err 		= false;
+			fd 				= 0;
+			if ((fd = open(base->name, O_RDONLY)) < 0){
+				print_err_open();
+			}
+			else if (fstat(fd, &fileStat) < 0)
+			{
+				print_err_fstats();
+			}
+			else if ((ptr = mmap(0, fileStat.st_size, PROT_READ|PROT_EXEC ,MAP_SHARED , fd, 0)) == MAP_FAILED) {
+				print_err_mmap();			
+			}
+			if (base->err == 0) {
+				nm(ptr);
+			}
+			if (base->err == 0 && (munmap(ptr, fileStat.st_size)) < 0) {
+				print_err_munmap();		
+			}
+			if (base->err)
+				err++;
+		}
+		if (err) {
+			//ft_putstr("Some error ocured Nm\n");
 			return 1;
-		}
-		if ((ptr = mmap(0, fileStat.st_size, PROT_READ|PROT_EXEC ,MAP_SHARED , fd, 0)) == MAP_FAILED) {
-			printf("[ERROR] - > mmap\n");
-			return 1;			
-		}
-		nm(ptr);
-		if ((munmap(ptr, fileStat.st_size)) < 0) {
-			printf("[ERROR] - > munmap\n");
-			return 1;					
 		}
 		return 0;
-
 	}
 
 }

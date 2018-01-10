@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/01/10 10:17:39 by eebersol         ###   ########.fr        #
+#    Updated: 2018/01/10 16:54:32 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,6 @@ $(NAME): $(OBJ)
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 
-.PHONY: clean fclean re
 
 clean:
 	@rm -f $(OBJ)
@@ -58,15 +57,39 @@ fclean:	clean
 	@/bin/rm -rf $(NAME)
 	@echo "Clean all .o and .a"
 
-exec : fclean all
-	@./Nm-otool "malloc.o"
+exec : all
+	@./$(NAME) $(NAME)
+	@./$(NAME) $(NAME) > test_executable ; nm -o $(NAME) > test_executable_true
+	@diff test_executable test_executable_true; if [ $$? -eq 0 ] ; then echo "\nyour executable : \x1B[32mSUCCESS\x1B[0m\n" ; fi
+	@diff test_executable test_executable_true; if [ $$? -eq 1 ] ; then echo "\nyour executable : \x1B[31mERROR\x1B[0m\n" ; fi
 
 fat	: all
-	@./Nm-otool /usr/lib/bundle1.o
+	@./$(NAME) /usr/lib/bundle1.o
+	@./$(NAME) /usr/lib/bundle1.o > test_fat ; nm -o /usr/lib/bundle1.o > test_fat_true
+	@diff test_fat test_fat_true; if [ $$? -eq 0 ] ; then echo "\n/usr/bin/fat : \x1B[32mSUCCESS\x1B[0m\n" ; fi
+	@diff test_fat test_fat_true; if [ $$? -eq 1 ] ; then echo "\n/usr/bin/fat : \x1B[31mERROR\x1B[0m\n" ; fi
 
 perl : all
-	@./Nm-otool /usr/bin/perl
+	@./$(NAME) /usr/bin/perl
+	@./$(NAME) /usr/bin/perl > test_perl ; nm -o /usr/bin/perl > test_perl_true
+	@diff test_perl test_perl_true; if [ $$? -eq 0 ] ; then echo "\n/usr/bin/perl : \x1B[32mSUCCESS\x1B[0m\n" ; fi
+	@diff test_perl test_perl_true; if [ $$? -eq 1 ] ; then echo "\n/usr/bin/perl : \x1B[31mERROR\x1B[0m\n" ; fi
 
 python : all
-	@./Nm-otool /usr/bin/python
+	@./$(NAME) /usr/bin/python
+	@./$(NAME) /usr/bin/python > test_python ; nm -o /usr/bin/python > test_python_true
+	@diff test_python test_python_true; if [ $$? -eq 0 ] ; then echo "\n/usr/bin/python : \x1B[32mSUCCESS\x1B[0m\n" ; fi
+	@diff test_python test_python_true; if [ $$? -eq 1 ] ; then echo "\n/usr/bin/python : \x1B[31mERROR\x1B[0m\n" ; fi
+
+multiple : all
+	@./$(NAME) init_struct.o malloc.o
+	@./$(NAME) init_struct.o malloc.o > test_multiple_arg ; nm -o init_struct.o malloc.o > test_multiple_arg_true
+	@./$(NAME) init_struct.o malloc.o > tmp; if [ $$? -eq 1 ] ;  then echo "\nmutiple arg : \x1B[31mERROR\x1B[0m return value false\n" ; fi
+	@diff test_python test_python_true; if [ $$? -eq 0 ] ; then echo "mutiple arg : \x1B[32mSUCCESS\x1B[0m\n" ; fi
+	@diff test_python test_python_true; if [ $$? -eq 1 ] ; then echo "\n/multiple arg : \x1B[31mERROR\x1B[0m\n" ; fi
+
+testNm : all exec fat perl python multiple
+
+.PHONY: clean fclean re
+	
 re: fclean all

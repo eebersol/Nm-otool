@@ -12,7 +12,9 @@
 # include <sys/mman.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <ar.h>
 
+# include <mach-o/ranlib.h>
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
 # include <mach-o/fat.h>
@@ -44,34 +46,34 @@ typedef	struct				s_magic
 typedef	struct				s_base
 {
 	char 					*name;
+	bool					err;
 	t_magic 				*magicBase;
 }							t_base;
 
 // delcare function 
 
-
+// init_struct.c //
 void						init_base(void);
 t_base						*recover_base(void);
 
 // nm.c //
-
 void 						nm (char *ptr);
 
 // fat.c //
-
-void 						resolve_fat (int ncmds, struct 	fat_arch *fat_arch, int i);
 void 						handle_fat (char *ptr);
 
 // magic.c //
-
 void 						print_output(int nsyms, int symoff, int stroff, void *ptr);
+void						add_seg (struct load_command *com);
 void 						handle_64 (char *ptr);
-void	add_seg (struct load_command *com);
 
 // print.c //
 
-void						printf_prg_name();
-void						print_handle_64();
+void						print_err_munmap(void);
+void						print_err_mmap(void);
+void						print_err_fstats(void);
+void						print_err_open(void);
+void						print_nm(void);
 
 // swap.c //
 
@@ -85,10 +87,8 @@ char 						get_type(uint8_t n_type, t_magic *magic);
 char 						*get_value(uint64_t n_value, t_magic *magic);
 
 // tools.c //
-void						*smap(size_t len);
 int							lst_count(t_magic *lst);
-t_magic						*sort_list_alpha(t_magic *magic);
-t_magic						*swapNode(t_magic *magic);
-void 						pairWiseSwap(t_magic *head);
 void						swap(t_magic *node1, t_magic *node2);
+void 						sort_alphanumeric(t_magic *head);
+
 #endif

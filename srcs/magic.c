@@ -26,7 +26,6 @@ void print_output(int nsyms, int symoff, int stroff, void *ptr)
 		magic->name_func 	= stringable + array[i].n_un.n_strx;
 		magic->type 		= get_type(array[i].n_type, magic);
 		magic->value 		= get_value(array[i].n_value, magic);
-		//magic->value 		= array[i].n_value;
 		i++;
 		if (i < nsyms)
 		{
@@ -45,7 +44,6 @@ void	add_seg (struct load_command *lc)
 	i 	= 0;
 	seg = (struct segment_command_64*)lc;
 	sec = (struct section_64*)(seg + sizeof(seg) / sizeof(void*));
-	//printf("nbr nsects ::%u\n", seg->nsects);
 	while (i < seg->nsects)
 	{
 		//printf("sec->name :: %s\n", sec->sectname);
@@ -72,18 +70,18 @@ void handle_64 (char *ptr)
 	{
 		if (lc->cmd == LC_SEGMENT_64)
 		{
-			//printf("LC_SEGMENT_64\n");
-			//printf("\nsc->name : |%s| - ", sc->segname);
-			//printf("sc->flags : |%u|\n", swap_uint32(sc->flags));
+			// printf("LC_SEGMENT_64\n");
+			// printf("\nsc->name : |%s| - ", sc->segname);
+			// printf("sc->flags : |%u|\n", swap_uint32(sc->flags));
 			add_seg(lc);
 		}
-		else if (lc->cmd == LC_ROUTINES_64)
-		{
-			//printf("LC_ROUTINES_64\n");
-		}
+		// else if (lc->cmd == LC_ROUTINES_64)
+		// {
+		// 	printf("LC_ROUTINES_64\n");
+		// }
 		else if (lc->cmd == LC_SYMTAB)
 		{
-			//printf("LC_SYMTAB\n");
+			// printf("LC_SYMTAB\n");
 			sym 	= (struct 	symtab_command *)lc;
 			print_output(sym->nsyms, sym->symoff, sym->stroff, (void *)ptr);
 			break;
@@ -91,6 +89,6 @@ void handle_64 (char *ptr)
 		lc = (void *)lc + lc->cmdsize;
 		sc = (void*)sc + lc->cmdsize;
 	}
-	print_handle_64();
+	print_nm();
 
 }

@@ -1,10 +1,5 @@
 #include "../includes/nm-otool.h"
 
-void	*smap(size_t len)
-{
-	return (mmap(NULL, len, FLAG_PROT, FLAG_MAP, -1, 0));
-}
-
 int		lst_count(t_magic *lst)
 {
 	int		i;
@@ -42,7 +37,7 @@ void	swap(t_magic *node1, t_magic *node2)
 	node2->name_func 	= tempNameFunc;
 }
 
-void pairWiseSwap(t_magic *node)
+void sort_alphanumeric(t_magic *node)
 {
 	int			swapped;
 	int 		i;
@@ -57,9 +52,9 @@ void pairWiseSwap(t_magic *node)
 		ptr1 = node;
 		while (ptr1 && ptr1->next != lptr)
 		{
-
 			i = 0;
-			if (ft_strcmp(ptr1->next->name_func, "_prefix") == 0 && ft_strcmp(ptr1->name_func, "_prefixlen") == 0) {
+			if (ft_strcmp(ft_strsub(ptr1->name_func, 0, ft_strlen(ptr1->next->name_func)), ptr1->next->name_func) == 0 
+					&& ft_strlen(ptr1->name_func) > ft_strlen(ptr1->next->name_func)) {
 				swapped = 1;
 				swap(ptr1, ptr1->next);
 			}
