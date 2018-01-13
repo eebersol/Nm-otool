@@ -18,5 +18,5 @@ void handle_fat (char *ptr)
 		arch += sizeof(struct fat_arch) /*/ sizeof(void*)*/;
 		i--;
 	}
-	nm(ptr + swap_uint32(offset));
+	identify_file(ptr + swap_uint32(offset));
 }

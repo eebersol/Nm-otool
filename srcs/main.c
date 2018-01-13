@@ -11,17 +11,22 @@ int main(int ac, char **av)
 	int 	i;
 	int 	err;
 
-	if (ac < 2) {
+	if (ac < 2) 
+	{
 		printf("Nm need argument\n");
 		return 1;
 	}
 	else
 	{
-		i = 0;
-		err = 0;
+		base 				= recover_base();
+		err 				= 0;
+		i 					= 0;
+		if (strcmp(av[0], "./ft_nm") == 0)
+			base->nm = true;
+		else
+			base->nm = false;
 		while (++i < ac)
 		{
-			base 			= recover_base();
 			base->magicBase = NULL;
 			base->name 		= av[i];
 			base->err 		= false;
@@ -37,7 +42,8 @@ int main(int ac, char **av)
 				print_err_mmap();			
 			}
 			if (base->err == 0) {
-				nm(ptr);
+				identify_file(ptr);
+				print_archive();
 			}
 			if (base->err == 0 && (munmap(ptr, fileStat.st_size)) < 0) {
 				print_err_munmap();		

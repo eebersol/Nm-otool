@@ -61,3 +61,84 @@ void	print_nm(void)
 		magic = magic->next;
 	}
 }
+
+void	print_otool(void)
+{
+	t_base 	*base;
+
+	base 	= recover_base();
+	sort_alphanumeric(base->magicBase);
+	while (base->magicBase)
+	{
+		ft_putstr(base->magicBase->value);
+		ft_putchar('\t');
+		ft_putstr(base->magicBase->text_section);
+		if (base->magicBase->next == NULL) {
+			break;
+		}
+		base->magicBase = base->magicBase->next;
+	}
+}
+
+void 	print_archive(void)
+{
+	t_base 		*base;
+	t_archive 	*archive;
+
+	base = recover_base();
+	archive = base->archiveBase;
+	sort_alphanumeric_archive(archive);
+	while (archive)
+	{
+		ft_putstr(base->name);
+		ft_putchar('(');
+		ft_putstr(archive->name);
+		ft_putstr("):\n");
+		ft_putstr("Contents of (__TEXT,__text) section\n");
+		if (archive->magicArchive)
+		{
+			while (archive->magicArchive)
+			{
+				ft_putstr(archive->magicArchive->value);
+				ft_putchar('\t');
+				ft_putstr(archive->magicArchive->text_section);
+				if (archive->magicArchive->next == NULL)
+					break;
+				archive->magicArchive = archive->magicArchive->next;	
+			}
+		}
+		if (archive->next == NULL)
+			break;
+		archive = archive->next;
+	}
+}
+
+void	 add_archive(void)
+{
+	t_base 		*base;
+	t_archive 	*archive;
+	t_magic 	*magic;
+	int i;
+
+	base = recover_base();
+	archive = base->archiveBase;
+	magic 	= base->magicBase;
+	i = lst_count_archive(archive);
+	while (archive)
+	{
+		archive->magicArchive = magic;
+		// while (magic)
+		// {
+		// 	printf("In magic list archive\n");
+		// 	archive->magicArchive->next = (t_magic*)malloc(sizeof(t_magic));
+		// 	archive->magicArchive = magic;
+		// 	if (magic->next == NULL)
+		// 		break;
+		// 	magic = magic->next;
+		// 	archive = archive->next;
+		// }
+		if (archive->next == NULL)
+			break;
+		archive = archive->next;
+	}
+}
