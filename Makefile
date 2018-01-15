@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/01/13 15:32:29 by eebersol         ###   ########.fr        #
+#    Updated: 2018/01/15 15:54:11 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,13 +83,31 @@ fclean:	clean
 
 re: fclean all
 
+bash :
+	@echo "\t\t\t\x1B[33m_____________________________\x1B[0m\n"
+	@echo "\t\t\t\x1B[33m*** Test executable file ***\x1B[0m"
+	@echo "\t\t\t\x1B[33m______________________________\x1B[0m\n\n"
+	@./$(NAME) /bin/bash
+	@./$(NAME) /bin/bash > test_bash 					; nm -o /bin/bash > test_bash_true
+	@diff test_bash test_bash_true 	> diff				; if [ $$? -eq 0 ] ; then echo "\nYour bash : \x1B[32mSUCCESS\x1B[0m\n" ; fi
+	@diff test_bash test_bash_true 					; if [ $$? -eq 1 ] ; then echo "\nYour bash : \x1B[31mERROR\x1B[0m\n" ; fi
+
+archive :
+	@echo "\t\t\t\x1B[33m______________________________\x1B[0m\n"
+	@echo "\t\t\t\x1B[33m*** Test otool archive ***\x1B[0m"
+	@echo "\t\t\t\x1B[33m______________________________\x1B[0m\n\n"
+	@./$(NAME) libft/libft.a > test_nm_archive 		; nm -o libft/libft.a > test_nm_archive_true
+	@./$(NAME) libft/libft.a
+	@diff test_nm_archive test_nm_archive_true	> diff	; if [ $$? -eq 0 ] ; then echo "\nOtool libft/libft.a: \x1B[32mSUCCESS\x1B[0m\n" ; fi
+	@diff test_nm_archive test_nm_archive_true 		; if [ $$? -eq 1 ] ; then echo "\nOtool libft/libft.a : \x1B[31mERROR\x1B[0m\n" ; fi
+
 exec : all
 	@echo "\t\t\t\x1B[33m_____________________________\x1B[0m\n"
 	@echo "\t\t\t\x1B[33m*** Test executable file ***\x1B[0m"
 	@echo "\t\t\t\x1B[33m______________________________\x1B[0m\n\n"
 	@./$(NAME) $(NAME)
 	@./$(NAME) $(NAME) > test_executable 					; nm -o $(NAME) > test_executable_true
-	@diff test_executable test_executable_true 				; if [ $$? -eq 0 ] ; then echo "\nYour executable : \x1B[32mSUCCESS\x1B[0m\n" ; fi
+	@diff test_executable test_executable_true 	> diff		; if [ $$? -eq 0 ] ; then echo "\nYour executable : \x1B[32mSUCCESS\x1B[0m\n" ; fi
 	@diff test_executable test_executable_true 				; if [ $$? -eq 1 ] ; then echo "\nYour executable : \x1B[31mERROR\x1B[0m\n" ; fi
 
 fat	: all
@@ -158,6 +176,15 @@ otoolArchive : all
 	@./$(NAME_OTOOL) libft/libft.a
 	@diff test_otool_archive test_otool_archive_true		; if [ $$? -eq 0 ] ; then echo "\nOtool libft/libft.a: \x1B[32mSUCCESS\x1B[0m\n" ; fi
 	@diff test_otool_archive test_otool_archive_true 		; if [ $$? -eq 1 ] ; then echo "\nOtool libft/libft.a : \x1B[31mERROR\x1B[0m\n" ; fi
+
+otoolExec : all
+	@echo "\t\t\t\x1B[33m_____________________________\x1B[0m\n"
+	@echo "\t\t\t\x1B[33m*** Test executable file ***\x1B[0m"
+	@echo "\t\t\t\x1B[33m______________________________\x1B[0m\n\n"
+	@./$(NAME_OTOOL) $(NAME_OTOOL)
+	@./$(NAME_OTOOL) $(NAME_OTOOL) > test_executable_otool 			; otool -t $(NAME_OTOOL) > test_executable_otool_ref
+	@diff test_executable_otool test_executable_otool_ref > diff	; if [ $$? -eq 0 ] ; then echo "\nYour executable : \x1B[32mSUCCESS\x1B[0m\n" ; fi
+	@diff test_executable_otool test_executable_otool_ref 			; if [ $$? -eq 1 ] ; then echo "\nYour executable : \x1B[31mERROR\x1B[0m\n" ; fi
 
 .PHONY: clean fclean re
 	

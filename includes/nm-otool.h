@@ -47,6 +47,7 @@ typedef	struct				s_magic
 typedef	struct				s_archive
 {
 	char 					*name;
+	char 					*path_name;
 	int 					size_fuck;
 	void 					*addr;
 	t_magic 				*magicArchive;
@@ -57,7 +58,9 @@ typedef	struct				s_base
 {
 	bool					nm;
 	bool					archive;
+	bool					archiveNm;
 	char 					*name;
+	char 					*path_name;
 	char 					*nameArchive;
 	bool					err;
 	t_magic 				*magicBase;
@@ -93,6 +96,7 @@ void						print_err_fstats(void);
 void						print_err_open(void);
 void						print_nm(void);
 void						print_otool(void);
+void 	print_nm_archive(void);
 // swap.c //
 
 uint16_t					swap_uint16(uint16_t nb);
@@ -107,6 +111,10 @@ char 						*get_value(uint64_t n_value, t_magic *magic);
 // get_otool.c // 
 char						*get_name(char *name);
 int							get_size(char *name);
+char 						*get_value_otool_archive(uint64_t n_value);
+char 						*get_value_otool_exec(uint64_t n_value);
+char 						*get_value_otool_manager(uint64_t n_value);
+char 						*str_lower(char *str);
 
 // tools.c //
 t_magic						*lst_reverse(t_magic *root);

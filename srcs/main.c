@@ -43,7 +43,8 @@ int main(int ac, char **av)
 			}
 			if (base->err == 0) {
 				identify_file(ptr);
-				print_archive();
+				if (base->archive == true)
+					print_archive();
 			}
 			if (base->err == 0 && (munmap(ptr, fileStat.st_size)) < 0) {
 				print_err_munmap();		

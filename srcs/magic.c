@@ -26,7 +26,7 @@ void print_output_nm(int nsyms, int symoff, int stroff, void *ptr)
 			magic->next 		= (t_magic*)malloc(sizeof(t_magic));
 			magic 				= magic->next;
 		}
-	}
+	};
 }
 
 void	display_check()
@@ -99,9 +99,9 @@ void	check_seg (struct load_command *lc, struct mach_header_64 *header)
 	{
 		if (ft_strcmp(sec->segname, "__TEXT") == 0 && ft_strcmp(sec->sectname, "__text") == 0)
 		{
-			if (recover_base()->archive == false) {
+			if (recover_base()->archive == false && recover_base()->nm == false) {
 				ft_putstr(recover_base()->name);
-				ft_putstr("\n:");
+				ft_putstr(":\n");
 				ft_putstr("Contents of (__TEXT,__text) section\n");
 			}
 			get_content(sec->addr, sec->size, (char *)header + sec->offset);
@@ -130,7 +130,7 @@ void			get_content(uint64_t addr, unsigned int size, char *ptr)
 		{
 			if (i != 0)
 				addr += 16;
-			test_addr = get_value_otool(swap_uint64(addr));
+			test_addr = get_value_otool_manager(swap_uint64(addr));
 		}
 		str = ft_strjoin(str, itoa_base(ptr[i], 16, 2));
 		str = ft_strjoin(str, " ");
@@ -140,7 +140,7 @@ void			get_content(uint64_t addr, unsigned int size, char *ptr)
 			{
 				magic->next 		= (t_magic*)malloc(sizeof(t_magic));
 				magic->text_section = (char*)malloc(sizeof(char*) * ft_strlen(str) + 1);
-				magic->text_section = ft_strjoin(str, "\n");
+				magic->text_section = str;
 				magic->value 		= test_addr;
 				magic 				= magic->next;
 			}
@@ -152,7 +152,7 @@ void			get_content(uint64_t addr, unsigned int size, char *ptr)
 	}
 	if (str && ft_strlen(str) > 1 && magic->text_section == NULL){
 		magic->text_section = (char*)malloc(sizeof(char*) * ft_strlen(str) + 1);
-		magic->text_section = ft_strjoin(str, "\n");	
+		magic->text_section = str;	
 		magic->value 		= test_addr;
 	}
 }
@@ -194,8 +194,6 @@ void handle_64 (char *ptr)
 		lc = (void *)lc + lc->cmdsize;
 		sc = (void*)sc + lc->cmdsize;
 	}
-	//printf("Checkin handle_64\n");
-	//display_check();
 	if (recover_base()->nm == true) {
 		print_nm();
 	}

@@ -77,3 +77,21 @@ uint64_t	swap_uint64(uint64_t nb)
 				(nb & 0xFF00000000000000) >> 56);
 	return (nb);
 }
+
+
+
+
+
+
+
+
+
+
+
+OTOOL SORT :::: 
+
+
+D'ABORD LES DOSSIERS SONT SORT POUR LES .O DANS LES FILES
+
+
+

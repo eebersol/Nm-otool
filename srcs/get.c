@@ -45,6 +45,42 @@ char get_type(uint8_t n_type, t_magic *magic)
 	}
 }
 
+// char 	*get_value(uint64_t n_value, t_magic *magic)
+// {
+// 	char 	*value_l;
+// 	char 	*value_r;
+// 	size_t 	value_len;
+// 	size_t 	i;
+// 	int 	padding;
+
+
+// 	(void)magic;
+// 	value_r = ft_itoa_base(n_value, 16);
+// 	i = 0;
+// 	while (i < ft_strlen(value_r)) {
+// 		value_r[i] = ft_tolower(value_r[i]);
+// 		i++;
+// 	}
+// 	value_l = ft_itoa_base(swap_uint64(n_value), 16);
+// 	value_len = ft_strlen(value_l) + ft_strlen(value_r);
+// 	if (value_len < 9)
+// 	{
+// 		while (value_len < 9)
+// 		{
+// 			value_r = ft_strjoin(value_r, "0");
+// 			value_len = ft_strlen(value_r) + ft_strlen(value_l);
+// 		}
+// 	}
+// 	else if (value_len > 9)
+// 	{
+// 		padding = 9 - ft_strlen(value_r);
+// 		value_r = ft_strsub(value_r, 0, padding);
+// 		value_len = ft_strlen(value_l) + ft_strlen(value_r);
+// 	}
+// 	value_l = ft_strjoin("0000000", value_l);
+// 	return (ft_strjoin(value_l, value_r));
+// }
+
 char 	*get_value(uint64_t n_value, t_magic *magic)
 {
 	char 	*value_l;
@@ -79,46 +115,4 @@ char 	*get_value(uint64_t n_value, t_magic *magic)
 	}
 	value_l = ft_strjoin("0000000", value_l);
 	return (ft_strjoin(value_l, value_r));
-}
-
-char 	*get_value_otool(uint64_t n_value)
-{
-	char 	*value_l;
-	char 	*value_r;
-	size_t 	value_len;
-	size_t 	i;
-	int 	padding;
-
-
-	value_r = ft_itoa_base(n_value, 16);
-	i = 0;
-	while (i < ft_strlen(value_r)) {
-		value_r[i] = ft_tolower(value_r[i]);
-		i++;
-	}
-	value_l = ft_itoa_base(swap_uint64(n_value), 16);
-	value_len = ft_strlen(value_l) + ft_strlen(value_r);
-	if (value_len < 9)
-	{
-		while (value_len < 9)
-		{
-			value_l = ft_strjoin("0", value_l);
-			value_len = ft_strlen(value_l) + ft_strlen(value_r);
-		}
-	}
-	else if (value_len > 9)
-	{
-		padding = 9 - ft_strlen(value_r);
-		value_l = ft_strsub(value_l, 0, padding);
-		value_len = ft_strlen(value_l) + ft_strlen(value_r);
-	}
-	value_l = ft_strjoin("0000000", value_l);
-	value_l = ft_strjoin(value_l, value_r);
-	value_l = ft_strsub(value_l, 0, ft_strlen(value_l)-1 );
-	value_l = ft_strjoin("0", value_l);
-	while (i < ft_strlen(value_l)) {
-		value_l[i] = ft_tolower(value_l[i]);
-		i++;
-	}
-	return (value_l);
 }

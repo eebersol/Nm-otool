@@ -46,6 +46,10 @@ void	print_nm(void)
 		{
 			ft_putstr(base->name);
 			ft_putstr(": ");
+			if (base->path_name) {
+				ft_putstr(base->path_name);
+				ft_putstr(": ");
+			}
 			if (magic->type == 'S' || magic->type == 'T' || magic->type == 't' || magic->type == 'b' || magic->type == 'd' || magic->type == 'D' || magic->type == 's')
 				ft_putstr(magic->value);
 			else
@@ -67,12 +71,13 @@ void	print_otool(void)
 	t_base 	*base;
 
 	base 	= recover_base();
-	sort_alphanumeric(base->magicBase);
+	//sort_alphanumeric_otool(base->magicBase);
 	while (base->magicBase)
 	{
 		ft_putstr(base->magicBase->value);
 		ft_putchar('\t');
 		ft_putstr(base->magicBase->text_section);
+		ft_putchar('\n');
 		if (base->magicBase->next == NULL) {
 			break;
 		}
@@ -102,6 +107,7 @@ void 	print_archive(void)
 				ft_putstr(archive->magicArchive->value);
 				ft_putchar('\t');
 				ft_putstr(archive->magicArchive->text_section);
+				ft_putchar('\n');
 				if (archive->magicArchive->next == NULL)
 					break;
 				archive->magicArchive = archive->magicArchive->next;	

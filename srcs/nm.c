@@ -28,10 +28,15 @@ void identify_file (char *ptr)
 		handle_fat(ptr);
 	}
 	else if (!ft_strncmp(ptr, ARMAG, SARMAG)) {
-		ft_putstr("Archive : ");
-		ft_putstr(recover_base()->name);
-		ft_putchar('\n');
-		recover_base()->archive = true;
+		if (recover_base()->nm == false)
+		{
+			recover_base()->archive = true;
+			ft_putstr("Archive : ");
+			ft_putstr(recover_base()->name);
+			ft_putchar('\n');
+		}
+		else
+			recover_base()->archiveNm = true;
 		handle_archive(ptr);
 	}
 	else
