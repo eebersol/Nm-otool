@@ -34,14 +34,40 @@
 // 	LARGE
 // }							t_zone_type;
 
+
+typedef	struct				s_section
+{
+	struct s_segment		*seg;
+	struct s_section		*next;
+}							t_section;
+
+
+typedef	struct				s_segment
+{
+	char 					*name;
+	int 					nb;
+	struct s_segment		*next;
+}							t_segment;
+
+
+typedef	struct				s_sectionType
+{
+	char 					*name;
+	int 					nb;
+	struct s_sectionType	*next;
+}							t_sectionType;
+
+
 typedef	struct				s_magic
 {
 	char					*name_func;
 	char					type;
 	char 					*value;
 	char 					*text_section;
+	void 					*addr;
 	struct s_magic			*next;
 	struct nlist_64			*content;
+	struct 	load_command 	*lcStruct;
 }							t_magic;
 
 typedef	struct				s_archive
@@ -63,12 +89,15 @@ typedef	struct				s_base
 	char 					*path_name;
 	char 					*nameArchive;
 	bool					err;
+	int 					index;
 	t_magic 				*magicBase;
 	t_archive				*archiveBase;
+	t_section				*sectionBase;
 }							t_base;
 
 // delcare function 
-
+void		get_section(struct load_command *lc, struct mach_header_64 *header);
+int		lst_count_section(t_section *lst);
 // init_struct.c //
 void						init_base(void);
 t_base						*recover_base(void);
@@ -81,7 +110,7 @@ void 						handle_fat (char *ptr);
 
 // magic.c //
 void	display_check();
-void 						print_output_nm(int nsyms, int symoff, int stroff, void *ptr);
+void 						print_output_nm(int nsyms, int symoff, int stroff, void *ptr, struct 	load_command *lc);
 void						check_seg (struct load_command *com, struct 	mach_header_64 *header);
 void 						handle_64 (char *ptr);
 void						get_content(uint64_t addr, unsigned int size, char *ptr);

@@ -35,8 +35,10 @@ void	handle_archive(char *ptr)
 	base->archiveBase 	= (t_archive*)malloc(sizeof(t_archive));
 	archive 			= base->archiveBase;
 	tmp_archive 		= base->archiveBase;
-	while (i < size)
-	{		archive = print_art(ran[i].ran_off, ptr, archive);
+	while (i < size)	
+	{	
+		printf("JE SUIS ICI\n");
+		archive = print_art(ran[i].ran_off, ptr, archive);
 		i++;
 		if (i < size)
 			archive->next = (t_archive*)malloc(sizeof(t_archive));

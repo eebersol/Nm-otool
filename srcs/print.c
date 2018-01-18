@@ -44,12 +44,12 @@ void	print_nm(void)
 	{
 		if (magic->type != 'X')
 		{
-			ft_putstr(base->name);
-			ft_putstr(": ");
-			if (base->path_name) {
-				ft_putstr(base->path_name);
-				ft_putstr(": ");
-			}
+			// ft_putstr(base->name);
+			// ft_putstr(": ");
+			// if (base->path_name) {
+			// 	ft_putstr(base->path_name);
+			// 	ft_putstr(": ");
+			// }
 			if (magic->type == 'S' || magic->type == 'T' || magic->type == 't' || magic->type == 'b' || magic->type == 'd' || magic->type == 'D' || magic->type == 's')
 				ft_putstr(magic->value);
 			else
@@ -69,19 +69,20 @@ void	print_nm(void)
 void	print_otool(void)
 {
 	t_base 	*base;
+	t_magic *magicTmp;
 
-	base 	= recover_base();
-	//sort_alphanumeric_otool(base->magicBase);
-	while (base->magicBase)
+	base 		= recover_base();
+	magicTmp 	= base->magicBase;
+	while (magicTmp)
 	{
-		ft_putstr(base->magicBase->value);
+		ft_putstr(magicTmp->value);
 		ft_putchar('\t');
-		ft_putstr(base->magicBase->text_section);
+		ft_putstr(magicTmp->text_section);
 		ft_putchar('\n');
-		if (base->magicBase->next == NULL) {
+		if (magicTmp->next == NULL) {
 			break;
 		}
-		base->magicBase = base->magicBase->next;
+		magicTmp = magicTmp->next;
 	}
 }
 

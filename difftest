@@ -1,0 +1,392 @@
+52c52
+< 0000000000040644 s _NDR_record
+---
+> 0000000000040644 d _NDR_record
+146,149c146,149
+< 000000000003ff20 s __ZL11currentPool
+< 000000000003f950 s __ZL11initialPool
+< 000000000003fe68 s __ZL11sImageInfos
+< 000000000003fe80 s __ZL11sImageUUIDs
+---
+> 000000000003ff20 d __ZL11currentPool
+> 000000000003f950 d __ZL11initialPool
+> 000000000003fe68 d __ZL11sImageInfos
+> 000000000003fe80 d __ZL11sImageUUIDs
+152,153c152,153
+< 000000000003fea0 s __ZL17sObjectFileImages
+< 0000000000074c50 s __ZL17sThisAddressSpace
+---
+> 000000000003fea0 d __ZL17sObjectFileImages
+> 0000000000074c50 b __ZL17sThisAddressSpace
+156,159c156,159
+< 0000000000042930 s __ZL18initialPoolContent
+< 00000000000424f8 s __ZL18sLastErrorFileCode
+< 0000000000042500 s __ZL18sLastErrorFilePath
+< 0000000000042900 s __ZL19sDynamicInterposing
+---
+> 0000000000042930 b __ZL18initialPoolContent
+> 00000000000424f8 b __ZL18sLastErrorFileCode
+> 0000000000042500 b __ZL18sLastErrorFilePath
+> 0000000000042900 b __ZL19sDynamicInterposing
+175c175
+< 0000000000074950 s __ZN10__cxxabiv112_GLOBAL__N_14heapE
+---
+> 0000000000074950 b __ZN10__cxxabiv112_GLOBAL__N_14heapE
+177,178c177,178
+< 0000000000040500 s __ZN10__cxxabiv112_GLOBAL__N_1L10heap_mutexE
+< 0000000000074940 s __ZN10__cxxabiv112_GLOBAL__N_1L8freelistE
+---
+> 0000000000040500 d __ZN10__cxxabiv112_GLOBAL__N_1L10heap_mutexE
+> 0000000000074940 b __ZN10__cxxabiv112_GLOBAL__N_1L8freelistE
+196c196
+< 000000000003fb60 s __ZN11ImageLoader10fgTotalDOFE
+---
+> 000000000003fb60 d __ZN11ImageLoader10fgTotalDOFE
+201c201
+< 000000000003fbd0 s __ZN11ImageLoader13fgLoadOrdinalE
+---
+> 000000000003fbd0 d __ZN11ImageLoader13fgLoadOrdinalE
+206,207c206,207
+< 000000000003fb50 s __ZN11ImageLoader15fgTotalBindTimeE
+< 000000000003fb68 s __ZN11ImageLoader15fgTotalInitTimeE
+---
+> 000000000003fb50 d __ZN11ImageLoader15fgTotalBindTimeE
+> 000000000003fb68 d __ZN11ImageLoader15fgTotalInitTimeE
+213,214c213,214
+< 000000000003fb8c s __ZN11ImageLoader17fgTotalBindFixupsE
+< 000000000003fb48 s __ZN11ImageLoader17fgTotalRebaseTimeE
+---
+> 000000000003fb8c d __ZN11ImageLoader17fgTotalBindFixupsE
+> 000000000003fb48 d __ZN11ImageLoader17fgTotalRebaseTimeE
+217c217
+< 000000000003fb78 s __ZN11ImageLoader18fgTotalBytesMappedE
+---
+> 000000000003fb78 d __ZN11ImageLoader18fgTotalBytesMappedE
+219,222c219,222
+< 000000000003fb28 s __ZN11ImageLoader19fgInterposingTuplesE
+< 000000000003fbcc s __ZN11ImageLoader19fgSymbolTrieSearchsE
+< 000000000003fb88 s __ZN11ImageLoader19fgTotalRebaseFixupsE
+< 000000000003fb58 s __ZN11ImageLoader19fgTotalWeakBindTimeE
+---
+> 000000000003fb28 d __ZN11ImageLoader19fgInterposingTuplesE
+> 000000000003fbcc d __ZN11ImageLoader19fgSymbolTrieSearchsE
+> 000000000003fb88 d __ZN11ImageLoader19fgTotalRebaseFixupsE
+> 000000000003fb58 d __ZN11ImageLoader19fgTotalWeakBindTimeE
+230,233c230,233
+< 000000000003fbb0 s __ZN11ImageLoader21fgNextPIEDylibAddressE
+< 000000000003fba0 s __ZN11ImageLoader21fgTotalLazyBindFixupsE
+< 000000000003fb80 s __ZN11ImageLoader21fgTotalSegmentsMappedE
+< 000000000003fb70 s __ZN11ImageLoader22fgTotalBytesPreFetchedE
+---
+> 000000000003fbb0 d __ZN11ImageLoader21fgNextPIEDylibAddressE
+> 000000000003fba0 d __ZN11ImageLoader21fgTotalLazyBindFixupsE
+> 000000000003fb80 d __ZN11ImageLoader21fgTotalSegmentsMappedE
+> 000000000003fb70 d __ZN11ImageLoader22fgTotalBytesPreFetchedE
+237c237
+< 000000000003feb8 s __ZN11ImageLoader23fgDynamicImageReExportsE
+---
+> 000000000003feb8 d __ZN11ImageLoader23fgDynamicImageReExportsE
+241,242c241,242
+< 000000000003fb94 s __ZN11ImageLoader24fgTotalBindImageSearchesE
+< 000000000003fb40 s __ZN11ImageLoader24fgTotalLoadLibrariesTimeE
+---
+> 000000000003fb94 d __ZN11ImageLoader24fgTotalBindImageSearchesE
+> 000000000003fb40 d __ZN11ImageLoader24fgTotalLoadLibrariesTimeE
+245,247c245,247
+< 000000000003fbc4 s __ZN11ImageLoader26fgImagesHasWeakDefinitionsE
+< 000000000003fbbc s __ZN11ImageLoader26fgImagesWithUsedPrebindingE
+< 000000000003fb90 s __ZN11ImageLoader26fgTotalBindSymbolsResolvedE
+---
+> 000000000003fbc4 d __ZN11ImageLoader26fgImagesHasWeakDefinitionsE
+> 000000000003fbbc d __ZN11ImageLoader26fgImagesWithUsedPrebindingE
+> 000000000003fb90 d __ZN11ImageLoader26fgTotalBindSymbolsResolvedE
+249,250c249,250
+< 000000000003fba8 s __ZN11ImageLoader27fgImagesRequiringCoalescingE
+< 000000000003fb20 s __ZN11ImageLoader27fgImagesUsedFromSharedCacheE
+---
+> 000000000003fba8 d __ZN11ImageLoader27fgImagesRequiringCoalescingE
+> 000000000003fb20 d __ZN11ImageLoader27fgImagesUsedFromSharedCacheE
+252c252
+< 000000000003fb9c s __ZN11ImageLoader29fgTotalPossibleLazyBindFixupsE
+---
+> 000000000003fb9c d __ZN11ImageLoader29fgTotalPossibleLazyBindFixupsE
+309c309
+< 000000000003fbc8 s __ZN16ImageLoaderMachO26fgSymbolTableBinarySearchsE
+---
+> 000000000003fbc8 d __ZN16ImageLoaderMachO26fgSymbolTableBinarySearchsE
+382,383c382,383
+< 000000000003f978 s __ZN4dyld12gLinkContextE
+< 000000000003ff08 s __ZN4dyld12gProcessInfoE
+---
+> 000000000003f978 d __ZN4dyld12gLinkContextE
+> 000000000003ff08 d __ZN4dyld12gProcessInfoE
+397c397
+< 000000000003fac0 s __ZN4dyld17gLibSystemHelpersE
+---
+> 000000000003fac0 d __ZN4dyld17gLibSystemHelpersE
+446,448c446,448
+< 000000000003fc20 s __ZN4dyldL10sAllImagesE
+< 0000000000040350 s __ZN4dyldL10sLogSocketE
+< 0000000000042448 s __ZN4dyldL10sLogToFileE
+---
+> 000000000003fc20 d __ZN4dyldL10sAllImagesE
+> 0000000000040350 d __ZN4dyldL10sLogSocketE
+> 0000000000042448 b __ZN4dyldL10sLogToFileE
+454c454
+< 000000000003fc58 s __ZN4dyldL11sImageRootsE
+---
+> 000000000003fc58 d __ZN4dyldL11sImageRootsE
+457c457
+< 000000000003fc00 s __ZN4dyldL12sSharedCacheE
+---
+> 000000000003fc00 d __ZN4dyldL12sSharedCacheE
+464,466c464,466
+< 00000000000424e0 s __ZN4dyldL14sAllImagesLockE
+< 000000000003fd70 s __ZN4dyldL14sBatchHandlersE
+< 000000000003ff00 s __ZN4dyldL14sExecShortNameE
+---
+> 00000000000424e0 b __ZN4dyldL14sAllImagesLockE
+> 000000000003fd70 d __ZN4dyldL14sBatchHandlersE
+> 000000000003ff00 d __ZN4dyldL14sExecShortNameE
+468,473c468,473
+< 000000000003fed0 s __ZN4dyldL15sDylibOverridesE
+< 000000000003ff2c s __ZN4dyldL15sHostCPUsubtypeE
+< 000000000003fe18 s __ZN4dyldL15sMainExecutableE
+< 0000000000042490 s __ZN4dyldL15sNotifyObjCInitE
+< 000000000003ff48 s __ZN4dyldL15sSharedCacheDirE
+< 000000000003fcc0 s __ZN4dyldL15sSingleHandlersE
+---
+> 000000000003fed0 d __ZN4dyldL15sDylibOverridesE
+> 000000000003ff2c d __ZN4dyldL15sHostCPUsubtypeE
+> 000000000003fe18 d __ZN4dyldL15sMainExecutableE
+> 0000000000042490 b __ZN4dyldL15sNotifyObjCInitE
+> 000000000003ff48 d __ZN4dyldL15sSharedCacheDirE
+> 000000000003fcc0 d __ZN4dyldL15sSingleHandlersE
+481,484c481,484
+< 0000000000042488 s __ZN4dyldL17sNotifyObjCMappedE
+< 00000000000424c0 s __ZN4dyldL17sNotifyReplyPortsE
+< 000000000003fad0 s __ZN4dyldL17sSharedCacheSlideE
+< 000000000003fc10 s __ZN4dyldL17sUndefinedHandlerE
+---
+> 0000000000042488 b __ZN4dyldL17sNotifyObjCMappedE
+> 00000000000424c0 b __ZN4dyldL17sNotifyReplyPortsE
+> 000000000003fad0 d __ZN4dyldL17sSharedCacheSlideE
+> 000000000003fc10 d __ZN4dyldL17sUndefinedHandlerE
+490,493c490,493
+< 000000000003fc40 s __ZN4dyldL18sAddImageCallbacksE
+< 00000000000424a8 s __ZN4dyldL18sBundleBeingLoadedE
+< 0000000000042428 s __ZN4dyldL18sDynamicReferencesE
+< 000000000003fef0 s __ZN4dyldL18sMappedRangesStartE
+---
+> 000000000003fc40 d __ZN4dyldL18sAddImageCallbacksE
+> 00000000000424a8 b __ZN4dyldL18sBundleBeingLoadedE
+> 0000000000042428 b __ZN4dyldL18sDynamicReferencesE
+> 000000000003fef0 d __ZN4dyldL18sMappedRangesStartE
+495,496c495,496
+< 000000000003fee8 s __ZN4dyldL19sInsertedDylibCountE
+< 0000000000042450 s __ZN4dyldL19sNotifyObjCUnmappedE
+---
+> 000000000003fee8 d __ZN4dyldL19sInsertedDylibCountE
+> 0000000000042450 b __ZN4dyldL19sNotifyObjCUnmappedE
+501c501
+< 000000000003ff50 s __ZN4dyldL20sLoadingCrashMessageE
+---
+> 000000000003ff50 d __ZN4dyldL20sLoadingCrashMessageE
+503,504c503,504
+< 000000000003f930 s __ZN4dyldL21sLibraryFallbackPathsE
+< 000000000003fca8 s __ZN4dyldL21sRemoveImageCallbacksE
+---
+> 000000000003f930 d __ZN4dyldL21sLibraryFallbackPathsE
+> 000000000003fca8 d __ZN4dyldL21sRemoveImageCallbacksE
+506c506
+< 0000000000042458 s __ZN4dyldL22sDynamicReferencesLockE
+---
+> 0000000000042458 b __ZN4dyldL22sDynamicReferencesLockE
+511c511
+< 000000000003f900 s __ZN4dyldL23sFrameworkFallbackPathsE
+---
+> 000000000003f900 d __ZN4dyldL23sFrameworkFallbackPathsE
+513c513
+< 00000000000424b0 s __ZN4dyldL24sFrameworksFoundAsDylibsE
+---
+> 00000000000424b0 b __ZN4dyldL24sFrameworksFoundAsDylibsE
+515,516c515,516
+< 000000000003fbf0 s __ZN4dyldL25sMainExecutableMachHeaderE
+< 0000000000042449 s __ZN4dyldL26sRemoveImageCallbacksInUseE
+---
+> 000000000003fbf0 d __ZN4dyldL25sMainExecutableMachHeaderE
+> 0000000000042449 b __ZN4dyldL26sRemoveImageCallbacksInUseE
+518c518
+< 000000000003fc70 s __ZN4dyldL29sImageFilesNeedingTerminationE
+---
+> 000000000003fc70 d __ZN4dyldL29sImageFilesNeedingTerminationE
+520,523c520,523
+< 00000000000404f0 s __ZN4dyldL31sRestrictedLibraryFallbackPathsE
+< 00000000000404e0 s __ZN4dyldL33sRestrictedFrameworkFallbackPathsE
+< 000000000003fc88 s __ZN4dyldL35sImageFilesNeedingDOFUnregistrationE
+< 0000000000042469 s __ZN4dyldL35sSharedCacheIgnoreInodeAndTimeStampE
+---
+> 00000000000404f0 d __ZN4dyldL31sRestrictedLibraryFallbackPathsE
+> 00000000000404e0 d __ZN4dyldL33sRestrictedFrameworkFallbackPathsE
+> 000000000003fc88 d __ZN4dyldL35sImageFilesNeedingDOFUnregistrationE
+> 0000000000042469 b __ZN4dyldL35sSharedCacheIgnoreInodeAndTimeStampE
+525c525
+< 000000000003fe20 s __ZN4dyldL4sEnvE
+---
+> 000000000003fe20 d __ZN4dyldL4sEnvE
+528,534c528,534
+< 00000000000424f0 s __ZN4dyldL8sEnvModeE
+< 0000000000042478 s __ZN4dyldL8sHaswellE
+< 000000000003ff28 s __ZN4dyldL8sHostCPUE
+< 000000000003ff40 s __ZN4dyldL8sLogfileE
+< 000000000003fbe0 s __ZN4dyldL9sExecPathE
+< 0000000000042468 s __ZN4dyldL9sSafeModeE
+< 0000000000040358 s __ZN4dyldL9sSysCallsE
+---
+> 00000000000424f0 b __ZN4dyldL8sEnvModeE
+> 0000000000042478 b __ZN4dyldL8sHaswellE
+> 000000000003ff28 d __ZN4dyldL8sHostCPUE
+> 000000000003ff40 d __ZN4dyldL8sLogfileE
+> 000000000003fbe0 d __ZN4dyldL9sExecPathE
+> 0000000000042468 b __ZN4dyldL9sSafeModeE
+> 0000000000040358 d __ZN4dyldL9sSysCallsE
+763c763
+< 0000000000040650 s __ZTVN9libunwind12UnwindCursorINS_17LocalAddressSpaceENS_16Registers_x86_64EEE
+---
+> 0000000000040650 d __ZTVN9libunwind12UnwindCursorINS_17LocalAddressSpaceENS_16Registers_x86_64EEE
+767,773c767,773
+< 0000000000042928 s __ZZL9printTimePKcyyE15sUnitsPerSecond
+< 0000000000074930 s __ZZN23ImageLoaderMachOClassic26bindIndirectSymbolPointersERKN11ImageLoader11LinkContextEbbE13alreadyWarned
+< 0000000000042499 s __ZZN4dyld20garbageCollectImagesEvE5sRedo
+< 0000000000042498 s __ZZN4dyld20garbageCollectImagesEvE8sDoingGC
+< 00000000000424e8 s __ZZN4dyldL14parseColonListEPKcS1_E10sEmptyList
+< 00000000000424b9 s __ZZN4dyldL9useSyslogEvE12launchdOwned
+< 00000000000424b8 s __ZZN4dyldL9useSyslogEvE14launchdChecked
+---
+> 0000000000042928 b __ZZL9printTimePKcyyE15sUnitsPerSecond
+> 0000000000074930 b __ZZN23ImageLoaderMachOClassic26bindIndirectSymbolPointersERKN11ImageLoader11LinkContextEbbE13alreadyWarned
+> 0000000000042499 b __ZZN4dyld20garbageCollectImagesEvE5sRedo
+> 0000000000042498 b __ZZN4dyld20garbageCollectImagesEvE8sDoingGC
+> 00000000000424e8 b __ZZN4dyldL14parseColonListEPKcS1_E10sEmptyList
+> 00000000000424b9 b __ZZN4dyldL9useSyslogEvE12launchdOwned
+> 00000000000424b8 b __ZZN4dyldL9useSyslogEvE14launchdChecked
+800c800
+< 000000000003ff10 s ___cxa_terminate_handler
+---
+> 000000000003ff10 d ___cxa_terminate_handler
+802c802
+< 000000000003ff18 s ___cxa_unexpected_handler
+---
+> 000000000003ff18 d ___cxa_unexpected_handler
+841c841
+< 000000000003f8e8 s ___pthread_head
+---
+> 000000000003f8e8 d ___pthread_head
+845c845
+< 0000000000074c48 s ___remove_counter
+---
+> 0000000000074c48 b ___remove_counter
+853c853
+< 000000000003f8f8 s ___stack_chk_guard
+---
+> 000000000003f8f8 d ___stack_chk_guard
+867c867
+< 000000000004064c s __current_pid
+---
+> 000000000004064c d __current_pid
+893c893
+< 000000000003ff30 s __dyld_start_static
+---
+> 000000000003ff30 d __dyld_start_static
+951c951
+< 0000000000040640 s __pthread_count
+---
+> 0000000000040640 d __pthread_count
+955c955
+< 0000000000074c30 s __pthread_introspection_hook
+---
+> 0000000000074c30 b __pthread_introspection_hook
+963c963
+< 0000000000074c38 s __pthread_mutex_sig_fast
+---
+> 0000000000074c38 b __pthread_mutex_sig_fast
+983,984c983,984
+< 000000000003f8a4 s __task_reply_port
+< 0000000000040b40 s __thread
+---
+> 000000000003f8a4 d __task_reply_port
+> 0000000000040b40 b __thread
+990c990
+< 0000000000074b5c s _arc4_count
+---
+> 0000000000074b5c b _arc4_count
+992c992
+< 0000000000074b50 s _arc4_lock
+---
+> 0000000000074b50 b _arc4_lock
+1028c1028
+< 000000000003fad8 S _dyld_shared_cache_ranges
+---
+> 000000000003fad8 D _dyld_shared_cache_ranges
+1033c1033
+< 000000000003f8e0 s _exitf
+---
+> 000000000003f8e0 d _exitf
+1052c1052
+< 0000000000074bfc s _getpagesize.value
+---
+> 0000000000074bfc b _getpagesize.value
+1073c1073
+< 000000000003f8a0 s _mach_init.mach_init_inited
+---
+> 000000000003f8a0 d _mach_init.mach_init_inited
+1083c1083
+< 000000000003f8ac s _mach_task_self_
+---
+> 000000000003f8ac d _mach_task_self_
+1086c1086
+< 0000000000074c3c s _mach_timebase_info.cached_info
+---
+> 0000000000074c3c b _mach_timebase_info.cached_info
+1130c1130
+< 0000000000074c08 s _pthread_get_stacksize_np.rlimit_stack
+---
+> 0000000000074c08 b _pthread_get_stacksize_np.rlimit_stack
+1136c1136
+< 0000000000074b60 s _rdat
+---
+> 0000000000074b60 b _rdat
+1144,1152c1144,1152
+< 0000000000074c00 s _realpath$DARWIN_EXTSN.rootdev
+< 0000000000074c04 s _realpath$DARWIN_EXTSN.rootdev_inited
+< 0000000000074bf8 s _rs.0
+< 0000000000074bf9 s _rs.1
+< 0000000000040540 s _rs.2
+< 0000000000074b58 s _rs_data_available
+< 0000000000074b54 s _rs_stired
+< 0000000000042920 s _sCxaKey
+< 0000000000042910 s _sPreMainCxaGlobals
+---
+> 0000000000074c00 b _realpath$DARWIN_EXTSN.rootdev
+> 0000000000074c04 b _realpath$DARWIN_EXTSN.rootdev_inited
+> 0000000000074bf8 b _rs.0
+> 0000000000074bf9 b _rs.1
+> 0000000000040540 d _rs.2
+> 0000000000074b58 b _rs_data_available
+> 0000000000074b54 b _rs_stired
+> 0000000000042920 b _sCxaKey
+> 0000000000042910 b _sPreMainCxaGlobals
+1220,1225c1220,1225
+< 000000000003f8d0 s _vm_kernel_page_mask
+< 000000000003f8d8 s _vm_kernel_page_shift
+< 000000000003f8c8 s _vm_kernel_page_size
+< 000000000003f8b8 s _vm_page_mask
+< 000000000003f8c0 s _vm_page_shift
+< 000000000003f8b0 s _vm_page_size
+---
+> 000000000003f8d0 d _vm_kernel_page_mask
+> 000000000003f8d8 d _vm_kernel_page_shift
+> 000000000003f8c8 d _vm_kernel_page_size
+> 000000000003f8b8 d _vm_page_mask
+> 000000000003f8c0 d _vm_page_shift
+> 000000000003f8b0 d _vm_page_size

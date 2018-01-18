@@ -72,6 +72,24 @@ int		lst_count_archive(t_archive *lst)
 	return (i);
 }
 
+int		lst_count_section(t_section *lst)
+{
+	int		i;
+	t_section	*elem;
+
+	i = 0;
+	elem = lst;
+	if (elem)
+	{
+		while (elem)
+		{
+			i++;
+			elem = elem->next;
+		}
+	}
+	return (i);
+}
+
 void	swap(t_magic *node1, t_magic *node2)
 {
 	char	tempType;
