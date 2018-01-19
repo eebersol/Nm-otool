@@ -98,29 +98,25 @@
 // 	// }
 // }
 
-static void 	add_seg(struct load_command *lc, t_section *section)
+static void 	add_seg_32(struct load_command *lc, t_section *section)
 {
-	struct section_64			*sec;
-	struct segment_command_64	*seg;
+	struct section				*sec;
+	struct segment_command		*seg;
 	t_segment 					*segment;
 	unsigned int				i;
 	
 	i 		= 0;
-	seg 	= (struct segment_command_64*)lc;
-	sec 	= (struct section_64*)(seg + sizeof(seg) / sizeof(void*));
+	seg 	= (struct segment_command *)lc;
+	sec 	= (struct section *)(seg + sizeof(seg) / sizeof(void*));
 	section->seg = (t_segment*)malloc(sizeof(t_segment));
 	segment = section->seg; 
 	while (i < seg->nsects)
 	{
 		segment->name 		= ft_strdup(sec->sectname);
 		if (recover_base()->index && i == 0)
-		{
-		//	printf("EMTER\n");
 			segment->nb = recover_base()->index + 1;
-		}
 		else if  (i == 0)
 			segment->nb 		= 1;
-	//	printf("SEGMENT NAME : %s -- %d - %d\n", ft_strdup(sec->sectname), segment->nb, seg->nsects);
 		i++;
 		if (i < seg->nsects)
 		{
@@ -130,7 +126,7 @@ static void 	add_seg(struct load_command *lc, t_section *section)
 		}
 		else
 			break;
-		sec = (struct section_64 *)(((void*)sec) + sizeof(struct section_64));
+		sec = (struct section *)(((void*)sec) + sizeof(struct section));
 		if (i == seg->nsects)
 			break;
 	}
@@ -147,14 +143,19 @@ static 	unsigned int 	get_end(struct load_command *lctmp, unsigned int len)
 	count = 0;
 	while (i < len)
 	{
-		if (lctmp->cmd == LC_SEGMENT_64)
+		printf("%d\n", !lctmp->cmd);
+		if (lctmp->cmd == LC_SEGMENT)
+		{
 			count++;
+		}
+		if (lctmp->cmdsize >= INT_MAX)
+			break;
 		lctmp += lctmp->cmdsize / sizeof(void *);
 		i++;
 	}
 	return (count);
 }
-void		get_section(struct load_command *lc, struct mach_header_64 *header)
+void		get_section_32(struct load_command *lc, struct mach_header *header)
 {
 	t_base 				*base;
 	t_section			*section;
@@ -162,6 +163,7 @@ void		get_section(struct load_command *lc, struct mach_header_64 *header)
 	unsigned int		i;
 	unsigned int 		len;
 	unsigned int 		k;
+
 
 	i 					= 0;
 	k 					= 0;
@@ -173,10 +175,10 @@ void		get_section(struct load_command *lc, struct mach_header_64 *header)
 	i = 0;
 	while (i < header->ncmds)
 	{
-		if (lc->cmd == LC_SEGMENT_64)
+		if (lc->cmd == LC_SEGMENT)
 		{
 			k++;
-			add_seg(lc, section);
+			add_seg_32(lc, section);
 			if (k < len)
 			{
 				section->next 	= (t_section*)malloc(sizeof(t_section));
@@ -185,6 +187,8 @@ void		get_section(struct load_command *lc, struct mach_header_64 *header)
 			else
 				section->next = NULL;
 		}
+		if (lc->cmdsize >= INT_MAX)
+			break;
 		lc += lc->cmdsize / sizeof(void *);
 		i++;
 	}

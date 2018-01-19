@@ -39,18 +39,15 @@ void	print_nm(void)
 
 	base 	= recover_base();
 	magic 	= base->magicBase;
+	//return;
 	sort_alphanumeric(magic);
 	while (magic)
 	{
-		if (magic->type != 'X')
+		//printf("\n\nName : %s\nValue : %s\nType : %c\n", magic->name_func, magic->value, magic->type)
+		if (magic->type != 'X' && magic->name_func && ft_strlen(magic->name_func) > 0 
+			&& ft_strstr(magic->name_func, "radr:") == NULL && magic->type != 'u')
 		{
-			// ft_putstr(base->name);
-			// ft_putstr(": ");
-			// if (base->path_name) {
-			// 	ft_putstr(base->path_name);
-			// 	ft_putstr(": ");
-			// }
-			if (magic->type == 'S' || magic->type == 'T' || magic->type == 't' || magic->type == 'b' || magic->type == 'd' || magic->type == 'D' || magic->type == 's')
+			if (magic->type == 'S' || magic->type == 'T' || magic->type == 't' || magic->type == 'b' || magic->type == 'd' || magic->type == 'D' || magic->type == 's' || magic->type == 'I')
 				ft_putstr(magic->value);
 			else
 				ft_putstr("                ");

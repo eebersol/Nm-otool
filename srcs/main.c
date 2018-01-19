@@ -19,7 +19,6 @@ int main(int ac, char **av)
 	else
 	{
 		base 				= recover_base();
-		base->sectionBase 	= (t_section*)malloc(sizeof(t_section));
 		err 				= 0;
 		i 					= 0;
 		if (ft_strstr(av[0], "ft_nm") != NULL)

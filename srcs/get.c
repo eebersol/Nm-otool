@@ -56,84 +56,25 @@ char get_type(uint8_t n_type, t_magic *magic)
 
 	(void)magic;
 	(void)n_type;
-//	ft_putstr(magic->name_func);
-//	ft_putchar('\n');
-	c = 0;
-	if ((n_type & N_TYPE) == N_EXT)
-		printf("get_type : EXT\n");
-	else if ((n_type & N_TYPE) == N_LSYM ||(n_type & N_TYPE) ==  N_BINCL)
-		printf("get_type : LOCAL\n");
-	else if ((n_type & N_TYPE) == N_UNDF) {
-//		printf("get_type : N_UNDF\n");
+
+	if ((n_type & N_TYPE) == N_LSYM ||(n_type & N_TYPE) ==  N_BINCL)
+		c = 'X';
+	else if ((n_type & N_TYPE) == N_UNDF)
 		c = 'U';
-	}
 	else if ((n_type & N_TYPE) == N_ABS)
-	{
-//		printf("get_type : N_ABS\n");
 		c = 'A';
-	}
 	else if ((n_type & N_TYPE) == N_SECT)
-	{
-//		printf("get_type : N_SECT\n");
 		c = secto(magic);
-	}
 	else if ((n_type & N_TYPE) == N_PBUD)
-	{
-//		printf("get_type : N_PBUD\n");
 		c = 's';
-	}
 	else if ((n_type & N_TYPE) == N_INDR)
-		printf("get_type : N_INDR\n");
-	if ((n_type & N_EXT) == 0 && c != '?')
+		c = 'I';
+	else
+		c = 'X';
+	if ((n_type & N_EXT) == 0 && c != 'X')
 		c += 32;
-//	printf("get_type :  return value : %c\n", c);
-	// if (n_type == 15 || n_type == 31) 
-	// {
-	// 	if (magic->content->n_sect == 11)
-	// 		return ('D');
-	// 	else if (magic->content->n_sect == 3 || magic->content->n_sect == 4 || magic->content->n_sect == 5 || magic->content->n_sect == 7 || magic->content->n_sect == 10 || magic->content->n_sect == 12)
-	// 		return ('S');
-	// 	else
-	// 		return ('T');
-	// }
-	// else if (n_type == 30 && magic->content->n_sect == 2)
-	// 	return ('s');
-	// else if (n_type == N_EXT)
-	// 	return ('U');
-	// else if (n_type == N_STAB || n_type == N_PEXT) {
-	// 	printf("FIND :: N_STAB -- N_EXT\n");
-	// 	return('X');
-	// }
-	// else if (n_type == N_TYPE || n_type == 30) 
-	// {
-	// 	if ((n_type & N_TYPE) == N_UNDF)
-	// 		printf("N_UNDF\n");
-	// 	else if ((n_type & N_TYPE) == N_ABS)
-	// 		printf("N_ABS\n");
-	// 	else if ((n_type & N_TYPE) == N_PBUD)
-	// 		printf("N_PBUD\n");
-	// 	else if ((n_type & N_TYPE) == N_INDR)
-	// 		printf("N_INDR\n");
-	// 	else if ((n_type & N_TYPE) == N_SECT)
-	// 	{
-	// 		if (magic->content->n_sect == 1)
-	// 			return ('t');
-	// 		else if ((magic->content->n_sect == 4 || magic->content->n_sect == 10) && ft_strstr(magic->name_func, "."))
-	// 			return ('b');
-	// 		else if (magic->content->n_sect == 2 || magic->content->n_sect == 3 || magic->content->n_sect == 4 || magic->content->n_sect == 5 || magic->content->n_sect == 9  || magic->content->n_sect == 10|| magic->content->n_sect == 12)
-	// 			return ('s');
-	// 		else if (magic->content->n_sect == 11)
-	// 			return ('d');
-	// 	}
-	// 	return ('b');
-	// }
-	// else {
-		// ft_putstr("No type found.");
-	//ft_putstr("return type : ");
-	//ft_putchar(c);
-	//ft_putchar('\n');
-		return (c);
-	// }
+	//printf("RETURN |%c|\n", c);
+	return (c);
 }
 
 char 	*get_value(uint64_t n_value, t_magic *magic)

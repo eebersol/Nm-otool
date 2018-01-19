@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/01/18 11:34:54 by eebersol         ###   ########.fr        #
+#    Updated: 2018/01/19 12:06:12 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ _SRC			= main.c \
 					archive.c \
 					get_otool.c \
 					add_section.c \
+					add_section_32.c \
+					magic_32.c \
 
 _SRC_OTOOL		= main.c \
 					init_struct.c \
@@ -43,6 +45,8 @@ _SRC_OTOOL		= main.c \
 					archive.c \
 					get_otool.c \
 					add_section.c \
+					add_section_32.c \
+					magic_32.c \
 
 
 INCLUDES		= -I./libft/includes/ -I./includes/

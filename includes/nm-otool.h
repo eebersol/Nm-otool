@@ -27,6 +27,7 @@
 
 # define FLAG_PROT			PROT_WRITE | PROT_READ
 # define FLAG_MAP			MAP_ANON | MAP_PRIVATE
+# define INT_MAX			2147483688
 // typedef	enum				e_zone_type
 // {
 // 	TINY,
@@ -67,6 +68,7 @@ typedef	struct				s_magic
 	void 					*addr;
 	struct s_magic			*next;
 	struct nlist_64			*content;
+	struct nlist			*content_32;
 	struct 	load_command 	*lcStruct;
 }							t_magic;
 
@@ -96,6 +98,9 @@ typedef	struct				s_base
 }							t_base;
 
 // delcare function 
+void swap_diff(void);
+void handle_32 (char *ptr);
+void		get_section_32(struct load_command *lc, struct mach_header *header);
 void		get_section(struct load_command *lc, struct mach_header_64 *header);
 int		lst_count_section(t_section *lst);
 // init_struct.c //

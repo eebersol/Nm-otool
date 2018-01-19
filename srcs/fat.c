@@ -14,7 +14,20 @@ void handle_fat (char *ptr)
 	while (i)
 	{
 		if (swap_uint32(arch->cputype) == CPU_TYPE_X86_64)
+		{
 			offset = arch->offset;
+		}
+		else if (swap_uint32(arch->cputype) == CPU_TYPE_I386) {
+			ft_putstr("Wrong architecture : CPU_TYPE_I386 are not supported.\n");
+			return ;
+		}
+		else if (swap_uint32(arch->cputype) == CPU_TYPE_POWERPC)
+		{
+			ft_putstr("Wrong architecture : CPU_TYPE_POWERPC are not supported.\n");
+			return ;
+		}
+		// else
+		// 	ft_putstr("Unknow\n");
 		arch += sizeof(struct fat_arch) /*/ sizeof(void*)*/;
 		i--;
 	}

@@ -19,11 +19,12 @@ void print_output_nm(int nsyms, int symoff, int stroff, void *ptr, struct 	load_
 		magic->content 		= &array[i];
 		magic->name_func 	= stringable + array[i].n_un.n_strx;
 		// if (swap_uint32(array[i].n_desc) != 0)
-		// 	printf("%s\n", magic->name_func);
 		magic->addr 		= ptr;
 		magic->lcStruct 	= lc;
 		magic->type 		= get_type(array[i].n_type, magic);
 		magic->value 		= get_value(array[i].n_value, magic);
+		// if (magic->type != 'X')
+		// 	printf("\n\nName : %su\nValue : %s\nType : %c\n", magic->name_func, magic->value, magic->type);
 		i++;
 		if (i < nsyms)
 		{

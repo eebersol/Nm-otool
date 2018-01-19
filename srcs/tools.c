@@ -108,7 +108,33 @@ void	swap(t_magic *node1, t_magic *node2)
 	node2->value 		= tempValue;
 	node2->name_func 	= tempNameFunc;
 }
+void swap_diff()
+{
+	int			swapped;
+	int 		i;
+	t_magic		*ptr1;
+	t_magic		*lptr;
 
+	lptr = NULL;
+	swapped = 1;
+	while (swapped)
+	{
+		swapped = 0;
+		ptr1 = recover_base()->magicBase;
+		while (ptr1 && ptr1->next != lptr)
+		{
+			i = 0;
+			if (ft_strcmp(ptr1->name_func, ptr1->next->name_func) == 0 
+				&& ft_atoi(ptr1->value) < ft_atoi(ptr1->next->value))
+			 {
+				swapped = 1;
+				swap(ptr1, ptr1->next);
+			}
+			ptr1 = ptr1->next;
+		}
+		lptr = ptr1;
+	}
+}
 void sort_alphanumeric(t_magic *node)
 {
 	int			swapped;
@@ -145,6 +171,7 @@ void sort_alphanumeric(t_magic *node)
 		}
 		lptr = ptr1;
 	}
+	swap_diff();
 }
 
 
