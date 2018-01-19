@@ -1,6 +1,21 @@
 #include "../includes/nm-otool.h"
 
-static char		read_tab(int i)
+char 	*str_lower(char *str)
+{
+	size_t i;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (i < ft_strlen(str))
+	{
+		str[i] = ft_tolower(str[i]);
+		i++;
+	}
+	return (str);
+}
+
+char		read_tab(int i)
 {
 	char	*tab;
 
@@ -36,60 +51,6 @@ char		*itoa_base(int val, int base, int output_size)
 	return (ft_strdup(p));
 }
 
-int		lst_count(t_magic *lst)
-{
-	int		i;
-	t_magic	*elem;
-
-	i = 0;
-	elem = lst;
-	if (elem)
-	{
-		while (elem)
-		{
-			i++;
-			elem = elem->next;
-		}
-	}
-	return (i);
-}
-
-int		lst_count_archive(t_archive *lst)
-{
-	int		i;
-	t_archive	*elem;
-
-	i = 0;
-	elem = lst;
-	if (elem)
-	{
-		while (elem)
-		{
-			i++;
-			elem = elem->next;
-		}
-	}
-	return (i);
-}
-
-int		lst_count_section(t_section *lst)
-{
-	int		i;
-	t_section	*elem;
-
-	i = 0;
-	elem = lst;
-	if (elem)
-	{
-		while (elem)
-		{
-			i++;
-			elem = elem->next;
-		}
-	}
-	return (i);
-}
-
 void	swap(t_magic *node1, t_magic *node2)
 {
 	char	tempType;
@@ -108,6 +69,7 @@ void	swap(t_magic *node1, t_magic *node2)
 	node2->value 		= tempValue;
 	node2->name_func 	= tempNameFunc;
 }
+
 void swap_diff()
 {
 	int			swapped;
@@ -135,6 +97,7 @@ void swap_diff()
 		lptr = ptr1;
 	}
 }
+
 void sort_alphanumeric(t_magic *node)
 {
 	int			swapped;
@@ -215,38 +178,8 @@ void sort_alphanumeric_archive(t_archive *node)
 				swapped = 1;
 				swap_archive(ptr1, ptr1->next);
 			}
-			// while (ptr1->name[i] && ptr1->next->name[i])
-			// {
-			// 	if (ptr1->name[i] > ptr1->next->name[i]) {
-			// 		swapped = 1;
-			// 		swap_archive(ptr1, ptr1->next);
-			// 	}
-			// 	else if (ptr1->name[i] < ptr1->next->name[i])
-			// 		break;
-			// 	else
-			// 		i++;
-			// }
 			ptr1 = ptr1->next;
 		}
 		lptr = ptr1;
 	}
 }
-
-t_magic	*lst_reverse(t_magic *root)
-{
-	t_magic *new_root;
-	t_magic *next;
-
-	new_root = NULL;
-	next = NULL;
-	while (root)
-	{
-		next = root->next;
-		root->next = new_root;
-		new_root = root;
-		root = next;
-	}
-	return (new_root);
-}
-
-

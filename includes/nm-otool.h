@@ -87,6 +87,7 @@ typedef	struct				s_base
 	bool					nm;
 	bool					archive;
 	bool					archiveNm;
+	int 					type_arch;
 	char 					*name;
 	char 					*path_name;
 	char 					*nameArchive;
@@ -97,68 +98,88 @@ typedef	struct				s_base
 	t_section				*sectionBase;
 }							t_base;
 
-// delcare function 
-void swap_diff(void);
-void handle_32 (char *ptr);
-void		get_section_32(struct load_command *lc, struct mach_header *header);
-void		get_section(struct load_command *lc, struct mach_header_64 *header);
-int		lst_count_section(t_section *lst);
-// init_struct.c //
-void						init_base(void);
-t_base						*recover_base(void);
+// add_section //
+void 			add_seg(struct load_command *lc, t_section *section);
+unsigned int 	get_end(struct load_command *lctmp, unsigned int len);
+void			get_section(struct load_command *lc, struct mach_header_64 *header);
 
-// nm.c //
-void 						identify_file (char *ptr);
+// add_section_32 //
+void 			add_seg_32(struct load_command *lc, t_section *section);
+unsigned int 	get_end_32(struct load_command *lctmp, unsigned int len);
+void			get_section_32(struct load_command *lc, struct mach_header *header);
 
-// fat.c //
-void 						handle_fat (char *ptr);
+// archive //
+void	 		add_archive(void);
+t_archive		*get_archive(uint32_t off, char *ptr, t_archive *archive);
+void			handle_archive(char *ptr);
 
-// magic.c //
-void	display_check();
-void 						print_output_nm(int nsyms, int symoff, int stroff, void *ptr, struct 	load_command *lc);
-void						check_seg (struct load_command *com, struct 	mach_header_64 *header);
-void 						handle_64 (char *ptr);
-void						get_content(uint64_t addr, unsigned int size, char *ptr);
-char 	*get_value_otool(uint64_t n_value);
-// print.c //
+// fat //
+void 			handle_fat (char *ptr);
 
-void 						print_archive(void);
-void	 					add_archive(void);
-void						print_err_munmap(void);
-void						print_err_mmap(void);
-void						print_err_fstats(void);
-void						print_err_open(void);
-void						print_nm(void);
-void						print_otool(void);
-void 	print_nm_archive(void);
-// swap.c //
+// get //
+char			browse_section_32(t_magic *magic);
+char			browse_section(t_magic *magic);
+char 			get_type(uint8_t n_type, t_magic *magic);
+char 			*get_value(uint64_t n_value, t_magic *magic);
 
-uint16_t					swap_uint16(uint16_t nb);
-uint32_t					swap_uint32(uint32_t nb);
-uint64_t					swap_uint64(uint64_t nb);
+// get_otool //
+char			*get_name(char *name);
+int				get_size(char *name);
+char 			*get_value_otool_archive(uint64_t n_value);
+char 			*get_value_otool_exec(uint64_t n_value);
+char 			*get_value_otool_manager(uint64_t n_value);
 
-// get.c //
+// init_struct //
+t_base			*recover_base(void);
+void			init_base(void);
 
-char 						get_type(uint8_t n_type, t_magic *magic);
-char 						*get_value(uint64_t n_value, t_magic *magic);
+// magic //
+void 			get_data_nm(int nsyms, int symoff, int stroff, void *ptr, struct load_command *lc);
+void			check_seg(struct load_command *lc, struct mach_header_64 *header);
+void			get_content(uint64_t addr, unsigned int size, char *ptr);
+void 			handle_64(char *ptr);
 
-// get_otool.c // 
-char						*get_name(char *name);
-int							get_size(char *name);
-char 						*get_value_otool_archive(uint64_t n_value);
-char 						*get_value_otool_exec(uint64_t n_value);
-char 						*get_value_otool_manager(uint64_t n_value);
-char 						*str_lower(char *str);
+// magic_32 //
+void			check_seg_32 (struct load_command *lc, struct mach_header *header);
+void 			get_data_nm_32(int nsyms, int symoff, int stroff, void *ptr, struct load_command *lc);
+void 			handle_32 (char *ptr);
 
-// tools.c //
-t_magic						*lst_reverse(t_magic *root);
-int							lst_count(t_magic *lst);
-int							lst_count_archive(t_archive *lst);
-void						swap(t_magic *node1, t_magic *node2);
-void 						sort_alphanumeric(t_magic *head);
-void 						sort_alphanumeric_archive(t_archive *node);
-char						*itoa_base(int val, int base, int output_size);
+// nm //
+void 			identify_file (char *ptr);
 
-// archive.c //
-void	handle_archive(char *ptr);
+// print_error //
+void			print_err_munmap(void);
+void			print_err_fstats(void);
+void			print_err_mmap(void);
+void			print_err_open(void);
+
+// print //
+void			print_nm(void);
+void			print_otool(void);
+void 			print_archive(void);
+
+// swap //
+uint16_t		swap_uint16(uint16_t nb);
+uint32_t		swap_uint32(uint32_t nb);
+uint64_t		swap_uint64(uint64_t nb);
+
+// tools //
+char 			*str_lower(char *str);
+char			read_tab(int i);
+char			*itoa_base(int val, int base, int output_size);
+
+// tools_sort //
+void 			swap_diff(void);
+void 			sort_alphanumeric(t_magic *node);
+void			swap_archive(t_archive *node1, t_archive *node2);
+void 			sort_alphanumeric_archive(t_archive *node);
+
+// toos_lst //
+int				lst_count(t_magic *lst);
+int				lst_count_archive(t_archive *lst);
+int				lst_count_section(t_section *lst);
+t_magic			*lst_reverse(t_magic *root);
+
+
+
 #endif

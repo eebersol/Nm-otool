@@ -2,43 +2,27 @@
 
 void identify_file (char *ptr) 
 {
-	unsigned int  magic_number;
+	t_base 			*base;
+	unsigned int  	magic_number;
 
-	magic_number  = *(int *)ptr;
-	if (magic_number == MH_MAGIC_64) {
-		 //printf("It's MH_MAGIC_64\n");
+	magic_number  	= *(int *)ptr;
+	base 			= recover_base();
+	if (magic_number == MH_MAGIC_64 || magic_number == MH_CIGAM_64) {
+		base->type_arch = 1;
 		handle_64(ptr);
 	}
-	else if (magic_number == MH_CIGAM_64) {
-		// printf("It's MAGIC_CIGAM_64\n");
-		handle_64(ptr);
-	}
-	else if (magic_number == MH_MAGIC) {
-		//printf("It's MAGIC_MAGIC_32\n");
+	else if (magic_number == MH_MAGIC || magic_number == MH_CIGAM) {
+		base->type_arch = 2;
 		handle_32(ptr);
 	}
-	else if (magic_number == MH_CIGAM) {
-		//ft_putstr("HI 6\n");
-		handle_32(ptr);
-		//printf("It's MAGIC_CIGAM_32\n");
-	}
-	else if (magic_number == FAT_MAGIC) {
-		// printf("It's FAT_MAGIC\n");
-		handle_fat(ptr);
-	}
-	else if (magic_number == FAT_CIGAM) {
-		// printf("It's FAT_CIGAM\n");
-		//ft_putstr("HI 5\n");
+	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM) {
+		base->type_arch = 3;
 		handle_fat(ptr);
 	}
 	else if (!ft_strncmp(ptr, ARMAG, SARMAG)) {
-		//ft_putstr("ARCHIVE 1\n");
 		if (recover_base()->nm == false)
 		{
 			recover_base()->archive = true;
-		//	ft_putstr("Archive : ");
-		//	ft_putstr(recover_base()->name);
-		//	ft_putchar('\n');
 		}
 		else
 			recover_base()->archiveNm = true;

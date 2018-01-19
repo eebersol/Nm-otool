@@ -18,20 +18,6 @@ int			get_size(char *name)
 	return (x);
 }
 
-char 	*str_lower(char *str)
-{
-	size_t i;
-
-	i = 0;
-	if (!str)
-		return (NULL);
-	while (i < ft_strlen(str))
-	{
-		str[i] = ft_tolower(str[i]);
-		i++;
-	}
-	return (str);
-}
 char 	*get_value_otool_archive(uint64_t n_value)
 {
 	char 	*value_l;
@@ -72,13 +58,12 @@ char 	*get_value_otool_exec(uint64_t n_value)
 	size_t 	value_len;
 	int 	padding;
 
-	padding = 0;
-	value_len = 0;
-	value_l = ft_itoa_base(n_value, 16);
-	value_l = ft_strsub(value_l, 0, ft_strlen(value_l) - 1);
-	result = "0000000";
-	value_r = str_lower(ft_itoa_base(swap_uint64(n_value), 16));
-
+	padding 	= 0;
+	value_len 	= 0;
+	value_l 	= ft_itoa_base(n_value, 16);
+	value_l 	= ft_strsub(value_l, 0, ft_strlen(value_l) - 1);
+	result 		= "0000000";
+	value_r 	= str_lower(ft_itoa_base(swap_uint64(n_value), 16));
 	if (ft_strlen(result) + ft_strlen(value_l) + ft_strlen(value_r) < 16)
 	{
 		value_len = ft_strlen(result) + ft_strlen(value_l) + ft_strlen(value_r);
@@ -103,15 +88,11 @@ char *get_value_otool_manager(uint64_t n_value)
 	t_base 	*base;
 	char 	*ret;
 
-	base = recover_base();
+	base 	= recover_base();
 	ret 	= NULL;
 	if (base->archive == true)
-	{
 		ret = get_value_otool_archive(n_value);
-	}
 	else
-	{
 		ret = get_value_otool_exec(n_value);
-	}
 	return (ret);
 }

@@ -1,34 +1,20 @@
 #include "../includes/nm-otool.h"
 
 
-static char		secto(t_magic *magic)
+char		browse_section_32(t_magic *magic)
 {
 	t_section 		*tmp;
 	t_segment 		*tmpSegment;
 
 	tmp = recover_base()->sectionBase;
 
-	//printf("Len : %d\n", lst_count_section(tmp));
 	while (tmp)
 	{
-		//ft_putstr("while(tmp) -- \n");
 		tmpSegment = tmp->seg;
 		while (tmpSegment)
 		{
-		//	ft_putstr("while(tmpSegment) : ");
-			// if (tmpSegment->name) {
-			// 	ft_putstr(tmpSegment->name);
-			// }
-			//ft_putstr("NBR : ");
-			//ft_putnbr(tmpSegment->nb);
-			//ft_putchar('-');
-			//ft_putnbr(magic->content->n_sect);
-			//ft_putchar('\n');
-			if (tmpSegment->name != NULL && tmpSegment->nb == magic->content->n_sect)
+			if (tmpSegment->name != NULL && tmpSegment->nb == magic->content_32->n_sect)
 			{
-				//ft_putstr("ENTER : ");
-				//ft_putstr(tmpSegment->name);
-				//ft_putchar('\n');
 				if (!ft_strcmp(tmpSegment->name, SECT_DATA))
 					return ('D');
 				else if (!ft_strcmp(tmpSegment->name, SECT_BSS))
@@ -46,7 +32,39 @@ static char		secto(t_magic *magic)
 				break;
 		tmp = tmp->next;
 	}
-	//ft_putstr("nothing found \n");
+	return ('S');
+}
+
+char		browse_section(t_magic *magic)
+{
+	t_section 		*tmp;
+	t_segment 		*tmpSegment;
+
+	tmp = recover_base()->sectionBase;
+	while (tmp)
+	{
+		tmpSegment = tmp->seg;
+		while (tmpSegment)
+		{
+			if (tmpSegment->name != NULL && tmpSegment->nb == magic->content->n_sect)
+			{
+				if (!ft_strcmp(tmpSegment->name, SECT_DATA))
+					return ('D');
+				else if (!ft_strcmp(tmpSegment->name, SECT_BSS))
+					return ('B');
+				else if (!ft_strcmp(tmpSegment->name, SECT_TEXT))
+					return ('T');
+				else
+					return ('S');
+			}
+			if (tmpSegment->next == NULL)
+				break;
+			tmpSegment = tmpSegment->next;
+		}
+		if (tmp->next == NULL)
+				break;
+		tmp = tmp->next;
+	}
 	return ('S');
 }
 
@@ -63,8 +81,10 @@ char get_type(uint8_t n_type, t_magic *magic)
 		c = 'U';
 	else if ((n_type & N_TYPE) == N_ABS)
 		c = 'A';
-	else if ((n_type & N_TYPE) == N_SECT)
-		c = secto(magic);
+	else if ((n_type & N_TYPE) == N_SECT && recover_base()->type_arch != 2)
+		c = browse_section(magic);
+	else if ((n_type & N_TYPE) == N_SECT && recover_base()->type_arch == 2)
+		c = browse_section_32(magic);
 	else if ((n_type & N_TYPE) == N_PBUD)
 		c = 's';
 	else if ((n_type & N_TYPE) == N_INDR)
@@ -73,7 +93,6 @@ char get_type(uint8_t n_type, t_magic *magic)
 		c = 'X';
 	if ((n_type & N_EXT) == 0 && c != 'X')
 		c += 32;
-	//printf("RETURN |%c|\n", c);
 	return (c);
 }
 

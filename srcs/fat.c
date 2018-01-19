@@ -7,7 +7,6 @@ void handle_fat (char *ptr)
 	uint32_t				i;
 	uint32_t				offset;
 
-	// printf("Handle fat\n");
 	fat 		= (void*)ptr;
 	i 			= swap_uint32(fat->nfat_arch);
 	arch 		= ((void*)ptr) + sizeof(fat);
@@ -26,9 +25,7 @@ void handle_fat (char *ptr)
 			ft_putstr("Wrong architecture : CPU_TYPE_POWERPC are not supported.\n");
 			return ;
 		}
-		// else
-		// 	ft_putstr("Unknow\n");
-		arch += sizeof(struct fat_arch) /*/ sizeof(void*)*/;
+		arch += sizeof(struct fat_arch);
 		i--;
 	}
 	identify_file(ptr + swap_uint32(offset));

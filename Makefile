@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/01/19 12:06:12 by eebersol         ###   ########.fr        #
+#    Updated: 2018/01/19 16:14:04 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,41 +23,26 @@ _SRC			= main.c \
 					nm.c \
 					fat.c \
 					magic.c \
+					magic_32.c \
 					swap.c \
 					print.c \
+					print_error.c \
 					get.c \
-					tools.c \
-					archive.c \
 					get_otool.c \
+					tools.c \
+					tools_lst.c \
+					tools_sort.c \
+					archive.c \
 					add_section.c \
 					add_section_32.c \
-					magic_32.c \
-
-_SRC_OTOOL		= main.c \
-					init_struct.c \
-					nm.c \
-					fat.c \
-					magic.c \
-					swap.c \
-					print.c \
-					get.c \
-					tools.c \
-					archive.c \
-					get_otool.c \
-					add_section.c \
-					add_section_32.c \
-					magic_32.c \
-
 
 INCLUDES		= -I./libft/includes/ -I./includes/
 
 SRC				= $(addprefix srcs/,$(_SRC))
 
-SRC_OTOOL 		= $(addprefix srcs/,$(_SRC_OTOOL))
 
 OBJ				= $(SRC:.c=.o)
 
-OBJ_OTOOL 		= $(SRC_OTOOL:.c=.o)
 
 CFLAGS			= -Wall -Wextra -Werror
 
@@ -68,9 +53,9 @@ $(NAME): $(OBJ)
 	@gcc $(CFLAGS) $(OBJ) $(LIB) $(INCLUDES) -o $(NAME)
 	@echo $(NAME) " : compiled"
 
-$(NAME_OTOOL): $(OBJ_OTOOL)
+$(NAME_OTOOL): $(OBJ)
 	@make -C ./libft/
-	@gcc $(CFLAGS) $(OBJ_OTOOL) $(LIB) $(INCLUDES) -o $(NAME_OTOOL)
+	@gcc $(CFLAGS) $(OBJ) $(LIB) $(INCLUDES) -o $(NAME_OTOOL)
 	@echo $(NAME_OTOOL) ": compiled"
 
 %.o: %.c

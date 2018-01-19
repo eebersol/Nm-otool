@@ -1,6 +1,6 @@
 #include "../includes/nm-otool.h"
 
-static t_archive	*print_art(uint32_t off, char *ptr, t_archive *archive)
+t_archive	*get_archive(uint32_t off, char *ptr, t_archive *archive)
 {
 	struct ar_hdr	*arch;
 
@@ -37,8 +37,7 @@ void	handle_archive(char *ptr)
 	tmp_archive 		= base->archiveBase;
 	while (i < size)	
 	{	
-		printf("JE SUIS ICI\n");
-		archive = print_art(ran[i].ran_off, ptr, archive);
+		archive = get_archive(ran[i].ran_off, ptr, archive);
 		i++;
 		if (i < size)
 			archive->next = (t_archive*)malloc(sizeof(t_archive));
@@ -48,9 +47,7 @@ void	handle_archive(char *ptr)
 	{
 		base->path_name = tmp_archive->name; 
 		while (tmp_archive->next && ft_strcmp(base->path_name, tmp_archive->next->name) == 0 && base->nm == true)
-		{
 			tmp_archive = tmp_archive->next;
-		}
 		identify_file(tmp_archive->addr);
 		if (tmp_archive->next == NULL)
 			break;
