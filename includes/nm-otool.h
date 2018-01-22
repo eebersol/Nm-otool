@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 16:14:26 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/22 17:28:40 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef	struct				s_magic
 	char					*name_func;
 	char					type;
 	char					*value;
+	uint64_t 				value_number;
 	char					*text_section;
 	void					*addr;
 	struct s_magic			*next;
@@ -91,7 +92,8 @@ typedef	struct				s_base
 	bool					nm;
 	bool					archive;
 	bool					archiveNm;
-	bool					print_name;;
+	bool					print_name;
+	bool					opt_o;
 	int						type_arch;
 	char					*name;
 	char					*path_name;
@@ -136,7 +138,7 @@ void						handle_64(char *ptr);
 void						check_seg_32 (struct load_command *lc, struct mach_header *header);
 void						get_data_nm_32(int nsyms, int symoff, int stroff, void *ptr);
 void						handle_32 (char *ptr);
-void						parse_file(t_base *base, int ac, char **av);
+void						parse_file(t_base *base, int ac, char **av, int i);
 void						identify_file (char *ptr);
 void						print_err(char  *err);
 void						print_manager(void);

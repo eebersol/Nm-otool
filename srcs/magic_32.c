@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 16:14:00 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/22 17:15:56 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	get_data_nm_32(int nsyms, int symoff, int stroff, void *ptr)
 		magic->addr = ptr;
 		magic->type = get_type(array[i].n_type, magic);
 		magic->value = get_value(array[i].n_value);
+		magic->value_number = swap_uint64(array[i].n_value);
 		i++;
 		if (i < nsyms)
 		{

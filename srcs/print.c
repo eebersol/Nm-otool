@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 16:14:37 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/22 17:28:01 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ void	print_nm(void)
 	print_label();
 	while (magic)
 	{
+		if (recover_base()->opt_o == true)
+		{
+			ft_putstr(recover_base()->name);
+			ft_putstr(": ");
+		}
 		if (magic->type != 'X' && magic->name_func
 			&& ft_strlen(magic->name_func) > 0
 				&& ft_strstr(magic->name_func, "radr:") == NULL

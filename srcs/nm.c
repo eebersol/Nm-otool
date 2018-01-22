@@ -6,20 +6,18 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 15:30:18 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/22 17:02:03 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/nm-otool.h"
 
-void	parse_file(t_base *base, int ac, char **av)
+void	parse_file(t_base *base, int ac, char **av, int i)
 {
 	struct stat file_stats;
 	char		*ptr;
 	int			fd;
-	int			i;
 
-	i = 0;
 	while (++i < ac)
 	{
 		base = init_base(av[i]);
