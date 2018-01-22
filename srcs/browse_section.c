@@ -1,32 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   browse_section.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 15:25:43 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/22 16:04:47 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/nm-otool.h"
 
-int	main(int ac, char **av)
+char		browse_section_32(t_magic *magic)
 {
-	t_base	*base;
+	t_section	*tmp;
+	char		c;
 
-	base = recover_base();
-	if (ac >= 2)
+	tmp = recover_base()->sectionBase;
+	c = 'X';
+	while (tmp)
 	{
-		base->print_name = ac == 3 ? true : false;
-		base->nm = ft_strstr(av[0], "ft_nm") != NULL ? true : false;
-		parse_file(base, ac, av);
+		c = get_char_32(tmp->seg, magic);
+		if (c != 'X')
+			return (c);
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
 	}
-	else
+	return ('S');
+}
+
+char		browse_section(t_magic *magic)
+{
+	t_section	*tmp;
+	char		c;
+
+	tmp = recover_base()->sectionBase;
+	c = 'X';
+	while (tmp)
 	{
-		printf("Nm need argument\n");
-		base->err++;
+		c = get_char(tmp->seg, magic);
+		if (c != 'X')
+			return (c);
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
 	}
-	return (base->err > 1 ? 1 : 0);
+	return ('S');
 }

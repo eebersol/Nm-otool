@@ -1,81 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
+/*   Updated: 2018/01/22 16:03:12 by eebersol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/nm-otool.h"
 
-
-char		browse_section_32(t_magic *magic)
+char		get_char_32(t_segment *segment, t_magic *magic)
 {
-	t_section 		*tmp;
-	t_segment 		*tmpSegment;
+	t_segment	*tmp_segment;
 
-	tmp = recover_base()->sectionBase;
-
-	while (tmp)
+	tmp_segment = segment;
+	while (tmp_segment)
 	{
-		tmpSegment = tmp->seg;
-		while (tmpSegment)
+		if (tmp_segment->name != NULL
+			&& tmp_segment->nb == magic->content_32->n_sect)
 		{
-			if (tmpSegment->name != NULL && tmpSegment->nb == magic->content_32->n_sect)
-			{
-				if (!ft_strcmp(tmpSegment->name, SECT_DATA))
-					return ('D');
-				else if (!ft_strcmp(tmpSegment->name, SECT_BSS))
-					return ('B');
-				else if (!ft_strcmp(tmpSegment->name, SECT_TEXT))
-					return ('T');
-				else
-					return ('S');
-			}
-			if (tmpSegment->next == NULL)
-				break;
-			tmpSegment = tmpSegment->next;
+			if (!ft_strcmp(tmp_segment->name, SECT_DATA))
+				return ('D');
+			else if (!ft_strcmp(tmp_segment->name, SECT_BSS))
+				return ('B');
+			else if (!ft_strcmp(tmp_segment->name, SECT_TEXT))
+				return ('T');
+			else
+				return ('S');
 		}
-		if (tmp->next == NULL)
-				break;
-		tmp = tmp->next;
+		if (tmp_segment->next == NULL)
+			break ;
+		tmp_segment = tmp_segment->next;
 	}
-	return ('S');
+	return ('X');
 }
 
-char		browse_section(t_magic *magic)
+char		get_char(t_segment *segment, t_magic *magic)
 {
-	t_section 		*tmp;
-	t_segment 		*tmpSegment;
+	t_segment	*tmp_segment;
 
-	tmp = recover_base()->sectionBase;
-	while (tmp)
+	tmp_segment = segment;
+	while (tmp_segment)
 	{
-		tmpSegment = tmp->seg;
-		while (tmpSegment)
+		if (tmp_segment->name != NULL
+			&& tmp_segment->nb == magic->content->n_sect)
 		{
-			if (tmpSegment->name != NULL && tmpSegment->nb == magic->content->n_sect)
-			{
-				if (!ft_strcmp(tmpSegment->name, SECT_DATA))
-					return ('D');
-				else if (!ft_strcmp(tmpSegment->name, SECT_BSS))
-					return ('B');
-				else if (!ft_strcmp(tmpSegment->name, SECT_TEXT))
-					return ('T');
-				else
-					return ('S');
-			}
-			if (tmpSegment->next == NULL)
-				break;
-			tmpSegment = tmpSegment->next;
+			if (!ft_strcmp(tmp_segment->name, SECT_DATA))
+				return ('D');
+			else if (!ft_strcmp(tmp_segment->name, SECT_BSS))
+				return ('B');
+			else if (!ft_strcmp(tmp_segment->name, SECT_TEXT))
+				return ('T');
+			else
+				return ('S');
 		}
-		if (tmp->next == NULL)
-				break;
-		tmp = tmp->next;
+		if (tmp_segment->next == NULL)
+			break ;
+		tmp_segment = tmp_segment->next;
 	}
-	return ('S');
+	return ('X');
 }
 
-char get_type(uint8_t n_type, t_magic *magic)
+char		get_type(uint8_t n_type, t_magic *magic)
 {
 	char c;
 
 	(void)magic;
 	(void)n_type;
-
-	if ((n_type & N_TYPE) == N_LSYM ||(n_type & N_TYPE) ==  N_BINCL)
+	if ((n_type & N_TYPE) == N_LSYM || (n_type & N_TYPE) == N_BINCL)
 		c = 'X';
 	else if ((n_type & N_TYPE) == N_UNDF)
 		c = 'U';
@@ -96,22 +91,16 @@ char get_type(uint8_t n_type, t_magic *magic)
 	return (c);
 }
 
-char 	*get_value(uint64_t n_value, t_magic *magic)
+char		*get_value(uint64_t n_value)
 {
-	char 	*value_l;
-	char 	*value_r;
-	size_t 	value_len;
-	size_t 	i;
-	int 	padding;
+	char	*value_l;
+	char	*value_r;
+	size_t	value_len;
+	size_t	i;
+	int		padding;
 
-
-	(void)magic;
-	value_r = ft_itoa_base(n_value, 16);
 	i = 0;
-	while (i < ft_strlen(value_r)) {
-		value_r[i] = ft_tolower(value_r[i]);
-		i++;
-	}
+	value_r = str_lower(ft_itoa_base(n_value, 16));
 	value_l = ft_itoa_base(swap_uint64(n_value), 16);
 	value_len = ft_strlen(value_l) + ft_strlen(value_r);
 	if (value_len < 9)
@@ -128,6 +117,5 @@ char 	*get_value(uint64_t n_value, t_magic *magic)
 		value_l = ft_strsub(value_l, 0, padding);
 		value_len = ft_strlen(value_l) + ft_strlen(value_r);
 	}
-	value_l = ft_strjoin("0000000", value_l);
-	return (ft_strjoin(value_l, value_r));
+	return (ft_strjoin(ft_strjoin("0000000", value_l), value_r));
 }

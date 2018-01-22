@@ -1,116 +1,103 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
+/*   Updated: 2018/01/22 16:14:37 by eebersol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/nm-otool.h"
+
+void	print_manager(void)
+{
+	t_base	*base;
+
+	base = recover_base();
+	if (base->nm == true)
+		print_nm();
+	else if (base->archive == true)
+		add_archive();
+	else if (base->nm == false && base->archive == false)
+		print_otool();
+}
+
+void	print_err(char *err)
+{
+	t_base *base;
+
+	base = recover_base();
+	base->err++;
+	ft_putstr("nm: ");
+	ft_putstr(err);
+}
 
 void	print_nm(void)
 {
-	t_base 	*base;
-	t_magic *magic;
+	t_magic	*magic;
 
-	base 	= recover_base();
-	magic 	= base->magicBase;
-	//return;
+	magic = recover_base()->magicBase;
 	sort_alphanumeric(magic);
+	resort_diff();
+	print_label();
 	while (magic)
 	{
-		//printf("\n\nName : %s\nValue : %s\nType : %c\n", magic->name_func, magic->value, magic->type)
-		if (magic->type != 'X' && magic->name_func && ft_strlen(magic->name_func) > 0 
-			&& ft_strstr(magic->name_func, "radr:") == NULL && magic->type != 'u')
-		{
-			if (magic->type == 'S' || magic->type == 'T' || magic->type == 't' || magic->type == 'b' || magic->type == 'd' || magic->type == 'D' || magic->type == 's' || magic->type == 'I')
-				ft_putstr(magic->value);
-			else
-				ft_putstr("                ");
-			ft_putchar(' ');
-			ft_putchar(magic->type);
-			ft_putchar(' ');
-			ft_putstr(magic->name_func);
-			ft_putchar('\n');
-		}
+		if (magic->type != 'X' && magic->name_func
+			&& ft_strlen(magic->name_func) > 0
+				&& ft_strstr(magic->name_func, "radr:") == NULL
+					&& magic->type != 'u')
+			print_value_nm(magic);
 		if (magic->next == NULL)
-			break;
+			break ;
 		magic = magic->next;
 	}
 }
 
 void	print_otool(void)
 {
-	t_base 	*base;
-	t_magic *magicTmp;
+	t_base	*base;
+	t_magic	*magic_tmp;
 
-	base 		= recover_base();
-	magicTmp 	= base->magicBase;
-	while (magicTmp)
+	base = recover_base();
+	magic_tmp = base->magicBase;
+	while (magic_tmp)
 	{
-		ft_putstr(magicTmp->value);
+		ft_putstr(magic_tmp->value);
 		ft_putchar('\t');
-		ft_putstr(magicTmp->text_section);
+		ft_putstr(magic_tmp->text_section);
 		ft_putchar('\n');
-		if (magicTmp->next == NULL) {
-			break;
-		}
-		magicTmp = magicTmp->next;
+		if (magic_tmp->next == NULL)
+			break ;
+		magic_tmp = magic_tmp->next;
 	}
 }
 
-void 	print_archive(void)
+void	print_archive(void)
 {
-	t_base 		*base;
-	t_archive 	*archive;
+	t_archive	*archive;
 
-	base = recover_base();
-	archive = base->archiveBase;
+	archive = recover_base()->archiveBase;
+	if (recover_base()->archive == false)
+		return ;
 	sort_alphanumeric_archive(archive);
 	while (archive)
 	{
-		ft_putstr(base->name);
-		ft_putchar('(');
-		ft_putstr(archive->name);
-		ft_putstr("):\n");
-		ft_putstr("Contents of (__TEXT,__text) section\n");
+		print_label_archive(archive);
 		if (archive->magicArchive)
 		{
 			while (archive->magicArchive)
 			{
-				ft_putstr(archive->magicArchive->value);
-				ft_putchar('\t');
-				ft_putstr(archive->magicArchive->text_section);
-				ft_putchar('\n');
+				print_value_archive(archive);
 				if (archive->magicArchive->next == NULL)
-					break;
-				archive->magicArchive = archive->magicArchive->next;	
+					break ;
+				archive->magicArchive = archive->magicArchive->next;
 			}
 		}
 		if (archive->next == NULL)
-			break;
-		archive = archive->next;
-	}
-}
-
-void	 add_archive(void)
-{
-	t_base 		*base;
-	t_archive 	*archive;
-	t_magic 	*magic;
-	int i;
-
-	base = recover_base();
-	archive = base->archiveBase;
-	magic 	= base->magicBase;
-	i = lst_count_archive(archive);
-	while (archive)
-	{
-		archive->magicArchive = magic;
-		// while (magic)
-		// {
-		// 	printf("In magic list archive\n");
-		// 	archive->magicArchive->next = (t_magic*)malloc(sizeof(t_magic));
-		// 	archive->magicArchive = magic;
-		// 	if (magic->next == NULL)
-		// 		break;
-		// 	magic = magic->next;
-		// 	archive = archive->next;
-		// }
-		if (archive->next == NULL)
-			break;
+			break ;
 		archive = archive->next;
 	}
 }

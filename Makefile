@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/01/19 16:14:04 by eebersol         ###   ########.fr        #
+#    Updated: 2018/01/22 16:04:41 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ _SRC			= main.c \
 					magic_32.c \
 					swap.c \
 					print.c \
-					print_error.c \
+					print_bis.c \
 					get.c \
 					get_otool.c \
 					tools.c \
@@ -35,6 +35,7 @@ _SRC			= main.c \
 					archive.c \
 					add_section.c \
 					add_section_32.c \
+					browse_section.c \
 
 INCLUDES		= -I./libft/includes/ -I./includes/
 
@@ -177,6 +178,7 @@ otoolExec : all
 
 pythonTest : all
 	@/unit_test_nm_otool/python3 unit_test.py /bin
+
 
 testNm : all exec fat perl python multiple
 testAll : all exec fat perl python multiple pythonTest

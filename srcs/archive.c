@@ -1,56 +1,94 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   archive.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
+/*   Updated: 2018/01/22 16:06:28 by eebersol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/nm-otool.h"
 
-t_archive	*get_archive(uint32_t off, char *ptr, t_archive *archive)
+void			add_archive(void)
+{
+	t_base		*base;
+	t_archive	*archive;
+	t_magic		*magic;
+	int			i;
+
+	base = recover_base();
+	archive = base->archiveBase;
+	magic = base->magicBase;
+	i = lst_count_archive(archive);
+	while (archive)
+	{
+		archive->magicArchive = magic;
+		if (archive->next == NULL)
+			break ;
+		archive = archive->next;
+	}
+}
+
+t_archive		*get_archive(uint32_t off, char *ptr, t_archive *archive)
 {
 	struct ar_hdr	*arch;
 
-	arch 					= (void*)ptr + off;
-	archive->path_name 		= arch->ar_name;
-	archive->name 			= get_name(arch->ar_name);
-	archive->size_fuck 		= get_size(arch->ar_name);
-	archive->addr 			= (void*)arch + sizeof(*arch) + archive->size_fuck;
+	arch = (void*)ptr + off;
+	archive->path_name = arch->ar_name;
+	archive->name = get_name(arch->ar_name);
+	archive->size_name = get_size(arch->ar_name);
+	archive->addr = (void*)arch + sizeof(*arch) + archive->size_name;
 	return (archive);
 }
 
-void	handle_archive(char *ptr)
+void			browse_archive(void)
 {
-	t_base 			*base;
-	t_archive 		*archive;
-	t_archive 		*tmp_archive;
+	t_base		*base;
+	t_archive	*archive;
+
+	base = recover_base();
+	archive = base->archiveBase;
+	while (archive)
+	{
+		base->path_name = archive->name;
+		while (archive->next
+			&& ft_strcmp(base->path_name, archive->next->name) == 0
+				&& base->nm == true)
+			archive = archive->next;
+		identify_file(archive->addr);
+		if (archive->next == NULL)
+			break ;
+		archive = archive->next;
+	}
+}
+
+void			handle_archive(char *ptr)
+{
+	t_archive		*archive;
 	struct ar_hdr	*arch;
 	struct ranlib	*ran;
 	char			*test;
 	int				i;
 	int				size;
-	int				size_fuck;
 
-	i 					= 0;
-	arch 				= (void*)ptr + SARMAG;
-	size_fuck 			= get_size(arch->ar_name);
-	test 				= (void*)ptr + sizeof(*arch) + SARMAG + size_fuck;
-	ran 				= (void*)ptr + sizeof(*arch) + SARMAG + size_fuck + 4;
-	size 				= *((int *)test);
-	size 				= size / sizeof(struct ranlib);
-	base 				= recover_base();
-	base->archiveBase 	= (t_archive*)malloc(sizeof(t_archive));
-	archive 			= base->archiveBase;
-	tmp_archive 		= base->archiveBase;
-	while (i < size)	
-	{	
+	i = 0;
+	arch = (void*)ptr + SARMAG;
+	size = get_size(arch->ar_name);
+	test = (void*)ptr + sizeof(*arch) + SARMAG + size;
+	ran = (void*)ptr + sizeof(*arch) + SARMAG + size + 4;
+	size = *((int *)test) / sizeof(struct ranlib);
+	recover_base()->archiveBase = (t_archive*)malloc(sizeof(t_archive));
+	archive = recover_base()->archiveBase;
+	while (i < size)
+	{
 		archive = get_archive(ran[i].ran_off, ptr, archive);
 		i++;
 		if (i < size)
 			archive->next = (t_archive*)malloc(sizeof(t_archive));
 		archive = archive->next;
 	}
-	while (tmp_archive)
-	{
-		base->path_name = tmp_archive->name; 
-		while (tmp_archive->next && ft_strcmp(base->path_name, tmp_archive->next->name) == 0 && base->nm == true)
-			tmp_archive = tmp_archive->next;
-		identify_file(tmp_archive->addr);
-		if (tmp_archive->next == NULL)
-			break;
-		tmp_archive = tmp_archive->next;
-	}
+	browse_archive();
 }

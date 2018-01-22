@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
+/*   Updated: 2018/01/22 16:14:54 by eebersol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/nm-otool.h"
 
-char 	*str_lower(char *str)
+char	*str_lower(char *str)
 {
 	size_t i;
 
@@ -15,7 +27,7 @@ char 	*str_lower(char *str)
 	return (str);
 }
 
-char		read_tab(int i)
+char	read_tab(int i)
 {
 	char	*tab;
 
@@ -23,7 +35,7 @@ char		read_tab(int i)
 	return (tab[i]);
 }
 
-char		*itoa_base(int val, int base, int output_size)
+char	*itoa_base(int val, int base, int output_size)
 {
 	char			buffer[output_size + 1];
 	char			*p;
@@ -51,135 +63,26 @@ char		*itoa_base(int val, int base, int output_size)
 	return (ft_strdup(p));
 }
 
-void	swap(t_magic *node1, t_magic *node2)
+t_magic	*add_list(t_magic *magic, char *str, char *test_addr, int flag)
 {
-	char	tempType;
-	char	*tempValue;
-	char	*tempNameFunc;
-
-	tempType 			= node1->type;
-	tempValue 			= node1->value;
-	tempNameFunc 		= node1->name_func;
-
-	node1->type 		= node2->type;
-	node1->value 		= node2->value;
-	node1->name_func 	= node2->name_func;
-
-	node2->type 		= tempType;
-	node2->value 		= tempValue;
-	node2->name_func 	= tempNameFunc;
+	magic->next = (t_magic*)malloc(sizeof(t_magic));
+	magic->text_section = (char*)malloc(sizeof(char*) * ft_strlen(str) + 1);
+	magic->text_section = str;
+	magic->value = test_addr;
+	magic = magic->next;
+	if (flag)
+		magic->next = NULL;
+	return (magic);
 }
 
-void swap_diff()
+int		cmp_name(char *str1, char *str2)
 {
-	int			swapped;
-	int 		i;
-	t_magic		*ptr1;
-	t_magic		*lptr;
-
-	lptr = NULL;
-	swapped = 1;
-	while (swapped)
-	{
-		swapped = 0;
-		ptr1 = recover_base()->magicBase;
-		while (ptr1 && ptr1->next != lptr)
-		{
-			i = 0;
-			if (ft_strcmp(ptr1->name_func, ptr1->next->name_func) == 0 
-				&& ft_atoi(ptr1->value) < ft_atoi(ptr1->next->value))
-			 {
-				swapped = 1;
-				swap(ptr1, ptr1->next);
-			}
-			ptr1 = ptr1->next;
-		}
-		lptr = ptr1;
-	}
-}
-
-void sort_alphanumeric(t_magic *node)
-{
-	int			swapped;
-	int 		i;
-	t_magic		*ptr1;
-	t_magic		*lptr;
-
-	lptr = NULL;
-	swapped = 1;
-	while (swapped)
-	{
-		swapped = 0;
-		ptr1 = node;
-		while (ptr1 && ptr1->next != lptr)
-		{
-			i = 0;
-			if (ft_strcmp(ft_strsub(ptr1->name_func, 0, ft_strlen(ptr1->next->name_func)), ptr1->next->name_func) == 0 
-					&& ft_strlen(ptr1->name_func) > ft_strlen(ptr1->next->name_func)) {
-				swapped = 1;
-				swap(ptr1, ptr1->next);
-			}
-			while (ptr1->name_func[i] && ptr1->next->name_func[i])
-			{
-				if (ptr1->name_func[i] > ptr1->next->name_func[i]) {
-					swapped = 1;
-					swap(ptr1, ptr1->next);
-				}
-				else if (ptr1->name_func[i] < ptr1->next->name_func[i])
-					break;
-				else
-					i++;
-			}
-			ptr1 = ptr1->next;
-		}
-		lptr = ptr1;
-	}
-	swap_diff();
-}
-
-
-void	swap_archive(t_archive *node1, t_archive *node2)
-{
-	t_magic *tempListMagic;
-	char	*tempName;
-
-	tempListMagic			= node1->magicArchive;
-	tempName 				= node1->name;
-
-	node1->magicArchive 	= node2->magicArchive;
-	node1->name 			= node2->name;
-
-	node2->magicArchive 	= tempListMagic;
-	node2->name 			= tempName;
-}
-
-void sort_alphanumeric_archive(t_archive *node)
-{
-	int				swapped;
-	int 			i;
-	t_archive		*ptr1;
-	t_archive		*lptr;
-
-	lptr = NULL;
-	swapped = 1;
-	while (swapped)
-	{
-		swapped = 0;
-		ptr1 = node;
-		while (ptr1 && ptr1->next != lptr)
-		{
-			i = 0;
-			if (ft_strcmp(ft_strsub(ptr1->name, 0, ft_strlen(ptr1->next->name)), ptr1->next->name) == 0 
-					&& ft_strlen(ptr1->name) > ft_strlen(ptr1->next->name)) {
-				swapped = 1;
-				swap_archive(ptr1, ptr1->next);
-			}
-			if (ft_strcmp(ptr1->name, ptr1->next->name) > 0) {
-				swapped = 1;
-				swap_archive(ptr1, ptr1->next);
-			}
-			ptr1 = ptr1->next;
-		}
-		lptr = ptr1;
-	}
+	if (ft_strcmp(ft_strsub(str1, 0,
+		ft_strlen(str2)), str2) == 0
+			&& ft_strlen(str1) > ft_strlen(str2))
+		return (1);
+	else if ((ft_strcmp(str1, str2) > 0))
+		return (1);
+	else
+		return (0);
 }

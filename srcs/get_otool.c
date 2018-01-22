@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_otool.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
+/*   Updated: 2018/01/22 15:18:53 by eebersol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/nm-otool.h"
 
 char		*get_name(char *name)
@@ -18,13 +30,12 @@ int			get_size(char *name)
 	return (x);
 }
 
-char 	*get_value_otool_archive(uint64_t n_value)
+char		*get_value_otool_archive(uint64_t n_value)
 {
-	char 	*value_l;
-	char 	*value_r;
-	size_t 	value_len;
-	int 	padding;
-
+	char	*value_l;
+	char	*value_r;
+	size_t	value_len;
+	int		padding;
 
 	value_r = str_lower(ft_itoa_base(n_value, 16));
 	value_l = ft_itoa_base(swap_uint64(n_value), 16);
@@ -43,53 +54,47 @@ char 	*get_value_otool_archive(uint64_t n_value)
 		value_l = ft_strsub(value_l, 0, padding);
 		value_len = ft_strlen(value_l) + ft_strlen(value_r);
 	}
-	value_l = ft_strjoin("0000000", value_l);
-	value_l = ft_strjoin(value_l, value_r);
-	value_l = ft_strsub(value_l, 0, ft_strlen(value_l)-1 );
-	value_l = ft_strjoin("0", value_l);
+	value_l = ft_strjoin(ft_strjoin("0000000", value_l), value_r);
+	value_l = ft_strjoin("0", ft_strsub(value_l, 0, ft_strlen(value_l) - 1));
 	return (value_l);
 }
 
-char 	*get_value_otool_exec(uint64_t n_value)
+char		*get_value_otool_exec(uint64_t n_value)
 {
-	char 	*value_l;
-	char 	*value_r;
-	char 	*result;
-	size_t 	value_len;
-	int 	padding;
+	char	*value_l;
+	char	*value_r;
+	size_t	value_len;
+	int		padding;
 
-	padding 	= 0;
-	value_len 	= 0;
-	value_l 	= ft_itoa_base(n_value, 16);
-	value_l 	= ft_strsub(value_l, 0, ft_strlen(value_l) - 1);
-	result 		= "0000000";
-	value_r 	= str_lower(ft_itoa_base(swap_uint64(n_value), 16));
-	if (ft_strlen(result) + ft_strlen(value_l) + ft_strlen(value_r) < 16)
+	value_l = ft_itoa_base(n_value, 16);
+	value_l = ft_strsub(value_l, 0, ft_strlen(value_l) - 1);
+	value_r = str_lower(ft_itoa_base(swap_uint64(n_value), 16));
+	if (ft_strlen("0000000") + ft_strlen(value_l) + ft_strlen(value_r) < 16)
 	{
-		value_len = ft_strlen(result) + ft_strlen(value_l) + ft_strlen(value_r);
+		value_len = ft_strlen("0000000")
+			+ ft_strlen(value_l) + ft_strlen(value_r);
 		while (value_len < 16)
 		{
 			value_l = ft_strjoin(value_l, "0");
 			value_len++;
 		}
 	}
-	else if (ft_strlen(result) + ft_strlen(value_l) + ft_strlen(value_r) > 16)
+	else if (ft_strlen("0000000")
+		+ ft_strlen(value_l) + ft_strlen(value_r) > 16)
 	{
-		padding = 16 - (ft_strlen(value_r) + ft_strlen(result));
+		padding = 16 - (ft_strlen(value_r) + ft_strlen("0000000"));
 		value_l = ft_strsub(value_l, 0, padding);
 	}
-	result = ft_strjoin(result, ft_strjoin(value_l, value_r));
-	return (result);
+	return (ft_strjoin("0000000", ft_strjoin(value_l, value_r)));
 }
 
-
-char *get_value_otool_manager(uint64_t n_value)
+char		*val_otool(uint64_t n_value)
 {
-	t_base 	*base;
-	char 	*ret;
+	t_base	*base;
+	char	*ret;
 
-	base 	= recover_base();
-	ret 	= NULL;
+	base = recover_base();
+	ret = NULL;
 	if (base->archive == true)
 		ret = get_value_otool_archive(n_value);
 	else

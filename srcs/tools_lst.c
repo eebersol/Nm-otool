@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools_lst.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
+/*   Updated: 2018/01/22 15:50:27 by eebersol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/nm-otool.h"
 
 int		lst_count(t_magic *lst)
@@ -20,7 +32,7 @@ int		lst_count(t_magic *lst)
 
 int		lst_count_archive(t_archive *lst)
 {
-	int		i;
+	int			i;
 	t_archive	*elem;
 
 	i = 0;
@@ -38,7 +50,7 @@ int		lst_count_archive(t_archive *lst)
 
 int		lst_count_section(t_section *lst)
 {
-	int		i;
+	int			i;
 	t_section	*elem;
 
 	i = 0;
