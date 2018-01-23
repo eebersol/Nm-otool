@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 16:06:28 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/23 15:41:38 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@ void			add_archive(void)
 	t_base		*base;
 	t_archive	*archive;
 	t_magic		*magic;
-	int			i;
 
 	base = recover_base();
 	archive = base->archiveBase;
 	magic = base->magicBase;
-	i = lst_count_archive(archive);
 	while (archive)
 	{
-		archive->magicArchive = magic;
+		if (ft_strcmp(archive->name, base->path_name) == 0)
+			archive->magicArchive = magic;
 		if (archive->next == NULL)
 			break ;
 		archive = archive->next;
@@ -53,6 +52,8 @@ void			browse_archive(void)
 	archive = base->archiveBase;
 	while (archive)
 	{
+		if (!archive->name)
+			break ;
 		base->path_name = archive->name;
 		while (archive->next
 			&& ft_strcmp(base->path_name, archive->next->name) == 0
@@ -82,6 +83,13 @@ void			handle_archive(char *ptr)
 	size = *((int *)test) / sizeof(struct ranlib);
 	recover_base()->archiveBase = (t_archive*)malloc(sizeof(t_archive));
 	archive = recover_base()->archiveBase;
+	if (size == 0)
+	{
+		archive->name ="unknow";
+		archive->magicArchive = NULL;
+		archive->next = NULL;
+		return;
+	}
 	while (i < size)
 	{
 		archive = get_archive(ran[i].ran_off, ptr, archive);

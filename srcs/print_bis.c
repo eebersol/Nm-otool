@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 17:26:39 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/23 15:32:46 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,16 @@ void	print_label(void)
 	t_base *base;
 
 	base = recover_base();
-	if (base->print_name == false)
+	if (base->print_name == false && base->archiveNm == false)
 		return ;
 	ft_putstr("\n");
 	ft_putstr(base->name);
+	if (base->archiveNm == true)
+	{
+		ft_putchar('(');
+		ft_putstr(base->path_name);
+		ft_putchar(')');
+	}
 	ft_putstr(":\n");
 }
 
@@ -31,7 +37,10 @@ void	print_label_archive(t_archive *archive)
 	base = recover_base();
 	ft_putstr(base->name);
 	ft_putchar('(');
-	ft_putstr(archive->name);
+	if (!archive->name)
+		ft_putstr("unknow");
+	else
+		ft_putstr(archive->name);
 	ft_putstr("):\n");
 	ft_putstr("Contents of (__TEXT,__text) section\n");
 	return ;
@@ -39,10 +48,13 @@ void	print_label_archive(t_archive *archive)
 
 void	print_value_archive(t_archive *archive)
 {
-	ft_putstr(archive->magicArchive->value);
-	ft_putchar('\t');
-	ft_putstr(archive->magicArchive->text_section);
-	ft_putchar('\n');
+	if (archive->magicArchive->value && archive->magicArchive->text_section)
+	{
+		ft_putstr(archive->magicArchive->value);
+		ft_putchar('\t');
+		ft_putstr(archive->magicArchive->text_section);
+		ft_putchar('\n');
+	}
 }
 
 void	print_value_nm(t_magic *magic)

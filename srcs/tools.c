@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 17:27:29 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/23 13:54:15 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,15 @@ char	*itoa_base(int val, int base, int output_size)
 
 t_magic	*add_list(t_magic *magic, char *str, char *test_addr, int flag)
 {
-	magic->next = (t_magic*)malloc(sizeof(t_magic));
 	magic->text_section = (char*)malloc(sizeof(char*) * ft_strlen(str) + 1);
 	magic->text_section = str;
 	magic->value = test_addr;
-	magic = magic->next;
-	if (flag)
+	if (flag == 0 )
+	{
+		magic->next = (t_magic*)malloc(sizeof(t_magic));
+		magic = magic->next;
+	}
+	else
 		magic->next = NULL;
 	return (magic);
 }

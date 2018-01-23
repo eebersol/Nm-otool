@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 17:28:40 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/23 16:05:38 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef	struct				s_magic
 	char					*name_func;
 	char					type;
 	char					*value;
-	uint64_t 				value_number;
 	char					*text_section;
 	void					*addr;
 	struct s_magic			*next;
@@ -83,6 +82,7 @@ typedef	struct				s_archive
 	char					*path_name;
 	int						size_name;
 	void					*addr;
+	bool					display;
 	t_magic					*magicArchive;
 	struct s_archive		*next;
 }							t_archive;
@@ -105,6 +105,9 @@ typedef	struct				s_base
 	t_section				*sectionBase;
 }							t_base;
 
+void	lstdel_at(t_archive **archive, int at);
+void	remove_doublon(void);
+void debug(void);
 void						add_seg(struct load_command *lc, t_section *section);
 unsigned int				get_end(struct load_command *lctmp, unsigned int len);
 void						get_section(struct load_command *lc,

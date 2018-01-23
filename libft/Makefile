@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+         #
+#    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 14:30:45 by qdequele          #+#    #+#              #
-#    Updated: 2016/11/06 20:23:04 by qdequele         ###   ########.fr        #
+#    Updated: 2018/01/22 18:22:07 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ _FT_STR_SRC			=	ft_striter.c ft_striteri.c ft_strdel.c ft_strclr.c\
 FT_STR_SRC			=	$(addprefix ft_str/,$(_FT_STR_SRC))
 
 #Define FT_UTILS
-_FT_UTILS_SRC		=	ft_atoi.c ft_itoa.c ft_bzero.c ft_toupper.c ft_tolower.c\
+_FT_UTILS_SRC		=	ft_atoi.c ft_atoi_base.c ft_itoa.c ft_bzero.c ft_toupper.c ft_tolower.c\
 						ft_nbrlen.c ft_nbrlen_base.c ft_wordlen.c ft_wordcount.c\
 						ft_itoa_base.c ft_get_next_line.c ft_colors.c \
 						ft_match.c ft_nmatch.c ft_sqrt.c ft_positive.c

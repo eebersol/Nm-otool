@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 17:28:01 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/23 15:38:48 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,13 @@ void	print_otool(void)
 	magic_tmp = base->magicBase;
 	while (magic_tmp)
 	{
-		ft_putstr(magic_tmp->value);
-		ft_putchar('\t');
-		ft_putstr(magic_tmp->text_section);
-		ft_putchar('\n');
+		if (magic_tmp->value && magic_tmp->text_section)
+		{
+			ft_putstr(magic_tmp->value);
+			ft_putchar('\t');
+			ft_putstr(magic_tmp->text_section);
+			ft_putchar('\n');
+		}
 		if (magic_tmp->next == NULL)
 			break ;
 		magic_tmp = magic_tmp->next;
@@ -87,7 +90,15 @@ void	print_archive(void)
 	archive = recover_base()->archiveBase;
 	if (recover_base()->archive == false)
 		return ;
-	sort_alphanumeric_archive(archive);
+	if (archive && lst_count_archive(archive) >= 2)
+	{
+		sort_alphanumeric_archive(archive);
+		remove_doublon();
+	}
+	archive = recover_base()->archiveBase;
+	ft_putstr("Archive : ");
+	ft_putstr(recover_base()->name);
+	ft_putchar('\n');
 	while (archive)
 	{
 		print_label_archive(archive);

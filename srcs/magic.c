@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 17:15:48 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/23 15:46:07 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	get_data_nm(int nsyms, int symoff, int stroff, void *ptr)
 		magic->addr = ptr;
 		magic->type = get_type(array[i].n_type, magic);
 		magic->value = get_value(array[i].n_value);
-		magic->value_number = swap_uint64(array[i].n_value);
 		i++;
 		if (i < nsyms)
 		{
@@ -56,7 +55,7 @@ void	check_seg(struct load_command *lc, struct mach_header_64 *header)
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{
-			if (recover_base()->archive == false && recover_base()->nm == false)
+			if (recover_base()->archive == false)
 			{
 				ft_putstr(recover_base()->name);
 				ft_putstr(":\n");

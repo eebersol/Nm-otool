@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/16 11:19:53 by qdequele          #+#    #+#             */
-/*   Updated: 2016/10/29 15:10:24 by qdequele         ###   ########.fr       */
+/*   Updated: 2018/01/22 18:22:47 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ int				ft_match(char *s1, char *s2);
 int				ft_nmatch(char *s1, char *s2);
 double			ft_sqrt(double nb);
 double			ft_positive(double x);
+int				ft_atoi_base(char *str, char *base);
 
 #endif
