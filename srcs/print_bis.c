@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 15:32:46 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/24 15:29:44 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	print_value_nm(t_magic *magic)
 {
 	if (magic->type != 'U')
 		ft_putstr(magic->value);
+	else if (recover_base()->is_32_dylib == true)
+		ft_putstr("        ");
 	else
 		ft_putstr("                ");
 	ft_putchar(' ');

@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 16:11:10 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/25 13:58:24 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ void	identify_file(char *ptr)
 	}
 	else if ((magic_number == MH_MAGIC || magic_number == MH_CIGAM) && recover_base()->nm == true)
 	{
+		recover_base()->is_32_dylib = true;
+
+
+
 		recover_base()->type_arch = 2;
 		handle_32(ptr);
 	}

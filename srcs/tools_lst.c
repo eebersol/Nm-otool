@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 15:20:04 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/24 12:52:31 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,24 @@ int		lst_count_section(t_section *lst)
 {
 	int			i;
 	t_section	*elem;
+
+	i = 0;
+	elem = lst;
+	if (elem)
+	{
+		while (elem)
+		{
+			i++;
+			elem = elem->next;
+		}
+	}
+	return (i);
+}
+
+int		lst_count_segment(t_segment *lst)
+{
+	int			i;
+	t_segment	*elem;
 
 	i = 0;
 	elem = lst;

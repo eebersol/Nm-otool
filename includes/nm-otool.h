@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 16:05:38 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/25 16:22:25 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <mach-o/ranlib.h>
 # include <mach/machine.h>
 # include "../libft/libft.h"
+
 
 # define FLAG_PROT			PROT_WRITE | PROT_READ
 # define FLAG_MAP			MAP_ANON | MAP_PRIVATE
@@ -74,7 +75,7 @@ typedef	struct				s_magic
 	struct s_magic			*next;
 	struct nlist_64			*content;
 	struct nlist			*content_32;
-}							t_magic;
+}						t_magic;
 
 typedef	struct				s_archive
 {
@@ -89,6 +90,7 @@ typedef	struct				s_archive
 
 typedef	struct				s_base
 {
+	bool					is_32_dylib;
 	bool					nm;
 	bool					archive;
 	bool					archiveNm;
@@ -103,8 +105,30 @@ typedef	struct				s_base
 	t_magic					*magicBase;
 	t_archive				*archiveBase;
 	t_section				*sectionBase;
+	t_section				*sectionCurr;
 }							t_base;
 
+
+
+char 		*get_value_manager(t_magic *magic, uint64_t n_value);
+char		*get_value_abs(uint64_t n_value, t_magic *magic);
+char		*get_value_64(uint64_t n_value, t_magic *magic);
+
+
+
+
+
+
+
+
+
+
+
+char			*ft_hexa_itoa(unsigned long n);
+void itox(unsigned int i, char *s);
+char		*get_value_dylib_32(uint64_t n_value);
+void 	sectionAdd(struct load_command *lc);
+void 	sectionAdd_32(struct load_command *lc);
 void	lstdel_at(t_archive **archive, int at);
 void	remove_doublon(void);
 void debug(void);
@@ -126,7 +150,7 @@ char						get_char(t_segment *segment, t_magic *magic);
 char						browse_section_32(t_magic *magic);
 char						browse_section(t_magic *magic);
 char						get_type(uint8_t n_type, t_magic *magic);
-char						*get_value(uint64_t n_value);
+char						*get_value(uint64_t n_value, t_magic *magic);
 char						*get_name(char *name);
 int							get_size(char *name);
 char						*get_value_otool_archive(uint64_t n_value);
@@ -167,6 +191,7 @@ void						sort_alphanumeric_archive(t_archive *node);
 int							lst_count(t_magic *lst);
 int							lst_count_archive(t_archive *lst);
 int							lst_count_section(t_section *lst);
+int							lst_count_segment(t_segment *lst);
 t_magic						*lst_reverse(t_magic *root);
 
 #endif

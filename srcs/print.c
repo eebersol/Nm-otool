@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 15:38:48 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/25 16:29:13 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	print_nm(void)
 	t_magic	*magic;
 
 	magic = recover_base()->magicBase;
+	//return ;
 	sort_alphanumeric(magic);
 	resort_diff();
 	print_label();

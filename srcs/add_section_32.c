@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 15:50:13 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/24 14:51:05 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ unsigned int		get_end_32(struct load_command *lctmp, unsigned int len)
 
 	i = 0;
 	count = 0;
-	printf("Len : %u\n", len);
 	while (i < len)
 	{
 		if (lctmp->cmd == LC_SEGMENT)
 		{
 			count++;
 		}
-		printf("Size : %d\n", lctmp->cmdsize);
 		if (lctmp->cmdsize >= INT_MAX)
 		{
 			break ;
@@ -70,12 +68,10 @@ void				get_section_32(struct load_command *lc,
 	unsigned int	i;
 	size_t			k;
 
-	printf("HOLA\n");
 	i = 0;
 	k = 0;
 	recover_base()->sectionBase = (t_section*)malloc(sizeof(t_section));
 	section = recover_base()->sectionBase;
-	printf("HOLA\n");
 	while (i < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT)

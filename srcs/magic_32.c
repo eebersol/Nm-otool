@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 15:48:12 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/25 13:44:11 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	get_data_nm_32(int nsyms, int symoff, int stroff, void *ptr)
 		magic->name_func = stringable + array[i].n_un.n_strx;
 		magic->addr = ptr;
 		magic->type = get_type(array[i].n_type, magic);
-		magic->value = get_value(array[i].n_value);
+		magic->value = get_value_manager(magic, array[i].n_value);
 		i++;
 		if (i < nsyms)
 		{
@@ -79,13 +79,16 @@ void	handle_32(char *ptr)
 	lc = (void *)ptr + sizeof(*header);
 	sc = (void *)ptr + sizeof(*header);
 	i = 0;
-	printf("ICICICICI\n");
-	get_section_32(lc, header, get_end_32(lc, header->ncmds));
 	while (i++ < header->ncmds)
 	{
-		if (lc->cmd == LC_SEGMENT && recover_base()->nm == false)
-			check_seg_32(lc, header);
-		else if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
+		if (lc->cmd == LC_SEGMENT)
+		{
+			if (recover_base()->nm == false)
+				check_seg_32(lc, header);
+			else
+				sectionAdd_32(lc);
+		}
+		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;
 			get_data_nm_32(sym->nsyms, sym->symoff, sym->stroff, (void *)ptr);

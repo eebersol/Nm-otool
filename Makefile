@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/01/23 10:53:35 by eebersol         ###   ########.fr        #
+#    Updated: 2018/01/25 13:43:45 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ _SRC			= main.c \
 					get.c \
 					get_otool.c \
 					tools.c \
+					tools_conversion.c \
 					tools_lst.c \
 					tools_sort.c \
 					archive.c \
@@ -37,6 +38,8 @@ _SRC			= main.c \
 					add_section_32.c \
 					browse_section.c \
 					debug.c \
+					value.c \
+					section.c \
 
 INCLUDES		= -I./libft/includes/ -I./includes/
 

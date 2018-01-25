@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 13:11:11 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/25 13:57:00 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_base	*init_base(char *name)
 	base = recover_base();
 	base->name = name;
 	base->err = false;
+	base->is_32_dylib = false;
 	base->index = 1;
 	base->magicBase = NULL;
 	base->sectionBase = NULL;

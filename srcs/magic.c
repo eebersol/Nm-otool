@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 15:46:07 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/25 13:41:41 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ void	get_data_nm(int nsyms, int symoff, int stroff, void *ptr)
 		magic->name_func = stringable + array[i].n_un.n_strx;
 		magic->addr = ptr;
 		magic->type = get_type(array[i].n_type, magic);
-		magic->value = get_value(array[i].n_value);
+		magic->value = get_value_manager(magic, array[i].n_value);
+		//magic->value = magic->type == 'A' ? get_value_dylib_32(array[i].n_value) : get_value(array[i].n_value);
+		// if (ft_strcmp(magic->name_func, "__objc_empty_vtable") == 0)
+		// {
+		// 	printf("get_data_nm : %s - %c\n", magic->value, magic->type);
+		// }
 		i++;
 		if (i < nsyms)
 		{
@@ -109,12 +114,16 @@ void	handle_64(char *ptr)
 	lc = (void *)ptr + sizeof(*header);
 	sc = (void *)ptr + sizeof(*header);
 	i = 0;
-	get_section(lc, header, get_end(lc, header->ncmds));
 	while (i++ < header->ncmds)
 	{
-		if (lc->cmd == LC_SEGMENT_64 && recover_base()->nm == false)
-			check_seg(lc, header);
-		else if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
+		if (lc->cmd == LC_SEGMENT_64)
+		{
+			if (recover_base()->nm == false)
+				check_seg(lc, header);
+			else
+				sectionAdd(lc);
+		}
+		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;
 			get_data_nm(sym->nsyms, sym->symoff, sym->stroff, (void *)ptr);
