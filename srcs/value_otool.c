@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_otool.c                                        :+:      :+:    :+:   */
+/*   value_otool.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 15:18:53 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/26 13:25:06 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,11 @@ char		*val_otool(uint64_t n_value)
 		ret = get_value_otool_archive(n_value);
 	else
 		ret = get_value_otool_exec(n_value);
+	if (recover_base()->type_arch == 2)
+	{
+		ret = ft_strsub(ret, ft_strlen(ret)/2, ft_strlen(ret));
+		//printf("ret :::: %s\n", ret);
+		//exit(0);
+	}
 	return (ret);
 }

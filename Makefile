@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/01/25 13:43:45 by eebersol         ###   ########.fr        #
+#    Updated: 2018/01/26 12:46:21 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,27 +19,22 @@ NAME_OTOOL		= ft_otool
 LIB				=	./libft/libft.a
 
 _SRC			= main.c \
+					archive.c \
 					init_struct.c \
-					nm.c \
-					fat.c \
-					magic.c \
-					magic_32.c \
-					swap.c \
+					handle.c \
+					nm_otool.c \
+					data_magic.c \
 					print.c \
 					print_bis.c \
-					get.c \
-					get_otool.c \
 					tools.c \
 					tools_conversion.c \
 					tools_lst.c \
 					tools_sort.c \
-					archive.c \
-					add_section.c \
-					add_section_32.c \
-					browse_section.c \
-					debug.c \
-					value.c \
+					type.c \
 					section.c \
+					swap.c \
+					value_nm.c \
+					value_otool.c \
 
 INCLUDES		= -I./libft/includes/ -I./includes/
 

@@ -6,14 +6,14 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/25 12:22:08 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/26 11:56:27 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/nm-otool.h"
 
-static	int		switch_hexa(int x)
+int		switch_hexa(int x)
 {
 	if (0 <= x && x <= 9)
 		return (48 + x);
@@ -42,8 +42,6 @@ char			*ft_hexa_itoa(unsigned long n)
 		x /= 16;
 		size++;
 	}
-	// if (recover_env()->result[0] == 'z')
-	// 	size /= 2;
 	str = (char *)malloc(sizeof(char) * (size + 1));
 	if (str)
 	{

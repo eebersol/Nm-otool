@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/25 16:29:13 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/26 16:04:39 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@ void	print_manager(void)
 	t_base	*base;
 
 	base = recover_base();
+	// printf("base->nm ::%d archive :: %d\n", base->nm, base->archive);
 	if (base->nm == true)
 		print_nm();
 	else if (base->archive == true)
+	{
+		// printf("ICI\n");
 		add_archive();
+	}
 	else if (base->nm == false && base->archive == false)
 		print_otool();
 }
@@ -32,6 +36,12 @@ void	print_err(char *err)
 	base = recover_base();
 	base->err++;
 	ft_putstr("nm: ");
+	if (ft_strcmp(err, Err_corrupt) == 0)
+	{
+		err = "corrupt truncated or malformed object (offset field of";
+		err = ft_strjoin(err, "section 0 in LC_SEGMENT command ");
+		err = ft_strjoin(err, "1 extends past the end of the file)\n");
+	}
 	ft_putstr(err);
 }
 
@@ -40,7 +50,6 @@ void	print_nm(void)
 	t_magic	*magic;
 
 	magic = recover_base()->magicBase;
-	//return ;
 	sort_alphanumeric(magic);
 	resort_diff();
 	print_label();
@@ -89,17 +98,12 @@ void	print_archive(void)
 	t_archive	*archive;
 
 	archive = recover_base()->archiveBase;
-	if (recover_base()->archive == false)
-		return ;
-	if (archive && lst_count_archive(archive) >= 2)
-	{
+	// if (archive && lst_count_archive(archive) >= 2)
+	// {
 		sort_alphanumeric_archive(archive);
 		remove_doublon();
-	}
-	archive = recover_base()->archiveBase;
-	ft_putstr("Archive : ");
-	ft_putstr(recover_base()->name);
-	ft_putchar('\n');
+	// }
+	print_title_archive();
 	while (archive)
 	{
 		print_label_archive(archive);

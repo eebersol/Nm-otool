@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 13:58:46 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/26 16:38:49 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ void	resort_diff(void)
 				&& (ptr1->type != 'U' && ptr1->next->type != 'I'))
 			{
 					swapped = 1;
+					swap(ptr1, ptr1->next);
+			}
+			if (ft_strcmp(ptr1->name_func, ptr1->next->name_func) == 0
+				&& (ptr1->type ==  ptr1->next->type + 32))
+			{
+				//printf("fname : %s - %c\n", ptr1->name_func, ptr1->type);
+					swapped = 0;
 					swap(ptr1, ptr1->next);
 			}
 			ptr1 = ptr1->next;

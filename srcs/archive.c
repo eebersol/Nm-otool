@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 15:41:38 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/26 15:28:54 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ void			handle_archive(char *ptr)
 	archive = recover_base()->archiveBase;
 	if (size == 0)
 	{
-		archive->name ="unknow";
+		archive->name = "unknow";
 		archive->magicArchive = NULL;
 		archive->next = NULL;
-		return;
+		return ;
 	}
 	while (i < size)
 	{

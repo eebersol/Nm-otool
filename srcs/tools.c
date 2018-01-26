@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/23 13:54:15 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/26 16:33:23 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_magic	*add_list(t_magic *magic, char *str, char *test_addr, int flag)
 	{
 		magic->next = (t_magic*)malloc(sizeof(t_magic));
 		magic = magic->next;
+		magic->text_section = NULL;
 	}
 	else
 		magic->next = NULL;

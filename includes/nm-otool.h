@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/25 16:22:25 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/26 16:01:19 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define Err_fstats			": fstats failed.\n"
 # define Err_mmap			": mmap failed.\n"
 # define Err_open			": No such fil or directory.\n"
+# define Err_corrupt 		"corrupt"
+# define Err_format 		"Wrong binary format\n"
 
 typedef	struct				s_section
 {
@@ -90,7 +92,6 @@ typedef	struct				s_archive
 
 typedef	struct				s_base
 {
-	bool					is_32_dylib;
 	bool					nm;
 	bool					archive;
 	bool					archiveNm;
@@ -110,88 +111,117 @@ typedef	struct				s_base
 
 
 
-char 		*get_value_manager(t_magic *magic, uint64_t n_value);
-char		*get_value_abs(uint64_t n_value, t_magic *magic);
-char		*get_value_64(uint64_t n_value, t_magic *magic);
-
-
-
-
-
-
-
-
-
-
-
-char			*ft_hexa_itoa(unsigned long n);
-void itox(unsigned int i, char *s);
-char		*get_value_dylib_32(uint64_t n_value);
-void 	sectionAdd(struct load_command *lc);
-void 	sectionAdd_32(struct load_command *lc);
-void	lstdel_at(t_archive **archive, int at);
-void	remove_doublon(void);
-void debug(void);
-void						add_seg(struct load_command *lc, t_section *section);
-unsigned int				get_end(struct load_command *lctmp, unsigned int len);
-void						get_section(struct load_command *lc,
-											struct mach_header_64 *header, unsigned int len);
-void						add_seg_32(struct load_command *lc, t_section *section);
-unsigned int				get_end_32(struct load_command *lctmp,  unsigned int len);
-void						get_section_32(struct load_command *lc,
-											struct mach_header *header, unsigned int len);
-void						add_archive(void);
-t_archive					*get_archive(uint32_t off, char *ptr, t_archive *archive);
-void						browse_archive();
-void						handle_archive(char *ptr);
-void						handle_fat (char *ptr);
-char						get_char_32(t_segment *segment, t_magic *magic);
-char						get_char(t_segment *segment, t_magic *magic);
-char						browse_section_32(t_magic *magic);
-char						browse_section(t_magic *magic);
-char						get_type(uint8_t n_type, t_magic *magic);
-char						*get_value(uint64_t n_value, t_magic *magic);
-char						*get_name(char *name);
-int							get_size(char *name);
-char						*get_value_otool_archive(uint64_t n_value);
-char						*get_value_otool_exec(uint64_t n_value);
-char						*val_otool(uint64_t n_value);
-t_base						*recover_base(void);
-t_base						*init_base(char *name);
-void						get_data_nm(int nsyms, int symoff, int stroff, void *ptr);
-void						check_seg(struct load_command *lc, struct mach_header_64 *header);
-void						get_content(uint64_t addr, unsigned int size, char *ptr);
-void						handle_64(char *ptr);
-void						check_seg_32 (struct load_command *lc, struct mach_header *header);
-void						get_data_nm_32(int nsyms, int symoff, int stroff, void *ptr);
-void						handle_32 (char *ptr);
-void						parse_file(t_base *base, int ac, char **av, int i);
-void						identify_file (char *ptr);
-void						print_err(char  *err);
-void						print_manager(void);
-void						print_nm(void);
-void						print_otool(void);
-void						print_archive(void);
-void						print_label(void);
-void						print_label_archive(t_archive *archive);
-void						print_value_archive(t_archive *archive);
-void						print_value_nm(t_magic *magic);
-uint16_t					swap_uint16(uint16_t nb);
-uint32_t					swap_uint32(uint32_t nb);
-uint64_t					swap_uint64(uint64_t nb);
-char						*str_lower(char *str);
-char						read_tab(int i);
-char						*itoa_base(int val, int base, int output_size);
-t_magic						*add_list(t_magic *magic, char *str, char *test_addr, int flag);
-int							cmp_name(char *str1, char *str2);
-void						resort_diff(void);
-void						sort_alphanumeric(t_magic *node);
-void						swap_archive(t_archive *node1, t_archive *node2);
-void						sort_alphanumeric_archive(t_archive *node);
-int							lst_count(t_magic *lst);
-int							lst_count_archive(t_archive *lst);
-int							lst_count_section(t_section *lst);
-int							lst_count_segment(t_segment *lst);
-t_magic						*lst_reverse(t_magic *root);
+/*
+** NAME : archive.c
+*/
+void				add_archive(void);
+t_archive			*get_archive(uint32_t off, char *ptr, t_archive *archive);
+void				browse_archive(void);
+void				handle_archive(char *ptr);
+/*
+** NAME : handle.c
+*/
+void				handle_fat(char *ptr);
+void				handle_64(char *ptr);
+void				handle_32(char *ptr);
+/*
+** NAME : init_struct.c
+*/
+t_base				*recover_base(void);
+t_base				*init_base(char *name);
+/*
+** NAME : process_data_magic.c
+*/
+void				data_magic(int nsyms, int symoff, int stroff, void *ptr);
+void				data_magic_32(int nsyms, int symoff, int stroff, void *ptr);
+void				data_seg(struct load_command *lc, struct mach_header_64 *header);
+void				data_seg_32(struct load_command *lc, struct mach_header *header);
+void				get_content(uint64_t addr, unsigned int size, char *ptr);
+/*
+** NAME : nm_otool.c
+*/
+void				parse_file(t_base *base, int ac, char **av, int i);
+void				identify_file(char *ptr);
+/*
+** NAME : print.c
+*/
+void				print_manager(void);
+void				print_err(char *err);
+void				print_nm(void);
+void				print_otool(void);
+void				print_archive(void);
+/*
+** NAME : print_bis.c
+*/
+void				print_label(void);
+void				print_title_archive(void);
+void				print_label_archive(t_archive *archive);
+void				print_value_archive(t_archive *archive);
+void				print_value_nm(t_magic *magic);
+/*
+** NAME : section.c
+*/
+t_section			*section_add(void);
+t_segment			*segment_add(t_segment *segment, int i, char *sectname, int typeFile, int len);
+void 				section(struct load_command *lc);
+void 				section_32(struct load_command *lc);
+/*
+** NAME : swap.c
+*/
+uint16_t			swap_uint16(uint16_t nb);
+uint32_t			swap_uint32(uint32_t nb);
+uint64_t			swap_uint64(uint64_t nb);
+/*
+** NAME : tools.c
+*/
+char				*str_lower(char *str);
+char				*itoa_base(int val, int base, int output_size);
+t_magic				*add_list(t_magic *magic, char *str, char *test_addr, int flag);
+int					cmp_name(char *str1, char *str2);
+/*
+** NAME : tools.conversion.c
+*/
+int					switch_hexa(int x);
+char				*ft_hexa_itoa(unsigned long n);
+/*
+** NAME : tools_lst.c
+*/
+int					lst_count(t_magic *lst);
+int					lst_count_archive(t_archive *lst);
+int					lst_count_section(t_section *lst);
+int					lst_count_segment(t_segment *lst);
+t_magic				*lst_reverse(t_magic *root);
+void				lstdel_at(t_archive **archive, int at);
+void				remove_doublon(void);
+/*
+** NAME : tools_sort.c
+*/
+void				swap(t_magic *node1, t_magic *node2);
+void				resort_diff(void);
+void				sort_alphanumeric(t_magic *node);
+void				swap_archive(t_archive *node1, t_archive *node2);
+void				sort_alphanumeric_archive(t_archive *node);
+/*
+** NAME : type.c
+*/
+char				browse_section(t_magic *magic, int typeFile);
+char				get_char_32(t_segment *segment, t_magic *magic);
+char				get_char(t_segment *segment, t_magic *magic);
+char				get_type(uint8_t n_type, t_magic *magic);
+/*
+** NAME : value.c
+*/
+char 				*padding(int value_len, char *value_l, char *value_r, int len);
+char				*value(uint64_t n_value);
+char				*value_abs(uint64_t n_value);
+char 				*value_manager(t_magic *magic, uint64_t n_value);
+/*
+** NAME : value_otool.c
+*/
+char				*get_name(char *name);
+int					get_size(char *name);
+char				*get_value_otool_archive(uint64_t n_value);
+char				*get_value_otool_exec(uint64_t n_value);
+char				*val_otool(uint64_t n_value);
 
 #endif

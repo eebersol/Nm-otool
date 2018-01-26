@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/24 15:29:44 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/26 15:59:25 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ void	print_label(void)
 		ft_putchar(')');
 	}
 	ft_putstr(":\n");
+}
+
+
+void	print_title_archive(void)
+{
+	t_base	*base;
+
+	base = recover_base();
+	ft_putstr("Archive : ");
+	ft_putstr(base->name);
+	ft_putchar('\n');
 }
 
 void	print_label_archive(t_archive *archive)
@@ -61,7 +72,7 @@ void	print_value_nm(t_magic *magic)
 {
 	if (magic->type != 'U')
 		ft_putstr(magic->value);
-	else if (recover_base()->is_32_dylib == true)
+	else if (recover_base()->type_arch == 2)
 		ft_putstr("        ");
 	else
 		ft_putstr("                ");

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nm.c                                               :+:      :+:    :+:   */
+/*   nm_otool.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/25 13:58:24 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/01/26 16:04:24 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	parse_file(t_base *base, int ac, char **av, int i)
 		if (base->err == 0)
 		{
 			identify_file(ptr);
-			print_archive();
+			//print_archive();
+			print_manager();
 		}
 		if (base->err == 0 && (munmap(ptr, file_stats.st_size)) < 0)
 			print_err(Err_mummap);
@@ -45,33 +46,20 @@ void	identify_file(char *ptr)
 
 	magic_number = *(int *)ptr;
 	if (magic_number == MH_MAGIC_64 || magic_number == MH_CIGAM_64)
-	{
-		recover_base()->type_arch = 1;
 		handle_64(ptr);
-	}
-	else if ((magic_number == MH_MAGIC || magic_number == MH_CIGAM) && recover_base()->nm == true)
+	else if ((magic_number == MH_MAGIC || magic_number == MH_CIGAM))
 	{
-		recover_base()->is_32_dylib = true;
-
-
-
 		recover_base()->type_arch = 2;
 		handle_32(ptr);
 	}
 	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
-	{
-		recover_base()->type_arch = 3;
 		handle_fat(ptr);
-	}	
 	else if (ft_strncmp(ptr, ARMAG, SARMAG) == 0)
 	{
 		recover_base()->archive = recover_base()->nm == false ? true : false;
 		recover_base()->archiveNm = recover_base()->nm == false ? false : true;
 		handle_archive(ptr);
 	}
-	else 
-	{
-		recover_base()->err++;
-		printf("Wrong binary format\n");
-	}
+	else
+		print_err(Err_format);
 }
