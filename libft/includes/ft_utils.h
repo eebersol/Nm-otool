@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/16 11:19:53 by qdequele          #+#    #+#             */
-/*   Updated: 2018/01/26 15:36:47 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 15:57:32 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,8 @@ int				ft_nmatch(char *s1, char *s2);
 double			ft_sqrt(double nb);
 double			ft_positive(double x);
 int				ft_atoi_base(char *str, char *base);
+char			*ft_hexa_itoa(unsigned long n);
+char			*ft_ultohex(unsigned long nb);
+int				ft_ullen_base(unsigned long nb, int base);
 
 #endif

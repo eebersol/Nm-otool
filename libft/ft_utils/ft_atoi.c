@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/27 11:43:46 by qdequele          #+#    #+#             */
-/*   Updated: 2018/01/22 18:21:04 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:41:51 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		ft_atoi(const char *s)
 {
-	 int		v;
-	 int		i;
-	 int		n;
+	int		v;
+	int		i;
+	int		n;
 
 	v = 0;
 	i = 0;

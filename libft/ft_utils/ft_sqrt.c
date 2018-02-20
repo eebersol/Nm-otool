@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/16 10:32:29 by eebersol          #+#    #+#             */
-/*   Updated: 2016/10/26 13:06:04 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:45:46 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +19,12 @@ double	ft_sqrt(double nb)
 
 	i = 1;
 	sq = 1;
-	if((unsigned int)nb == 0)
-		return(0);
+	if ((unsigned int)nb == 0)
+		return (0);
 	while (i * i < (unsigned int)nb)
 		i++;
 	if (((unsigned int)nb % i) == 0)
 		return (i);
 	else
-		return(0);
+		return (0);
 }

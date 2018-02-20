@@ -3,48 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qdequele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 10:02:34 by qdequele          #+#    #+#             */
-/*   Updated: 2015/12/08 10:42:41 by qdequele         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:45:17 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-// char	*ft_itoa_base(int nb, int base)
-// {
-// 	char			*str;
-// 	size_t			len;
-// 	size_t			neg;
-// 	long long int	n;
-
-// 	n = nb;
-// 	len = ft_nbrlen_base(n, base);
-// 	neg = ft_isnegative(n);
-// 	str = (char *)malloc(sizeof(char) * (neg + len + 1));
-// 	if (str == NULL)
-// 		return (NULL);
-// 	str[len + neg] = '\0';
-// 	if (neg)
-// 	{
-// 		str[0] = '-';
-// 		n = -n;
-// 	}
-// 	while ((len-- + neg) > neg)
-// 	{
-// 		str[len + neg] = (n % base) + ((n % base) > 9 ? 'A' - 10 : '0');
-// 		n = n / base;
-// 	}
-// 	return (str);
-// }
-
 #define ABS(abs) ((abs) < 0 ? (-abs) : (abs))
 
 void	aux(int n, int b, char *ans, int *p)
 {
-	char	base[] = "0123456789ABCDEF";
+	char	*base;
 
+	base = "0123456789ABCDEF";
 	if (n <= -b || b <= n)
 		aux(n / b, b, ans, p);
 	ans[(*p)++] = base[ABS(n % b)];
@@ -64,4 +38,21 @@ char	*ft_itoa_base(int value, int base)
 	aux(value, base, ans, &p);
 	ans[p] = '\0';
 	return (ans);
+}
+
+char	*ft_ultohex(unsigned long nb)
+{
+	char			*str;
+	size_t			len;
+
+	len = ft_ullen_base(nb, 16);
+	if ((str = (char *)malloc(sizeof(char) * (len + 1))) == NULL)
+		return (NULL);
+	str[len] = '\0';
+	while (len-- > 0)
+	{
+		str[len] = (nb % 16) + ((nb % 16) > 9 ? 'a' - 10 : '0');
+		nb = nb / 16;
+	}
+	return (str);
 }

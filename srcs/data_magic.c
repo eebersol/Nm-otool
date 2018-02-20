@@ -6,78 +6,71 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/26 15:53:36 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:37:44 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/nm-otool.h"
+#include "../includes/nm_otool.h"
 
 void	data_magic(int nsyms, int symoff, int stroff, void *ptr)
 {
+	t_list			*tmp;
 	t_magic			*magic;
 	struct nlist_64 *array;
 	char			*stringable;
 	int				i;
 
-	recover_base()->magicBase = (t_magic*)malloc(sizeof(t_magic));
-	magic = recover_base()->magicBase;
 	array = ptr + symoff;
 	stringable = ptr + stroff;
 	i = 0;
+	recover_base()->list_segment = ft_lst_reverse(recover_base()->list_segment);
 	while (i < nsyms)
 	{
-		magic->content = &array[i];
+		tmp = (t_list *)malloc(sizeof(t_list));
+		magic = (t_magic*)malloc(sizeof(t_magic));
+		magic->n_sect = array[i].n_sect;
 		magic->name_func = stringable + array[i].n_un.n_strx;
-		magic->addr = ptr;
 		magic->type = get_type(array[i].n_type, magic);
 		magic->value = value_manager(magic, array[i].n_value);
+		tmp->content = magic;
+		find_best_place(recover_base(), tmp);
 		i++;
-		if (i < nsyms)
-		{
-			magic->next = (t_magic*)malloc(sizeof(t_magic));
-			magic = magic->next;
-		}
 	}
 }
 
 void	data_magic_32(int nsyms, int symoff, int stroff, void *ptr)
 {
+	t_list			*tmp;
 	t_magic			*magic;
 	struct nlist	*array;
 	char			*stringable;
 	int				i;
 
-	recover_base()->magicBase = (t_magic*)malloc(sizeof(t_magic));
-	magic = recover_base()->magicBase;
 	array = ptr + symoff;
 	stringable = ptr + stroff;
 	i = 0;
+	recover_base()->list_segment = ft_lst_reverse(recover_base()->list_segment);
 	while (i < nsyms)
 	{
-		magic->content_32 = &array[i];
+		tmp = (t_list *)malloc(sizeof(t_list));
+		magic = (t_magic*)malloc(sizeof(t_magic));
+		magic->n_sect = array[i].n_sect;
 		magic->name_func = stringable + array[i].n_un.n_strx;
-		magic->addr = ptr;
 		magic->type = get_type(array[i].n_type, magic);
 		magic->value = value_manager(magic, array[i].n_value);
+		tmp->content = magic;
+		find_best_place(recover_base(), tmp);
 		i++;
-		if (i < nsyms)
-		{
-			magic->next = (t_magic*)malloc(sizeof(t_magic));
-			magic = magic->next;
-		}
 	}
 }
 
 void	get_content(uint64_t addr, unsigned int size, char *ptr)
 {
-	t_magic			*magic;
 	unsigned int	i;
 	char			*str;
 
 	i = 0;
 	str = "";
-	recover_base()->magicBase = (t_magic*)malloc(sizeof(t_magic));
-	magic = recover_base()->magicBase;
 	while (i < size)
 	{
 		if (i % 16 == 0 && i != 0)
@@ -86,15 +79,15 @@ void	get_content(uint64_t addr, unsigned int size, char *ptr)
 		if ((i + 1) % 16 == 0)
 		{
 			if (i + 1 != size)
-				magic = add_list(magic, str, val_otool(swap_uint64(addr)), 0);
-			if (i + 1 == size)
+				add_list(str, val_otool(swap_uint64(addr)));
+			else
 				break ;
 			str = "";
 		}
 		i++;
 	}
 	if (str && ft_strlen(str) > 1)
-		magic = add_list(magic, str, val_otool(swap_uint64(addr)), 1);
+		add_list(str, val_otool(swap_uint64(addr)));
 }
 
 void	data_seg(struct load_command *lc, struct mach_header_64 *header)
@@ -112,11 +105,10 @@ void	data_seg(struct load_command *lc, struct mach_header_64 *header)
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{
-			if (recover_base()->archive == false)
+			if (!recover_base()->archive)
 			{
 				ft_putstr(recover_base()->name);
-				ft_putstr(":\n");
-				ft_putstr("Contents of (__TEXT,__text) section\n");
+				ft_putstr(":\nContents of (__TEXT,__text) section\n");
 			}
 			get_content(sec->addr, sec->size, (char *)header + sec->offset);
 		}
@@ -140,11 +132,10 @@ void	data_seg_32(struct load_command *lc, struct mach_header *header)
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{
-			if (recover_base()->archive == false)
+			if (!recover_base()->archive)
 			{
 				ft_putstr(recover_base()->name);
-				ft_putstr(":\n");
-				ft_putstr("Contents of (__TEXT,__text) section\n");
+				ft_putstr("\nContents of (__TEXT,__text) section\n");
 			}
 			get_content(sec->addr, sec->size, (char *)header + sec->offset);
 		}

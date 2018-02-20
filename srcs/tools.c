@@ -6,28 +6,13 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/26 16:33:23 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:56:43 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/nm-otool.h"
+#include "../includes/nm_otool.h"
 
-char	*str_lower(char *str)
-{
-	size_t i;
-
-	i = 0;
-	if (!str)
-		return (NULL);
-	while (i < ft_strlen(str))
-	{
-		str[i] = ft_tolower(str[i]);
-		i++;
-	}
-	return (str);
-}
-
-char	read_tab(int i)
+static char	read_tab(int i)
 {
 	char	*tab;
 
@@ -35,7 +20,7 @@ char	read_tab(int i)
 	return (tab[i]);
 }
 
-char	*itoa_base(int val, int base, int output_size)
+char		*itoa_base(int val, int base, int output_size)
 {
 	char			buffer[output_size + 1];
 	char			*p;
@@ -63,30 +48,67 @@ char	*itoa_base(int val, int base, int output_size)
 	return (ft_strdup(p));
 }
 
-t_magic	*add_list(t_magic *magic, char *str, char *test_addr, int flag)
+void		add_list(char *str, char *test_addr)
 {
+	t_list	*list;
+	t_magic	*magic;
+
+	list = (t_list *)malloc(sizeof(t_list));
+	magic = (t_magic *)malloc(sizeof(t_magic));
 	magic->text_section = (char*)malloc(sizeof(char*) * ft_strlen(str) + 1);
 	magic->text_section = str;
 	magic->value = test_addr;
-	if (flag == 0 )
-	{
-		magic->next = (t_magic*)malloc(sizeof(t_magic));
-		magic = magic->next;
-		magic->text_section = NULL;
-	}
-	else
-		magic->next = NULL;
-	return (magic);
+	list->content = magic;
+	ft_lstaddend(&recover_base()->list_magic, list);
 }
 
-int		cmp_name(char *str1, char *str2)
+void		find_place(t_list *complet_node, t_magic *node)
 {
-	if (ft_strcmp(ft_strsub(str1, 0,
-		ft_strlen(str2)), str2) == 0
-			&& ft_strlen(str1) > ft_strlen(str2))
-		return (1);
-	else if ((ft_strcmp(str1, str2) > 0))
-		return (1);
+	t_base	*base;
+	t_list	*tmp;
+	t_magic	*magic;
+	int		j;
+
+	j = 0;
+	base = recover_base();
+	tmp = base->list_magic;
+	while (tmp)
+	{
+		magic = (t_magic *)tmp->content;
+		if (ft_strcmp(node->name_func, magic->name_func) == 0
+			&& magic->type == 'I')
+			return (ft_lstadd_at(&base->list_magic, complet_node, j));
+		if (ft_strcmp(node->name_func, magic->name_func) == 0
+			&& node->type < magic->type && node->type + 32 == magic->type)
+			return (ft_lstadd_at(&base->list_magic, complet_node, j));
+		if (ft_strcmp(node->name_func, magic->name_func) < 0)
+			return (ft_lstadd_at(&base->list_magic, complet_node, j));
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+		j++;
+	}
+	ft_lstaddend(&base->list_magic, complet_node);
+}
+
+void		find_best_place(t_base *base, t_list *tmp)
+{
+	t_magic	*tmp_magic;
+	char	*to_place;
+	char	*curr;
+
+	tmp_magic = (t_magic*)tmp->content;
+	if (ft_lstcount(base->list_magic) == 0)
+		return (ft_lstadd(&base->list_magic, tmp));
+	else if (ft_lstcount(base->list_magic) == 1)
+	{
+		to_place = (char*)((t_magic*)tmp->content)->name_func;
+		curr = (char*)((t_magic*)base->list_magic->content)->name_func;
+		if (ft_strcmp(curr, to_place) > 0)
+			return (ft_lstadd(&base->list_magic, tmp));
+		else
+			return (ft_lstaddend(&base->list_magic, tmp));
+	}
 	else
-		return (0);
+		find_place(tmp, tmp_magic);
 }

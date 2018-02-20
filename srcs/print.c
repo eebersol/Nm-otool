@@ -6,28 +6,11 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/26 16:04:39 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:55:04 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/nm-otool.h"
-
-void	print_manager(void)
-{
-	t_base	*base;
-
-	base = recover_base();
-	// printf("base->nm ::%d archive :: %d\n", base->nm, base->archive);
-	if (base->nm == true)
-		print_nm();
-	else if (base->archive == true)
-	{
-		// printf("ICI\n");
-		add_archive();
-	}
-	else if (base->nm == false && base->archive == false)
-		print_otool();
-}
+#include "../includes/nm_otool.h"
 
 void	print_err(char *err)
 {
@@ -35,8 +18,7 @@ void	print_err(char *err)
 
 	base = recover_base();
 	base->err++;
-	ft_putstr("nm: ");
-	if (ft_strcmp(err, Err_corrupt) == 0)
+	if (ft_strcmp(err, ERR_CORRUPT) == 0)
 	{
 		err = "corrupt truncated or malformed object (offset field of";
 		err = ft_strjoin(err, "section 0 in LC_SEGMENT command ");
@@ -45,41 +27,17 @@ void	print_err(char *err)
 	ft_putstr(err);
 }
 
-void	print_nm(void)
-{
-	t_magic	*magic;
-
-	magic = recover_base()->magicBase;
-	sort_alphanumeric(magic);
-	resort_diff();
-	print_label();
-	while (magic)
-	{
-		if (recover_base()->opt_o == true)
-		{
-			ft_putstr(recover_base()->name);
-			ft_putstr(": ");
-		}
-		if (magic->type != 'X' && magic->name_func
-			&& ft_strlen(magic->name_func) > 0
-				&& ft_strstr(magic->name_func, "radr:") == NULL
-					&& magic->type != 'u')
-			print_value_nm(magic);
-		if (magic->next == NULL)
-			break ;
-		magic = magic->next;
-	}
-}
-
 void	print_otool(void)
 {
 	t_base	*base;
+	t_list	*list;
 	t_magic	*magic_tmp;
 
 	base = recover_base();
-	magic_tmp = base->magicBase;
-	while (magic_tmp)
+	list = base->list_magic;
+	while (list)
 	{
+		magic_tmp = (t_magic*)list->content;
 		if (magic_tmp->value && magic_tmp->text_section)
 		{
 			ft_putstr(magic_tmp->value);
@@ -87,38 +45,47 @@ void	print_otool(void)
 			ft_putstr(magic_tmp->text_section);
 			ft_putchar('\n');
 		}
-		if (magic_tmp->next == NULL)
+		if (list->next == NULL)
 			break ;
-		magic_tmp = magic_tmp->next;
+		list = list->next;
 	}
 }
 
-void	print_archive(void)
+void	print_nm(void)
 {
-	t_archive	*archive;
+	t_list	*tmp;
+	t_magic	*magic;
+	t_base	*base;
 
-	archive = recover_base()->archiveBase;
-	// if (archive && lst_count_archive(archive) >= 2)
-	// {
-		sort_alphanumeric_archive(archive);
-		remove_doublon();
-	// }
-	print_title_archive();
-	while (archive)
+	base = recover_base();
+	tmp = base->list_magic;
+	if (base->archive == true)
 	{
-		print_label_archive(archive);
-		if (archive->magicArchive)
-		{
-			while (archive->magicArchive)
-			{
-				print_value_archive(archive);
-				if (archive->magicArchive->next == NULL)
-					break ;
-				archive->magicArchive = archive->magicArchive->next;
-			}
-		}
-		if (archive->next == NULL)
-			break ;
-		archive = archive->next;
+		ft_putstr(ft_strjoin("\n", base->name));
+		ft_putstr(ft_strjoin("(", base->name));
+		ft_putstr("):\n");
 	}
+	if (base->is_alone)
+		ft_putstr(ft_strjoin(base->name, ":\n"));
+	while (tmp)
+	{
+		magic = (t_magic*)tmp->content;
+		print_node_no_opt(base, magic);
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+}
+
+void	print_node_no_opt(t_base *base, t_magic *magic)
+{
+	if (magic->type != 'U')
+		ft_putstr(ft_strjoin(magic->value, " "));
+	else if (base->type_file == 2)
+		ft_putstr("         ");
+	else
+		ft_putstr("                 ");
+	ft_putchar(magic->type);
+	ft_putchar(' ');
+	ft_putstr(ft_strjoin(magic->name_func, "\n"));
 }

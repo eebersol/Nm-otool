@@ -6,17 +6,11 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 15:48:35 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:27:20 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/nm-otool.h"
-
-uint16_t	swap_uint16(uint16_t nb)
-{
-	nb = (nb << 8) | (nb >> 8);
-	return (nb);
-}
+#include "../includes/nm_otool.h"
 
 uint32_t	swap_uint32(uint32_t nb)
 {

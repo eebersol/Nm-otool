@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_positive.c                                      :+:      :+:    :+:   */
+/*   ft_str_lower.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/09 15:00:21 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:43:11 by eebersol         ###   ########.fr       */
+/*   Created: 2015/12/08 10:02:34 by qdequele          #+#    #+#             */
+/*   Updated: 2018/02/20 16:49:48 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-double	ft_positive(double x)
+char	*ft_str_lower(char *str)
 {
-	if (x < 0)
-		return (-x);
-	return (x);
+	size_t i;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (i < ft_strlen(str))
+	{
+		str[i] = ft_tolower(str[i]);
+		i++;
+	}
+	return (str);
 }

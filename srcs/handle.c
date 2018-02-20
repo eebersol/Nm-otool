@@ -6,11 +6,38 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/26 16:04:20 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:35:52 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/nm-otool.h"
+#include "../includes/nm_otool.h"
+
+void	handle_archive(char *ptr)
+{
+	struct ar_hdr	*arch;
+	int				i;
+
+	arch = (struct ar_hdr *)(void*)(ptr + SARMAG);
+	recover_base()->path_name = "";
+	arch = (struct ar_hdr *)((void*)arch +
+		sizeof(struct ar_hdr) + ft_atoi(arch->ar_size));
+	while (1)
+	{
+		if (ft_strstr(arch->ar_name, "__.SYMDEF SORTED")
+			|| ft_strcmp(arch->ar_name, "") == 0)
+			break ;
+		i = get_size(arch->ar_name);
+		if (ft_strcmp(recover_base()->path_name, get_name(arch->ar_name)) != 0)
+		{
+			recover_base()->name = get_name(arch->ar_name);
+			identify_file((void *)arch + sizeof(struct ar_hdr) + i);
+			reinit_base(recover_base()->name);
+		}
+		recover_base()->name = get_name(arch->ar_name);
+		arch = (struct ar_hdr *)((void*)arch
+			+ sizeof(struct ar_hdr) + ft_atoi(arch->ar_size));
+	}
+}
 
 void	handle_fat(char *ptr)
 {
@@ -19,18 +46,23 @@ void	handle_fat(char *ptr)
 	uint32_t			i;
 	uint32_t			offset;
 
-	fat = (void*)ptr;
-	i = swap_uint32(fat->nfat_arch);
+	fat = (struct fat_header*)ptr;
+	i = 0;
 	arch = ((void*)ptr) + sizeof(fat);
-	while (i--)
+	recover_base()->is_alone = swap_uint32(fat->nfat_arch) == 1 ? true : false;
+	while (i <= swap_uint32(fat->nfat_arch))
 	{
 		if (swap_uint32(arch->cputype) == CPU_TYPE_X86_64)
+		{
 			offset = arch->offset;
+			break ;
+		}
 		else if (swap_uint32(arch->cputype) == CPU_TYPE_I386)
-			return (ft_putstr("CPU_TYPE_I386 are not supported.\n"));
+			offset = arch->offset;
 		else if (swap_uint32(arch->cputype) == CPU_TYPE_POWERPC)
 			return (ft_putstr("CPU_TYPE_POWERPC are not supported.\n"));
-		arch += sizeof(struct fat_arch);
+		arch = (void*)arch + sizeof(struct fat_arch);
+		i++;
 	}
 	identify_file(ptr + swap_uint32(offset));
 }
@@ -49,7 +81,7 @@ void	handle_32(char *ptr)
 	{
 		if (lc->cmd == LC_SEGMENT)
 			recover_base()->nm == false ?
-						data_seg_32(lc, header) : section_32(lc);
+						data_seg_32(lc, header) : segment_32(lc);
 		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;
@@ -58,7 +90,7 @@ void	handle_32(char *ptr)
 		}
 		lc = (void *)lc + lc->cmdsize;
 	}
-	//print_manager();
+	recover_base()->nm == true ? print_nm() : print_otool();
 }
 
 void	handle_64(char *ptr)
@@ -74,7 +106,9 @@ void	handle_64(char *ptr)
 	while (i++ < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT_64)
-			recover_base()->nm == false ? data_seg(lc, header) : section(lc);
+		{
+			recover_base()->nm == false ? data_seg(lc, header) : segment(lc);
+		}
 		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;
@@ -83,5 +117,5 @@ void	handle_64(char *ptr)
 		}
 		lc = (void *)lc + lc->cmdsize;
 	}
-	//print_manager();
+	recover_base()->nm == true ? print_nm() : print_otool();
 }

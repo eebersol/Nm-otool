@@ -6,11 +6,11 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/26 15:57:00 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:37:36 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/nm-otool.h"
+#include "../includes/nm_otool.h"
 
 t_base	*recover_base(void)
 {
@@ -24,13 +24,25 @@ t_base	*init_base(char *name)
 	t_base	*base;
 
 	base = recover_base();
-	base->name = name;
-	base->err = false;
 	base->archive = false;
-	base->index = 1;
-	base->magicBase = NULL;
-	base->sectionBase = NULL;
-	base->nameArchive = NULL;
-	base->type_arch = 0;
+	base->type_file = 0;
+	base->name = name;
+	base->path_name = NULL;
+	base->err = false;
+	base->is_alone = false;
+	base->list_magic = NULL;
+	base->list_segment = NULL;
+	return (base);
+}
+
+t_base	*reinit_base(char *name)
+{
+	t_base	*base;
+
+	base = recover_base();
+	base->type_file = 0;
+	base->name = name;
+	base->list_magic = NULL;
+	base->list_segment = NULL;
 	return (base);
 }

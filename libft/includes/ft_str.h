@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/16 11:19:56 by qdequele          #+#    #+#             */
-/*   Updated: 2016/10/27 14:18:02 by qdequele         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:49:33 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s);
 char	*ft_freejoin(char *s1, char *s2);
 char	*ft_skip_char(char *str, char c);
+char	*ft_str_lower(char *str);
 
 #endif

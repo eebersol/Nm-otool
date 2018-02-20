@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 14:30:45 by qdequele          #+#    #+#              #
-#    Updated: 2018/01/22 18:22:07 by eebersol         ###   ########.fr        #
+#    Updated: 2018/02/20 16:49:45 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ _FT_STR_SRC			=	ft_striter.c ft_striteri.c ft_strdel.c ft_strclr.c\
 						ft_strncmp.c ft_strchr.c ft_strrchr.c ft_strstr.c\
 						ft_strlen.c ft_strrev.c ft_strnstr.c ft_strfjoin.c\
 						ft_strcut.c ft_str_to_tab.c ft_freejoin.c\
-						ft_skip_char.c
+						ft_skip_char.c ft_str_lower.c
 
 FT_STR_SRC			=	$(addprefix ft_str/,$(_FT_STR_SRC))
 
@@ -76,7 +76,7 @@ FT_STR_SRC			=	$(addprefix ft_str/,$(_FT_STR_SRC))
 _FT_UTILS_SRC		=	ft_atoi.c ft_atoi_base.c ft_itoa.c ft_bzero.c ft_toupper.c ft_tolower.c\
 						ft_nbrlen.c ft_nbrlen_base.c ft_wordlen.c ft_wordcount.c\
 						ft_itoa_base.c ft_get_next_line.c ft_colors.c \
-						ft_match.c ft_nmatch.c ft_sqrt.c ft_positive.c
+						ft_match.c ft_nmatch.c ft_sqrt.c ft_positive.c ft_hexa_itoa.c
 
 FT_UTILS_SRC		=	$(addprefix ft_utils/,$(_FT_UTILS_SRC))
 

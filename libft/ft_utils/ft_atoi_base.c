@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/01/22 18:22:37 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/20 16:42:46 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int		check_in_base(char c, char *base)
 	return (feedback);
 }
 
-static char	*normalise(char *str, char *base)
+static char		*normalise(char *str, char *base)
 {
 	long	start;
 	long	end;
@@ -55,7 +55,7 @@ static int		convert_number(char nbr, char *base)
 	return (i);
 }
 
-int		ft_atoi_base(char *str, char *base)
+int				ft_atoi_base(char *str, char *base)
 {
 	int		i;
 	long	base_nb;
