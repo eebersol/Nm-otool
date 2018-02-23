@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/23 15:18:09 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/23 15:37:05 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,17 @@ void		check_power_pc(struct fat_header *fat, struct fat_arch *arch)
 	t_base	*base;
 
 	base = recover_base();
-	if (endian_32(fat->nfat_arch) == 1)
+
+	if (arch->offset == 0)
+		return ;
+	// if (endian_32(arch->cputype) == CPU_TYPE_POWERPC)
+	// 	printf("power_pc\n");
+	// if (endian_32(arch->cputype) == CPU_TYPE_X86_64)
+	// 	printf("X86_64\n");
+	// if (endian_32(arch->cputype) == CPU_TYPE_I386)
+	// 	printf("I386\n");
+	// printf("offset : %u\n", arch->offset);
+	if (endian_32(fat->nfat_arch) == 1 && endian_32(arch->cputype) == CPU_TYPE_POWERPC)
 		print_err(ERR_POWER_PC);
 	else if (endian_32(fat->nfat_arch) != 1
 		&& endian_32(arch->cputype) == CPU_TYPE_POWERPC)

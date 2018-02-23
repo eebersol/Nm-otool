@@ -130,8 +130,8 @@ def tests_main(args):
     print("[+] total amount of files to process: {}".format(len(files_to_test)))
 
     # # launch tests
-    if args.nm:
-        errors += tests_nm(files_to_test, args)
+    # if args.nm:
+    #     errors += tests_nm(files_to_test, args)
     if args.otool:
         errors += tests_otool(files_to_test)
 
