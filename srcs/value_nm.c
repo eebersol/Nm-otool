@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:51:05 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/22 11:39:18 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char		*value(uint64_t n_value, int len)
 	size_t	value_len;
 
 	value_r = ft_str_lower(ft_itoa_base(n_value, 16));
-	value_l = ft_itoa_base(swap_uint64(n_value), 16);
+	value_l = ft_itoa_base(endian_64(n_value), 16);
 	value_len = ft_strlen(value_l) + ft_strlen(value_r);
 	return (padding(value_len, value_l, value_r, len));
 }

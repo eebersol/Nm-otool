@@ -59,12 +59,8 @@ def tests_nm(tests_array, args):
             errors += 1
         else:
             result = "\033[92mOK\033[0m"
-
-        if i == 3:
-            return 
-        if args.errors or "OK" in result and i < 3:
+        if args.errors and "OK" in result:
            continue
-        i = i + 1;
         print("\t+ {:{length}} {result}".format(t, length=max_len, result=result))
 
     return errors
@@ -80,7 +76,6 @@ def tests_otool(tests_array):
 
     for t in tests_array:
 
-        print(t)
         otool_out , otool_rc , _ = execute("{} {}".format("otool -t ", t))
         out , rc , err = execute("{} {}".format(OTOOL_PATH, t))
 
@@ -98,7 +93,6 @@ def tests_otool(tests_array):
             errors += 1
         else:
             result = "\033[92mOK\033[0m"
-
         if args.errors and "OK" in result:
            continue
         print("\t+ {:{length}} {result}".format(t, length=max_len, result=result))

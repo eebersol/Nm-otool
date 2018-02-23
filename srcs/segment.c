@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:37:34 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/23 15:16:19 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	segment(struct load_command *lc)
 	seg = (struct segment_command_64 *)lc;
 	sec = (struct section_64 *)(seg + sizeof(seg) / sizeof(void *));
 	i = 0;
+	if (recover_base()->file_size < seg->fileoff + seg->filesize)
+		print_err(ERR_CORRUPT);
 	if (seg->nsects == 0)
 		return ;
 	while (i++ < seg->nsects)
@@ -43,6 +45,8 @@ void	segment_32(struct load_command *lc)
 	seg = (struct segment_command *)lc;
 	sec = (struct section *)(seg + sizeof(seg) / sizeof(void *));
 	i = 0;
+	if (recover_base()->file_size < seg->fileoff + seg->filesize)
+		print_err(ERR_CORRUPT);
 	if (seg->nsects == 0)
 		return ;
 	while (i++ < seg->nsects)

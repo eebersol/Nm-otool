@@ -40,7 +40,7 @@ char		*get_value_otool_archive(uint64_t n_value)
 	int		padding;
 
 	value_r = ft_str_lower(ft_itoa_base(n_value, 16));
-	value_l = ft_itoa_base(swap_uint64(n_value), 16);
+	value_l = ft_itoa_base(endian_64(n_value), 16);
 	value_len = ft_strlen(value_l) + ft_strlen(value_r);
 	if (value_len < 9)
 	{
@@ -70,7 +70,7 @@ char		*get_value_otool_exec(uint64_t n_value)
 
 	value_l = ft_itoa_base(n_value, 16);
 	value_l = ft_strsub(value_l, 0, ft_strlen(value_l) - 1);
-	value_r = ft_str_lower(ft_itoa_base(swap_uint64(n_value), 16));
+	value_r = ft_str_lower(ft_itoa_base(endian_64(n_value), 16));
 	if (ft_strlen("0000000") + ft_strlen(value_l) + ft_strlen(value_r) < 16)
 	{
 		value_len = ft_strlen("0000000")

@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:55:04 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/23 14:57:04 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,30 +62,38 @@ void	print_nm(void)
 	if (base->archive == true)
 	{
 		ft_putstr(ft_strjoin("\n", base->name));
-		ft_putstr(ft_strjoin("(", base->name));
+		ft_putstr(ft_strjoin("(", base->path_name));
 		ft_putstr("):\n");
 	}
-	if (base->is_alone)
+	if (base->ac > 2 || base->is_alone)
+	{
+		base->is_alone == 0 ? ft_putstr("\n") : ft_putstr("");
 		ft_putstr(ft_strjoin(base->name, ":\n"));
+	}
 	while (tmp)
 	{
 		magic = (t_magic*)tmp->content;
-		print_node_no_opt(base, magic);
+		print_node(base, magic);
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
 	}
 }
 
-void	print_node_no_opt(t_base *base, t_magic *magic)
+void	print_node(t_base *base, t_magic *magic)
 {
-	if (magic->type != 'U')
-		ft_putstr(ft_strjoin(magic->value, " "));
-	else if (base->type_file == 2)
-		ft_putstr("         ");
-	else
-		ft_putstr("                 ");
-	ft_putchar(magic->type);
-	ft_putchar(' ');
-	ft_putstr(ft_strjoin(magic->name_func, "\n"));
+	if (ft_strlen(magic->name_func) > 0 && magic->type != 'X'
+		&& ft_strstr(magic->name_func, "radr://") == NULL
+			&& magic->type != 'u')
+	{
+		if (magic->type != 'U')
+			ft_putstr(ft_strjoin(magic->value, " "));
+		else if (base->type_file == 2)
+			ft_putstr("         ");
+		else
+			ft_putstr("                 ");
+		ft_putchar(magic->type);
+		ft_putchar(' ');
+		ft_putstr(ft_strjoin(magic->name_func, "\n"));
+	}
 }

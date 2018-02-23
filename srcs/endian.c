@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   endian.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:27:20 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/22 11:38:36 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/nm_otool.h"
 
-uint32_t	swap_uint32(uint32_t nb)
+uint32_t	endian_32(uint32_t nb)
 {
 	nb = ((nb & 0x000000FF) << 24 |
 			(nb & 0x0000FF00) << 8 |
@@ -21,7 +21,7 @@ uint32_t	swap_uint32(uint32_t nb)
 	return (nb);
 }
 
-uint64_t	swap_uint64(uint64_t nb)
+uint64_t	endian_64(uint64_t nb)
 {
 	nb = ((nb & 0x00000000000000FF) << 56 |
 			(nb & 0x000000000000FF00) << 40 |

@@ -6,11 +6,37 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:35:48 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/23 15:18:09 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/nm_otool.h"
+
+void		check_power_pc(struct fat_header *fat, struct fat_arch *arch)
+{
+	t_base	*base;
+
+	base = recover_base();
+	if (endian_32(fat->nfat_arch) == 1)
+		print_err(ERR_POWER_PC);
+	else if (endian_32(fat->nfat_arch) != 1
+		&& endian_32(arch->cputype) == CPU_TYPE_POWERPC)
+	{
+		base->power_pc = true;
+		ft_putstr("\n");
+		ft_putstr(base->name);
+		ft_putstr(" (for architecture ppc):\n Not supported.");
+	}
+	else if (endian_32(arch->cputype) != CPU_TYPE_POWERPC
+		&& base->power_pc == true)
+	{
+		ft_putstr("\n");
+		ft_putstr(base->name);
+		endian_32(arch->cputype) == CPU_TYPE_I386 ?
+			ft_putstr(" (for architecture i386):\n")
+				: ft_putstr(" (for architecture X86_64):\n");
+	}
+}
 
 char		get_char(char *name)
 {

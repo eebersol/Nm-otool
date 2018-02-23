@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:37:36 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/23 15:15:40 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ t_base	*init_base(char *name)
 
 	base = recover_base();
 	base->archive = false;
+	base->ac = 0;
+	base->file_size = 0;
+	base->power_pc = false;
 	base->type_file = 0;
 	base->name = name;
 	base->path_name = NULL;

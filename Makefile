@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/02/20 16:55:34 by eebersol         ###   ########.fr        #
+#    Updated: 2018/02/22 12:09:25 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,11 @@ _SRC			= init_struct.c \
 					handle.c \
 					nm_otool.c \
 					data_magic.c \
-					options.c \
 					print.c \
 					tools.c \
 					type.c \
 					segment.c \
-					swap.c \
+					endian.c \
 					value_nm.c \
 					value_otool.c \
 
@@ -35,9 +34,7 @@ INCLUDES		= -I./libft/includes/ -I./includes/
 
 SRC				= $(addprefix srcs/,$(_SRC))
 
-
 OBJ				= $(SRC:.c=.o)
-
 
 CFLAGS			= -Wall -Wextra -Werror
 
@@ -55,7 +52,6 @@ $(NAME_OTOOL): $(OBJ)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
-
 
 clean:
 	@rm -f $(OBJ)

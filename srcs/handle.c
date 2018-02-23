@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:35:52 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/23 15:14:19 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	handle_archive(char *ptr)
 		i = get_size(arch->ar_name);
 		if (ft_strcmp(recover_base()->path_name, get_name(arch->ar_name)) != 0)
 		{
-			recover_base()->name = get_name(arch->ar_name);
+			recover_base()->path_name = get_name(arch->ar_name);
 			identify_file((void *)arch + sizeof(struct ar_hdr) + i);
 			reinit_base(recover_base()->name);
 		}
-		recover_base()->name = get_name(arch->ar_name);
+		recover_base()->path_name = get_name(arch->ar_name);
 		arch = (struct ar_hdr *)((void*)arch
 			+ sizeof(struct ar_hdr) + ft_atoi(arch->ar_size));
 	}
@@ -49,22 +49,21 @@ void	handle_fat(char *ptr)
 	fat = (struct fat_header*)ptr;
 	i = 0;
 	arch = ((void*)ptr) + sizeof(fat);
-	recover_base()->is_alone = swap_uint32(fat->nfat_arch) == 1 ? true : false;
-	while (i <= swap_uint32(fat->nfat_arch))
+	recover_base()->is_alone = endian_32(fat->nfat_arch) == 1 ? true : false;
+	while (i <= endian_32(fat->nfat_arch))
 	{
-		if (swap_uint32(arch->cputype) == CPU_TYPE_X86_64)
+		check_power_pc(fat, arch);
+		if (endian_32(arch->cputype) == CPU_TYPE_X86_64)
 		{
 			offset = arch->offset;
 			break ;
 		}
-		else if (swap_uint32(arch->cputype) == CPU_TYPE_I386)
+		else if (endian_32(arch->cputype) == CPU_TYPE_I386)
 			offset = arch->offset;
-		else if (swap_uint32(arch->cputype) == CPU_TYPE_POWERPC)
-			return (ft_putstr("CPU_TYPE_POWERPC are not supported.\n"));
 		arch = (void*)arch + sizeof(struct fat_arch);
 		i++;
 	}
-	identify_file(ptr + swap_uint32(offset));
+	identify_file(ptr + endian_32(offset));
 }
 
 void	handle_32(char *ptr)
@@ -106,9 +105,7 @@ void	handle_64(char *ptr)
 	while (i++ < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT_64)
-		{
 			recover_base()->nm == false ? data_seg(lc, header) : segment(lc);
-		}
 		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;

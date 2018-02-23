@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:37:44 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/02/23 15:15:56 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	get_content(uint64_t addr, unsigned int size, char *ptr)
 		if ((i + 1) % 16 == 0)
 		{
 			if (i + 1 != size)
-				add_list(str, val_otool(swap_uint64(addr)));
+				add_list(str, val_otool(endian_64(addr)));
 			else
 				break ;
 			str = "";
@@ -87,7 +87,7 @@ void	get_content(uint64_t addr, unsigned int size, char *ptr)
 		i++;
 	}
 	if (str && ft_strlen(str) > 1)
-		add_list(str, val_otool(swap_uint64(addr)));
+		add_list(str, val_otool(endian_64(addr)));
 }
 
 void	data_seg(struct load_command *lc, struct mach_header_64 *header)
