@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/23 14:40:36 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/12 10:56:14 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		main(int ac, char **av)
 	}
 	else
 	{
-		printf("Nm need argument\n");
+		ft_putstr("Nm need argument\n");
 		base->err++;
 	}
 	return (base->err > 1 ? 1 : 0);

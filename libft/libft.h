@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 14:20:05 by qdequele          #+#    #+#             */
-/*   Updated: 2018/01/08 16:09:29 by eebersol         ###   ########.fr       */
+/*   Created: 2015/11/24 14:20:05 by eebersol          #+#    #+#             */
+/*   Updated: 2018/03/12 11:00:32 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,5 @@
 # include "includes/ft_print.h"
 # include "includes/ft_str.h"
 # include "includes/ft_utils.h"
-
-// typedef enum	e_bool {
-// 	false = 0,
-// 	true = 1
-// }				t_bool;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/23 15:15:34 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/12 11:04:50 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
 # define ERR_OPEN		"nm : No such fil or directory.\n"
 # define ERR_CORRUPT	"nm : File corrupt"
 # define ERR_FORMAT		"nm : Wrong binary format\n"
-# define ERR_OPT		"nm : Wrong option : -o -g -j -u -U\n"
 # define ERR_POWER_PC	"nm : CPU_TYPE_POWERPC are not supported.\n"
 
 typedef	struct			s_segment

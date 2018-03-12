@@ -41,6 +41,7 @@ def tests_nm(tests_array, args):
 
     for t in tests_array:
 
+        print(t);
         # execute nm and ft_nm
         nm_out , nm_rc , _ = execute("{} {}".format("nm", t))
         out , rc , err = execute("{} {}".format(NM_PATH, t))
@@ -130,10 +131,10 @@ def tests_main(args):
     print("[+] total amount of files to process: {}".format(len(files_to_test)))
 
     # # launch tests
-    # if args.nm:
-    #     errors += tests_nm(files_to_test, args)
-    if args.otool:
-        errors += tests_otool(files_to_test)
+    if args.nm:
+        errors += tests_nm(files_to_test, args)
+    # if args.otool:
+    #     errors += tests_otool(files_to_test)
 
     if errors:
         print("\n[!] total amount of errors: \033[91m{}\033[0m".format(errors))
