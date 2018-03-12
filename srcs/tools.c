@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/22 13:02:50 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/12 15:52:31 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void		find_best_place(t_base *base, t_list *tmp)
 	char	*curr;
 
 	tmp_magic = (t_magic*)tmp->content;
+	// base->list_magic = (t_list*)malloc(sizeof(t_list));
 	if (ft_lstcount(base->list_magic) == 0)
 		return (ft_lstadd(&base->list_magic, tmp));
 	else if (ft_lstcount(base->list_magic) == 1)

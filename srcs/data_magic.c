@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/23 15:15:56 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/12 15:51:10 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,11 @@ void	data_seg(struct load_command *lc, struct mach_header_64 *header)
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{
-			if (!recover_base()->archive)
-			{
-				ft_putstr(recover_base()->name);
-				ft_putstr(":\nContents of (__TEXT,__text) section\n");
-			}
+			ft_putstr(recover_base()->name);
+			ft_putstr("(");
+			ft_putstr(recover_base()->path_name);
+			ft_putstr(")");
+			ft_putstr(":\nContents of (__TEXT,__text) section\n");
 			get_content(sec->addr, sec->size, (char *)header + sec->offset);
 		}
 		sec = (struct section_64 *)(((void*)sec) + sizeof(struct section_64));
@@ -132,11 +132,11 @@ void	data_seg_32(struct load_command *lc, struct mach_header *header)
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{
-			if (!recover_base()->archive)
-			{
-				ft_putstr(recover_base()->name);
-				ft_putstr("\nContents of (__TEXT,__text) section\n");
-			}
+			ft_putstr(recover_base()->name);
+			ft_putstr("(");
+			ft_putstr(recover_base()->path_name);
+			ft_putstr(")");
+			ft_putstr("\nContents of (__TEXT,__text) section\n");
 			get_content(sec->addr, sec->size, (char *)header + sec->offset);
 		}
 		sec = (struct section *)(((void*)sec) + sizeof(struct section));

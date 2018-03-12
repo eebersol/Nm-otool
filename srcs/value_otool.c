@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/20 16:51:00 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/12 15:18:58 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char		*get_value_otool_archive(uint64_t n_value)
 	int		padding;
 
 	value_r = ft_str_lower(ft_itoa_base(n_value, 16));
-	value_l = ft_itoa_base(endian_64(n_value), 16);
+	value_l = ft_str_lower(ft_itoa_base(endian_64(n_value), 16));
 	value_len = ft_strlen(value_l) + ft_strlen(value_r);
 	if (value_len < 9)
 	{

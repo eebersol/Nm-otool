@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/07 10:14:23 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/12 10:54:25 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/12 15:06:32 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		ft_lstcount(t_list *lst)
 
 	i = 0;
 	elem = lst;
-	if (elem)
+	if (lst)
 	{
 		while (elem)
 		{

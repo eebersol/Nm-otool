@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/02/23 15:32:39 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/12 15:24:54 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	handle_archive(char *ptr)
 	recover_base()->path_name = "";
 	arch = (struct ar_hdr *)((void*)arch +
 		sizeof(struct ar_hdr) + ft_atoi(arch->ar_size));
+	ft_putstr(ft_strjoin("Archive : ", recover_base()->name));
+	ft_putchar('\n');
 	while (1)
 	{
 		if (ft_strstr(arch->ar_name, "__.SYMDEF SORTED")

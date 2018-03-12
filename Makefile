@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/02/22 12:09:25 by eebersol         ###   ########.fr        #
+#    Updated: 2018/03/12 15:38:19 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRC				= $(addprefix srcs/,$(_SRC))
 
 OBJ				= $(SRC:.c=.o)
 
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			= -Wall -Wextra -Werror -fsanitize=address -g
 
 all: $(NAME) $(NAME_OTOOL)
 
@@ -67,4 +67,3 @@ fclean:	clean
 re: fclean all
 
 .PHONY: clean fclean re
-	
