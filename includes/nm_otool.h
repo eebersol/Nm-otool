@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/12 15:51:46 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/13 11:15:07 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ uint64_t				endian_64(uint64_t nb);
 char					*itoa_base(int val, int base, int output_size);
 void					add_list(char *str, char *test_addr);
 void					find_place(t_list *complet_node, t_magic *node);
-void					find_best_place(t_base *base, t_list *tmp);
+void					find_best_place(t_base *base, t_list *tmp, int i);
 /*
 ** NAME : type.c
 */
@@ -141,7 +141,7 @@ char					*padding(int value_len, char *value_l,
 											char *value_r, int len);
 char					*value(uint64_t n_value, int len);
 char					*value_abs(uint64_t n_value, int len);
-char					*value_manager(t_magic *magic, uint64_t n_value);
+char					*value_manager(char type, uint64_t n_value);
 /*
 ** NAME : value_otool.c
 */

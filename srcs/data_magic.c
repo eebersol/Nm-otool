@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/12 15:51:10 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/13 12:15:54 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ void	data_magic(int nsyms, int symoff, int stroff, void *ptr)
 	recover_base()->list_segment = ft_lst_reverse(recover_base()->list_segment);
 	while (i < nsyms)
 	{
-		tmp = (t_list *)malloc(sizeof(t_list));
 		magic = (t_magic*)malloc(sizeof(t_magic));
 		magic->n_sect = array[i].n_sect;
 		magic->name_func = stringable + array[i].n_un.n_strx;
 		magic->type = get_type(array[i].n_type, magic);
-		magic->value = value_manager(magic, array[i].n_value);
-		tmp->content = magic;
-		find_best_place(recover_base(), tmp);
+		magic->value = ft_strdup(value_manager(magic->type, array[i].n_value));
+		tmp = (t_list *)malloc(sizeof(t_list));
+		tmp->content = (t_magic*)malloc(sizeof(t_magic));
+		tmp->content = (void*)magic;
+		find_best_place(recover_base(), tmp, i);
 		i++;
 	}
 }
@@ -57,9 +58,10 @@ void	data_magic_32(int nsyms, int symoff, int stroff, void *ptr)
 		magic->n_sect = array[i].n_sect;
 		magic->name_func = stringable + array[i].n_un.n_strx;
 		magic->type = get_type(array[i].n_type, magic);
-		magic->value = value_manager(magic, array[i].n_value);
+		magic->value = value_manager(magic->type, array[i].n_value);
+		tmp->content = (t_magic*)malloc(sizeof(t_magic));
 		tmp->content = magic;
-		find_best_place(recover_base(), tmp);
+		find_best_place(recover_base(), tmp, i);
 		i++;
 	}
 }

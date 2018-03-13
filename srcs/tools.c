@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/12 15:52:31 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/13 12:22:30 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void		find_place(t_list *complet_node, t_magic *node)
 	tmp = base->list_magic;
 	while (tmp)
 	{
-		magic = (t_magic *)tmp->content;
+		magic = tmp->content;
+		complet_node->next = NULL;
 		if (ft_strcmp(node->name_func, magic->name_func) == 0
 			&& magic->type == 'I')
 			return (ft_lstadd_at(&base->list_magic, complet_node, j));
@@ -83,32 +84,36 @@ void		find_place(t_list *complet_node, t_magic *node)
 			return (ft_lstadd_at(&base->list_magic, complet_node, j));
 		if (ft_strcmp(node->name_func, magic->name_func) < 0)
 			return (ft_lstadd_at(&base->list_magic, complet_node, j));
-		if (tmp->next == NULL)
-			break ;
 		tmp = tmp->next;
 		j++;
 	}
 	ft_lstaddend(&base->list_magic, complet_node);
 }
 
-void		find_best_place(t_base *base, t_list *tmp)
+void		find_best_place(t_base *base, t_list *tmp, int i)
 {
 	t_magic	*tmp_magic;
 	char	*to_place;
 	char	*curr;
 
 	tmp_magic = (t_magic*)tmp->content;
-	// base->list_magic = (t_list*)malloc(sizeof(t_list));
-	if (ft_lstcount(base->list_magic) == 0)
-		return (ft_lstadd(&base->list_magic, tmp));
-	else if (ft_lstcount(base->list_magic) == 1)
+	if (i == 0)
+	{
+		ft_lstadd(&base->list_magic, tmp);
+		base->list_magic->next = NULL;
+		return ;
+	}
+	if (i == 1)
 	{
 		to_place = (char*)((t_magic*)tmp->content)->name_func;
 		curr = (char*)((t_magic*)base->list_magic->content)->name_func;
 		if (ft_strcmp(curr, to_place) > 0)
 			return (ft_lstadd(&base->list_magic, tmp));
 		else
+		{
+			tmp->next = NULL;
 			return (ft_lstaddend(&base->list_magic, tmp));
+		}
 	}
 	else
 		find_place(tmp, tmp_magic);

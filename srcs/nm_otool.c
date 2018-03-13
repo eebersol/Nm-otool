@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/12 15:36:40 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/13 12:40:34 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	identify_file(char *ptr)
 		handle_fat(ptr);
 	else if (ft_strncmp(ptr, ARMAG, SARMAG) == 0)
 	{
+		if (recover_base()->nm == false)
+			ft_putstr(ft_strjoin("Archive : ", recover_base()->name));
 		recover_base()->archive = true;
 		handle_archive(ptr);
 	}

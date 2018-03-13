@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/12 15:51:00 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/13 12:44:56 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_base	*init_base(char *name)
 	base->path_name = NULL;
 	base->err = false;
 	base->is_alone = false;
-	base->list_magic = (t_list *)malloc(sizeof(t_list));
+	base->list_magic = NULL;
 	base->list_segment = NULL;
 	return (base);
 }
@@ -45,7 +45,7 @@ t_base	*reinit_base(char *name)
 	base = recover_base();
 	base->type_file = 0;
 	base->name = name;
-	base->list_magic = (t_list *)malloc(sizeof(t_list));
+	base->list_magic = NULL;
 	base->list_segment = NULL;
 	return (base);
 }
