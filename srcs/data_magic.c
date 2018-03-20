@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/20 12:44:20 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/20 13:36:52 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,11 @@ void	data_seg_32(struct load_command *lc, struct mach_header *header)
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{
 			ft_putstr(recover_base()->name);
-			ft_putstr("(");
-			ft_putstr(recover_base()->path_name);
-			ft_putstr(")");
+			if (recover_base()->path_name)
+			{
+				ft_putstr("(");
+				ft_putstr(ft_strjoin(recover_base()->path_name, ")"));
+			}
 			ft_putstr("\nContents of (__TEXT,__text) section\n");
 			get_content(sec->addr, sec->size, (char *)header + sec->offset);
 		}
