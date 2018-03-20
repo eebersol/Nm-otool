@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/13 12:36:47 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/20 12:40:24 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ void	handle_64(char *ptr)
 	while (i++ < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT_64)
+		{
 			recover_base()->nm == false ? data_seg(lc, header) : segment(lc);
+		}
 		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;

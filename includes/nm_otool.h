@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/13 11:15:07 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/20 11:01:45 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef	struct			s_base
 	bool				nm;
 	bool				archive;
 	bool				is_alone;
+	bool				print_or;
 	int					type_file;
 	char				*name;
 	char				*path_name;

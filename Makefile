@@ -6,7 +6,7 @@
 #    By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/08 19:11:03 by eebersol          #+#    #+#              #
-#    Updated: 2018/03/13 12:47:50 by eebersol         ###   ########.fr        #
+#    Updated: 2018/03/20 11:06:48 by eebersol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,6 @@ $(NAME): $(OBJ)
 	@echo $(NAME) " : compiled"
 
 $(NAME_OTOOL): $(OBJ)
-	@make -C ./libft/
 	@gcc $(CFLAGS) $(OBJ) $(LIB) $(INCLUDES) -o $(NAME_OTOOL)
 	@echo $(NAME_OTOOL) ": compiled"
 
@@ -67,6 +66,3 @@ fclean:	clean
 re: fclean all
 
 .PHONY: clean fclean re
-
-
-# -fsanitize=address -g Debug flag

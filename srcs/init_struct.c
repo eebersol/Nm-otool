@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/13 12:44:56 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/20 11:01:55 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_base	*init_base(char *name)
 	base->path_name = NULL;
 	base->err = false;
 	base->is_alone = false;
+	base->print_or = false;
 	base->list_magic = NULL;
 	base->list_segment = NULL;
 	return (base);

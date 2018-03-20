@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/13 12:44:27 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/03/20 12:38:23 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	print_nm(void)
 		ft_putstr(ft_strjoin("(", base->path_name));
 		ft_putstr("):\n");
 	}
-	if (base->ac > 2 || base->is_alone)
+	if (base->is_alone)
 	{
 		base->is_alone == 0 ? ft_putstr("\n") : ft_putstr("");
 		ft_putstr(ft_strjoin(base->name, ":\n"));
