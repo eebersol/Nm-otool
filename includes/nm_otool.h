@@ -108,7 +108,6 @@ void					identify_file(char *ptr);
 ** NAME : print.c
 */
 void					print_err(char *err);
-void					print_otool(void);
 void					print_nm(void);
 void					print_node(t_base *base, t_magic *magic);
 /*

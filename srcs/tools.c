@@ -50,16 +50,10 @@ char		*itoa_base(int val, int base, int output_size)
 
 void		add_list(char *str, char *test_addr)
 {
-	t_list	*list;
-	t_magic	*magic;
-
-	list = (t_list *)malloc(sizeof(t_list));
-	magic = (t_magic *)malloc(sizeof(t_magic));
-	magic->text_section = (char*)malloc(sizeof(char*) * ft_strlen(str) + 1);
-	magic->text_section = str;
-	magic->value = test_addr;
-	list->content = magic;
-	ft_lstaddend(&recover_base()->list_magic, list);
+	ft_putstr(test_addr);
+	ft_putchar('\t');
+	ft_putstr(str);
+	ft_putchar('\n');
 }
 
 void		find_place(t_list *complet_node, t_magic *node)

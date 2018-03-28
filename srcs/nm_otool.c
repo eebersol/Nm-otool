@@ -82,5 +82,5 @@ int		main(int ac, char **av)
 		ft_putstr("Program need argument\n");
 		base->err++;
 	}
-	return (base->err > 1 ? 1 : 0);
+	return (base->err >= 1 ? 1 : 0);
 }

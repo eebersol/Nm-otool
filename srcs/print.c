@@ -27,30 +27,6 @@ void	print_err(char *err)
 	ft_putstr(err);
 }
 
-void	print_otool(void)
-{
-	t_base	*base;
-	t_list	*list;
-	t_magic	*magic_tmp;
-
-	base = recover_base();
-	list = base->list_magic;
-	while (list)
-	{
-		magic_tmp = (t_magic*)list->content;
-		if (magic_tmp->value && magic_tmp->text_section)
-		{
-			ft_putstr(magic_tmp->value);
-			ft_putchar('\t');
-			ft_putstr(magic_tmp->text_section);
-			ft_putchar('\n');
-		}
-		if (list->next == NULL)
-			break ;
-		list = list->next;
-	}
-}
-
 void	print_nm(void)
 {
 	t_list	*tmp;

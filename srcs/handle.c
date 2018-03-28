@@ -81,8 +81,10 @@ void	handle_32(char *ptr)
 	while (i++ < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT)
+		{
 			recover_base()->nm == false ?
 						data_seg_32(lc, header) : segment_32(lc);
+		}
 		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;
@@ -91,7 +93,7 @@ void	handle_32(char *ptr)
 		}
 		lc = (void *)lc + lc->cmdsize;
 	}
-	recover_base()->nm == true ? print_nm() : print_otool();
+	recover_base()->nm == true ? print_nm() : 0;
 }
 
 void	handle_64(char *ptr)
@@ -118,5 +120,5 @@ void	handle_64(char *ptr)
 		}
 		lc = (void *)lc + lc->cmdsize;
 	}
-	recover_base()->nm == true ? print_nm() : print_otool();
+	recover_base()->nm == true ? print_nm() : 0;
 }

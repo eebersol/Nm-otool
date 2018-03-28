@@ -142,7 +142,7 @@ void	data_seg_32(struct load_command *lc, struct mach_header *header)
 				ft_putstr("(");
 				ft_putstr(ft_strjoin(recover_base()->path_name, ")"));
 			}
-			ft_putstr("\nContents of (__TEXT,__text) section\n");
+			ft_putstr(":\nContents of (__TEXT,__text) section\n");
 			get_content(sec->addr, sec->size, (char *)header + sec->offset);
 		}
 		sec = (struct section *)(((void*)sec) + sizeof(struct section));
