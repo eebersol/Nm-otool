@@ -12,6 +12,7 @@
 
 #include "../includes/nm_otool.h"
 
+
 void		check_power_pc(struct fat_header *fat, struct fat_arch *arch)
 {
 	t_base	*base;
@@ -26,18 +27,38 @@ void		check_power_pc(struct fat_header *fat, struct fat_arch *arch)
 		&& endian_32(arch->cputype) == CPU_TYPE_POWERPC)
 	{
 		base->power_pc = true;
-		ft_putstr("\n");
-		ft_putstr(base->name);
-		ft_putstr(" (for architecture ppc):\n Not supported.");
+		if (base->nm == false)
+		{
+			base->name = ft_strjoin(base->name, " ");
+			base->path_name = "architecture ppc";
+		}
+		else
+		{
+			ft_putstr("\n");
+			ft_putstr(base->name);
+			ft_putstr(" (for architecture ppc):\n");
+		}
 	}
 	else if (endian_32(arch->cputype) != CPU_TYPE_POWERPC
 		&& base->power_pc == true)
 	{
-		ft_putstr("\n");
-		ft_putstr(base->name);
-		endian_32(arch->cputype) == CPU_TYPE_I386 ?
-			ft_putstr(" (for architecture i386):\n")
-				: ft_putstr(" (for architecture X86_64):\n");
+		if (base->nm == false)
+		{
+			// base->name = ft_strjoin(base->name, " ");
+			if (endian_32(arch->cputype) == CPU_TYPE_I386)
+				base->path_name = "architecture i386";
+			else
+				base->path_name = "architecture X86_64";
+
+		}
+		else
+		{
+			ft_putstr("\n");
+			ft_putstr(base->name);
+			endian_32(arch->cputype) == CPU_TYPE_I386 ?
+				ft_putstr(" (for architecture i386):\n")
+					: ft_putstr(" (for architecture X86_64):\n");
+		}
 	}
 }
 

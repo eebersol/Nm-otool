@@ -12,6 +12,44 @@
 
 #include "../includes/nm_otool.h"
 
+void	handle_fat(char *ptr)
+{
+	struct fat_header	*fat;
+	struct fat_arch		*arch;
+	uint32_t			i;
+	uint32_t			offset;
+
+	fat = (struct fat_header*)ptr;
+	i = 0;
+	arch = ((void*)ptr) + sizeof(fat);
+	offset = 0;
+	recover_base()->to_print = 1;
+	recover_base()->is_alone = endian_32(fat->nfat_arch) == 1 ? true : false;
+	while (i <= endian_32(fat->nfat_arch))
+	{		
+		check_corruption(arch->offset, arch->size);
+		check_power_pc(fat, arch);
+		if (endian_32(arch->cputype) == CPU_TYPE_POWERPC)
+		{
+			offset = arch->offset;
+			solve_ppc(ptr + endian_32(offset));
+		}
+		if (endian_32(arch->cputype) == CPU_TYPE_X86_64)
+		{
+			offset = arch->offset;
+			break ;
+		}
+		else if (endian_32(arch->cputype) == CPU_TYPE_I386)
+		{
+			recover_base()->ii = true;
+			offset = arch->offset;
+		}
+		arch = (void*)arch + sizeof(struct fat_arch);
+		i++;
+	}
+	identify_file(ptr + endian_32(offset));
+}
+
 void	handle_archive(char *ptr)
 {
 	struct ar_hdr	*arch;
@@ -41,33 +79,6 @@ void	handle_archive(char *ptr)
 	}
 }
 
-void	handle_fat(char *ptr)
-{
-	struct fat_header	*fat;
-	struct fat_arch		*arch;
-	uint32_t			i;
-	uint32_t			offset;
-
-	fat = (struct fat_header*)ptr;
-	i = 0;
-	arch = ((void*)ptr) + sizeof(fat);
-	recover_base()->is_alone = endian_32(fat->nfat_arch) == 1 ? true : false;
-	while (i <= endian_32(fat->nfat_arch))
-	{
-		check_power_pc(fat, arch);
-		if (endian_32(arch->cputype) == CPU_TYPE_X86_64)
-		{
-			offset = arch->offset;
-			break ;
-		}
-		else if (endian_32(arch->cputype) == CPU_TYPE_I386)
-			offset = arch->offset;
-		arch = (void*)arch + sizeof(struct fat_arch);
-		i++;
-	}
-	identify_file(ptr + endian_32(offset));
-}
-
 void	handle_32(char *ptr)
 {
 	struct mach_header		*header;
@@ -77,18 +88,19 @@ void	handle_32(char *ptr)
 
 	header = (struct mach_header *)ptr;
 	lc = (void *)ptr + sizeof(*header);
+	check_corrupt_lc_command(lc, header->ncmds, header->sizeofcmds, 32);
 	i = 0;
 	while (i++ < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT)
 		{
 			recover_base()->nm == false ?
-						data_seg_32(lc, header) : segment_32(lc);
+				data_seg_32(lc, header) : segment_32(lc);
 		}
 		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;
-			data_magic_32(sym->nsyms, sym->symoff, sym->stroff, (void *)ptr);
+			data_magic_32(sym->nsyms, sym->symoff, sym->stroff, sym->strsize, (void *)ptr);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;
@@ -105,6 +117,7 @@ void	handle_64(char *ptr)
 
 	header = (struct mach_header_64 *)ptr;
 	lc = (void *)ptr + sizeof(*header);
+	check_corrupt_lc_command(lc, header->ncmds, header->sizeofcmds, 64);
 	i = 0;
 	while (i++ < header->ncmds)
 	{
@@ -115,7 +128,7 @@ void	handle_64(char *ptr)
 		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;
-			data_magic(sym->nsyms, sym->symoff, sym->stroff, (void *)ptr);
+			data_magic(sym->nsyms, sym->symoff, sym->stroff, sym->strsize, (void *)ptr);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;

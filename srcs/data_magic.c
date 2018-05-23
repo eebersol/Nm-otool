@@ -12,7 +12,7 @@
 
 #include "../includes/nm_otool.h"
 
-void	data_magic(int nsyms, int symoff, int stroff, void *ptr)
+void	data_magic(int nsyms, int symoff, int stroff, int strsize, void *ptr)
 {
 	t_list			*tmp;
 	t_magic			*magic;
@@ -20,6 +20,7 @@ void	data_magic(int nsyms, int symoff, int stroff, void *ptr)
 	char			*stringable;
 	int				i;
 
+	(void)strsize;
 	array = ptr + symoff;
 	stringable = ptr + stroff;
 	i = 0;
@@ -39,7 +40,7 @@ void	data_magic(int nsyms, int symoff, int stroff, void *ptr)
 	}
 }
 
-void	data_magic_32(int nsyms, int symoff, int stroff, void *ptr)
+void	data_magic_32(int nsyms, int symoff, int stroff, int strsize, void *ptr)
 {
 	t_list			*tmp;
 	t_magic			*magic;
@@ -50,6 +51,7 @@ void	data_magic_32(int nsyms, int symoff, int stroff, void *ptr)
 	array = ptr + symoff;
 	stringable = ptr + stroff;
 	i = 0;
+	(void)strsize;
 	recover_base()->list_segment = ft_lst_reverse(recover_base()->list_segment);
 	while (i < nsyms)
 	{
@@ -102,8 +104,11 @@ void	data_seg(struct load_command *lc, struct mach_header_64 *header)
 	sec = (struct section_64*)\
 				(seg + sizeof(struct segment_command_64*) / sizeof(void*));
 	i = 0;
+	check_corrupt_lc_command(lc, header->ncmds, header->sizeofcmds, 64);
 	while (i < seg->nsects)
 	{
+		if (sec->offset > 0 && sec->offset + sec->size > recover_base()->file_size)
+			exit(1);
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{
@@ -131,8 +136,11 @@ void	data_seg_32(struct load_command *lc, struct mach_header *header)
 	sec = (struct section*)\
 			(seg + sizeof(struct segment_command*) / sizeof(void*));
 	i = 0;
+	check_corrupt_lc_command(lc, header->ncmds, header->sizeofcmds, 32);
 	while (i < seg->nsects && seg->nsects != 0)
 	{
+		if (sec->offset > 0 && sec->offset + sec->size > recover_base()->file_size)
+			exit(1);
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{

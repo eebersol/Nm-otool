@@ -96,13 +96,15 @@ void		find_best_place(t_base *base, t_list *tmp, int i)
 		ft_lstadd(&base->list_magic, tmp);
 		base->list_magic->next = NULL;
 		return ;
-	}
+	};
 	if (i == 1)
 	{
 		to_place = (char*)((t_magic*)tmp->content)->name_func;
 		curr = (char*)((t_magic*)base->list_magic->content)->name_func;
 		if (ft_strcmp(curr, to_place) > 0)
+		{
 			return (ft_lstadd(&base->list_magic, tmp));
+		}
 		else
 		{
 			tmp->next = NULL;
@@ -110,5 +112,7 @@ void		find_best_place(t_base *base, t_list *tmp, int i)
 		}
 	}
 	else
+	{
 		find_place(tmp, tmp_magic);
+	}
 }

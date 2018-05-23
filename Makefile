@@ -29,6 +29,9 @@ _SRC			= init_struct.c \
 					endian.c \
 					value_nm.c \
 					value_otool.c \
+					check_corrupt.c \
+					solve_ppc.c \
+					solve_ppc_next.c \
 
 INCLUDES		= -I./libft/includes/ -I./includes/
 

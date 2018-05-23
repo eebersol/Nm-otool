@@ -12,7 +12,18 @@
 
 #include "../includes/nm_otool.h"
 
-void	print_err(char *err)
+static	void	print_title(t_base *base)
+{
+	if (base->is_alone)
+	{
+		base->is_alone == 0 ? ft_putstr("\n") : ft_putstr("");
+		ft_putstr(ft_strjoin(base->name, ":\n"));
+	}
+	if (base->ac >= 3 && base->archive == false && base->to_print == 0)
+		ft_putstr(ft_strjoin("\n", ft_strjoin(base->name, ":\n")));
+}
+
+void			print_err(char *err)
 {
 	t_base *base;
 
@@ -21,13 +32,14 @@ void	print_err(char *err)
 	if (ft_strcmp(err, ERR_CORRUPT) == 0)
 	{
 		err = "corrupt truncated or malformed object (offset field of";
-		err = ft_strjoin(err, "section 0 in LC_SEGMENT command ");
+		err = ft_strjoin(err, " section 0 in LC_SEGMENT command ");
 		err = ft_strjoin(err, "1 extends past the end of the file)\n");
 	}
 	ft_putstr(err);
+	exit(1);
 }
 
-void	print_nm(void)
+void			print_nm(void)
 {
 	t_list	*tmp;
 	t_magic	*magic;
@@ -41,11 +53,7 @@ void	print_nm(void)
 		ft_putstr(ft_strjoin("(", base->path_name));
 		ft_putstr("):\n");
 	}
-	if (base->is_alone)
-	{
-		base->is_alone == 0 ? ft_putstr("\n") : ft_putstr("");
-		ft_putstr(ft_strjoin(base->name, ":\n"));
-	}
+	print_title(base);
 	while (tmp)
 	{
 		magic = (t_magic*)tmp->content;
@@ -56,7 +64,7 @@ void	print_nm(void)
 	}
 }
 
-void	print_node(t_base *base, t_magic *magic)
+void			print_node(t_base *base, t_magic *magic)
 {
 	if (ft_strlen(magic->name_func) > 0 && magic->type != 'X'
 		&& ft_strstr(magic->name_func, "radr://") == NULL

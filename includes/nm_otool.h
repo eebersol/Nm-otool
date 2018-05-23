@@ -35,13 +35,13 @@
 # define FLAG_PROT		PROT_WRITE | PROT_READ
 # define FLAG_MAP		MAP_ANON | MAP_PRIVATE
 # define INT_MAX		2147483688
-# define ERR_MUMMAP		"nm : No such file or directory.\n"
-# define ERR_FSTATS		"nm : fstats failed.\n"
-# define ERR_MMAP		"nm : mmap failed.\n"
-# define ERR_OPEN		"nm : No such fil or directory.\n"
-# define ERR_CORRUPT	"nm : File corrupt"
-# define ERR_FORMAT		"nm : Wrong binary format\n"
-# define ERR_POWER_PC	"nm : CPU_TYPE_POWERPC are not supported.\n"
+# define ERR_MUMMAP		"No such file or directory.\n"
+# define ERR_FSTATS		"fstats failed.\n"
+# define ERR_MMAP		"mmap failed.\n"
+# define ERR_OPEN		"No such fil or directory.\n"
+# define ERR_CORRUPT	"File corrupt"
+# define ERR_FORMAT		"Wrong binary format\n"
+# define ERR_POWER_PC	"CPU_TYPE_POWERPC are not supported.\n"
 
 typedef	struct			s_segment
 {
@@ -60,7 +60,9 @@ typedef	struct			s_magic
 typedef	struct			s_base
 {
 	int					ac;
+	int					to_print;
 	bool				power_pc;
+	bool				ii;
 	unsigned int		file_size;
 	bool				nm;
 	bool				archive;
@@ -77,9 +79,9 @@ typedef	struct			s_base
 ** NAME : data_magic.c
 */
 void					data_magic(int nsyms, int symoff,
-									int stroff, void *ptr);
+									int stroff, int strsize, void *ptr);
 void					data_magic_32(int nsyms, int symoff,
-									int stroff, void *ptr);
+									int stroff, int strsize, void *ptr);
 void					get_content(uint64_t addr, unsigned int size,
 									char *ptr);
 void					data_seg(struct load_command *lc,
@@ -150,5 +152,24 @@ int						get_size(char *name);
 char					*get_value_otool_archive(uint64_t n_value);
 char					*get_value_otool_exec(uint64_t n_value);
 char					*val_otool(uint64_t n_value);
+/*
+** NAME : check_corrupt.c
+*/
+void					check_corruption(size_t offset, size_t size_arch);
+void					check_corrupt_lc_command(struct load_command *lc,
+												int cmd, unsigned int allcmd, int type);
+/*
+** NAME : solve_ppc.c
+*/
+char					*val_otool_ppc(uint64_t n_value);
+void					get_content_ppc(uint32_t addr, unsigned int size, char *ptr);
+void					data_seg_32_ppc(struct load_command *lc, struct mach_header *header);
+char					*value_ppc(uint32_t n_value, int len);
+void					segment_ppc(struct load_command *lc);
+/*
+** NAME : solve_ppc_next.c
+*/
+void					solve_ppc(char *ptr);
+void					data_magic_32_ppc(int nsyms, int symoff, int stroff, int strsize, void *ptr);
 
 #endif

@@ -25,9 +25,13 @@ void	identify_file(char *ptr)
 		handle_32(ptr);
 	}
 	else if (magic_number == FAT_MAGIC_64 || magic_number == FAT_CIGAM_64)
+	{
 		handle_fat(ptr);
+	}
 	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
+	{
 		handle_fat(ptr);
+	}
 	else if (ft_strncmp(ptr, ARMAG, SARMAG) == 0)
 	{
 		if (recover_base()->nm == false)

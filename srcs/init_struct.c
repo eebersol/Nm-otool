@@ -28,6 +28,7 @@ t_base	*init_base(char *name)
 	base->ac = 0;
 	base->file_size = 0;
 	base->power_pc = false;
+	base->ii = false;
 	base->type_file = 0;
 	base->name = name;
 	base->path_name = NULL;
@@ -36,6 +37,7 @@ t_base	*init_base(char *name)
 	base->print_or = false;
 	base->list_magic = NULL;
 	base->list_segment = NULL;
+	base->to_print = 0;
 	return (base);
 }
 
