@@ -23,7 +23,7 @@ void	segment(struct load_command *lc)
 	sec = (struct section_64 *)(seg + sizeof(seg) / sizeof(void *));
 	i = 0;
 	if (recover_base()->file_size < seg->fileoff + seg->filesize)
-		print_err(ERR_CORRUPT);
+		print_err(ERR_CORRUPT, 1);
 	if (seg->nsects == 0)
 		return ;
 	while (i++ < seg->nsects)
@@ -45,9 +45,10 @@ void	segment_32(struct load_command *lc)
 	seg = (struct segment_command *)lc;
 	sec = (struct section *)(seg + sizeof(seg) / sizeof(void *));
 	i = 0;
-	if (seg->fileoff > 0 && recover_base()->file_size < seg->fileoff + seg->filesize)
+	if (seg->fileoff > 0
+		&& recover_base()->file_size < seg->fileoff + seg->filesize)
 	{
-		print_err(ERR_CORRUPT);
+		print_err(ERR_CORRUPT, 1);
 	}
 	if (seg->nsects == 0)
 		return ;

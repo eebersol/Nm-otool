@@ -12,7 +12,7 @@
 
 #include "../includes/nm_otool.h"
 
-void	data_magic(int nsyms, int symoff, int stroff, int strsize, void *ptr)
+void	data_magic(int nsyms, int symoff, int stroff, void *ptr)
 {
 	t_list			*tmp;
 	t_magic			*magic;
@@ -20,27 +20,28 @@ void	data_magic(int nsyms, int symoff, int stroff, int strsize, void *ptr)
 	char			*stringable;
 	int				i;
 
-	(void)strsize;
 	array = ptr + symoff;
 	stringable = ptr + stroff;
 	i = 0;
 	recover_base()->list_segment = ft_lst_reverse(recover_base()->list_segment);
 	while (i < nsyms)
 	{
-		magic = (t_magic*)malloc(sizeof(t_magic));
+		check_function_name(array[i].n_un.n_strx, recover_base()->strsize, 0);
+		if (!(magic = (t_magic*)malloc(sizeof(t_magic)))
+			|| !(tmp = (t_list *)malloc(sizeof(t_list)))
+				|| !(tmp->content = (t_magic*)malloc(sizeof(t_magic))))
+			exit(1);
 		magic->n_sect = array[i].n_sect;
 		magic->name_func = stringable + array[i].n_un.n_strx;
 		magic->type = get_type(array[i].n_type, magic);
 		magic->value = ft_strdup(value_manager(magic->type, array[i].n_value));
-		tmp = (t_list *)malloc(sizeof(t_list));
-		tmp->content = (t_magic*)malloc(sizeof(t_magic));
 		tmp->content = (void*)magic;
 		find_best_place(recover_base(), tmp, i);
 		i++;
 	}
 }
 
-void	data_magic_32(int nsyms, int symoff, int stroff, int strsize, void *ptr)
+void	data_magic_32(int nsyms, int symoff, int stroff, void *ptr)
 {
 	t_list			*tmp;
 	t_magic			*magic;
@@ -51,17 +52,17 @@ void	data_magic_32(int nsyms, int symoff, int stroff, int strsize, void *ptr)
 	array = ptr + symoff;
 	stringable = ptr + stroff;
 	i = 0;
-	(void)strsize;
 	recover_base()->list_segment = ft_lst_reverse(recover_base()->list_segment);
 	while (i < nsyms)
 	{
-		tmp = (t_list *)malloc(sizeof(t_list));
-		magic = (t_magic*)malloc(sizeof(t_magic));
+		if (!(magic = (t_magic*)malloc(sizeof(t_magic)))
+			|| !(tmp = (t_list *)malloc(sizeof(t_list)))
+				|| !(tmp->content = (t_magic*)malloc(sizeof(t_magic))))
+			exit(1);
 		magic->n_sect = array[i].n_sect;
 		magic->name_func = stringable + array[i].n_un.n_strx;
 		magic->type = get_type(array[i].n_type, magic);
 		magic->value = value_manager(magic->type, array[i].n_value);
-		tmp->content = (t_magic*)malloc(sizeof(t_magic));
 		tmp->content = magic;
 		find_best_place(recover_base(), tmp, i);
 		i++;
@@ -104,11 +105,9 @@ void	data_seg(struct load_command *lc, struct mach_header_64 *header)
 	sec = (struct section_64*)\
 				(seg + sizeof(struct segment_command_64*) / sizeof(void*));
 	i = 0;
-	check_corrupt_lc_command(lc, header->ncmds, header->sizeofcmds, 64);
-	while (i < seg->nsects)
+	while (i++ < seg->nsects)
 	{
-		if (sec->offset > 0 && sec->offset + sec->size > recover_base()->file_size)
-			exit(1);
+		check_corruption(seg->fileoff, seg->filesize, sec->offset, sec->size);
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{
@@ -122,7 +121,6 @@ void	data_seg(struct load_command *lc, struct mach_header_64 *header)
 			get_content(sec->addr, sec->size, (char *)header + sec->offset);
 		}
 		sec = (struct section_64 *)(((void*)sec) + sizeof(struct section_64));
-		i++;
 	}
 }
 
@@ -136,11 +134,9 @@ void	data_seg_32(struct load_command *lc, struct mach_header *header)
 	sec = (struct section*)\
 			(seg + sizeof(struct segment_command*) / sizeof(void*));
 	i = 0;
-	check_corrupt_lc_command(lc, header->ncmds, header->sizeofcmds, 32);
-	while (i < seg->nsects && seg->nsects != 0)
+	while (i++ < seg->nsects && seg->nsects != 0)
 	{
-		if (sec->offset > 0 && sec->offset + sec->size > recover_base()->file_size)
-			exit(1);
+		check_corruption(seg->fileoff, seg->filesize, sec->offset, sec->size);
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
 		{
@@ -154,6 +150,5 @@ void	data_seg_32(struct load_command *lc, struct mach_header *header)
 			get_content(sec->addr, sec->size, (char *)header + sec->offset);
 		}
 		sec = (struct section *)(((void*)sec) + sizeof(struct section));
-		i++;
 	}
 }

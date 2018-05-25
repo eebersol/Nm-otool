@@ -29,7 +29,8 @@ char	***ft_join_aos(char ***last_array, char **to_add)
 
 	i = 0;
 	height = ft_count_raw_aos(last_array);
-	new_array = (char ***)malloc(sizeof(char**) * (height + 2));
+	if (!(new_array =  (char ***)malloc(sizeof(char**) * (height + 2))))
+		return (NULL);
 	while (i < height)
 	{
 		new_array[i] = last_array[i];
@@ -57,7 +58,8 @@ char	**ft_join_aoc(char **last_array, char *to_add)
 
 	i = 0;
 	height = ft_count_column_aoc(&to_add);
-	new_array = (char **)malloc(sizeof(char*) * (height + 2));
+	if (!(new_array =  (char **)malloc(sizeof(char*) * (height + 2))))
+		return (NULL);
 	while (i < height)
 	{
 		new_array[i] = last_array[i];
@@ -85,7 +87,8 @@ int		**ft_join_aoi(int **last_array, int *to_add)
 
 	i = 0;
 	height = ft_count_column_aoi(&to_add);
-	new_array = (int **)malloc(sizeof(int *) * (height + 2));
+	if (!(new_array =  (int **)malloc(sizeof(int *) * (height + 2))))
+		return (NULL);
 	while (i < height)
 	{
 		new_array[i] = last_array[i];

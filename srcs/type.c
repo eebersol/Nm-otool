@@ -12,56 +12,6 @@
 
 #include "../includes/nm_otool.h"
 
-
-void		check_power_pc(struct fat_header *fat, struct fat_arch *arch)
-{
-	t_base	*base;
-
-	base = recover_base();
-	if (arch->offset == 0)
-		return ;
-	if (endian_32(fat->nfat_arch) == 1
-		&& endian_32(arch->cputype) == CPU_TYPE_POWERPC)
-		print_err(ERR_POWER_PC);
-	else if (endian_32(fat->nfat_arch) != 1
-		&& endian_32(arch->cputype) == CPU_TYPE_POWERPC)
-	{
-		base->power_pc = true;
-		if (base->nm == false)
-		{
-			base->name = ft_strjoin(base->name, " ");
-			base->path_name = "architecture ppc";
-		}
-		else
-		{
-			ft_putstr("\n");
-			ft_putstr(base->name);
-			ft_putstr(" (for architecture ppc):\n");
-		}
-	}
-	else if (endian_32(arch->cputype) != CPU_TYPE_POWERPC
-		&& base->power_pc == true)
-	{
-		if (base->nm == false)
-		{
-			// base->name = ft_strjoin(base->name, " ");
-			if (endian_32(arch->cputype) == CPU_TYPE_I386)
-				base->path_name = "architecture i386";
-			else
-				base->path_name = "architecture X86_64";
-
-		}
-		else
-		{
-			ft_putstr("\n");
-			ft_putstr(base->name);
-			endian_32(arch->cputype) == CPU_TYPE_I386 ?
-				ft_putstr(" (for architecture i386):\n")
-					: ft_putstr(" (for architecture X86_64):\n");
-		}
-	}
-}
-
 char		get_char(char *name)
 {
 	if (!name)

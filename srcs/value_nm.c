@@ -69,11 +69,13 @@ char		*value_manager(char type, uint64_t n_value)
 {
 	t_base	*base;
 	int		len;
+	char	*result;
 
 	base = recover_base();
 	len = base->type_file == 2 ? 8 : 16;
 	if (type == 'A')
-		return (value_abs(n_value, len));
+		result = value_abs(n_value, len);
 	else
-		return (value(n_value, len));
+		result = value(n_value, len);
+	return (result);
 }

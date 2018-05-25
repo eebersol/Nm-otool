@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/20 11:01:45 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/05/24 15:49:20 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@
 # define FLAG_PROT		PROT_WRITE | PROT_READ
 # define FLAG_MAP		MAP_ANON | MAP_PRIVATE
 # define INT_MAX		2147483688
-# define ERR_MUMMAP		"No such file or directory.\n"
-# define ERR_FSTATS		"fstats failed.\n"
-# define ERR_MMAP		"mmap failed.\n"
-# define ERR_OPEN		"No such fil or directory.\n"
+# define ERR_MUMMAP		"No such file or directory."
+# define ERR_FSTATS		"fstats failed."
+# define ERR_MMAP		"mmap failed."
+# define ERR_OPEN		"No such file or directory."
 # define ERR_CORRUPT	"File corrupt"
-# define ERR_FORMAT		"Wrong binary format\n"
-# define ERR_POWER_PC	"CPU_TYPE_POWERPC are not supported.\n"
+# define ERR_FORMAT		"Wrong binary format"
+# define ERR_POWER_PC	"CPU_TYPE_POWERPC are not supported."
+# define ERR_BAD_INDEX	"Bad string Index"
 
 typedef	struct			s_segment
 {
@@ -59,7 +60,9 @@ typedef	struct			s_magic
 
 typedef	struct			s_base
 {
+	char 				*idiot_check;
 	int					ac;
+	unsigned int		strsize;
 	int					to_print;
 	bool				power_pc;
 	bool				ii;
@@ -79,9 +82,9 @@ typedef	struct			s_base
 ** NAME : data_magic.c
 */
 void					data_magic(int nsyms, int symoff,
-									int stroff, int strsize, void *ptr);
+									int stroff, void *ptr);
 void					data_magic_32(int nsyms, int symoff,
-									int stroff, int strsize, void *ptr);
+									int stroff, void *ptr);
 void					get_content(uint64_t addr, unsigned int size,
 									char *ptr);
 void					data_seg(struct load_command *lc,
@@ -109,8 +112,9 @@ void					identify_file(char *ptr);
 /*
 ** NAME : print.c
 */
-void					print_err(char *err);
+void					print_err(char *err, int i);
 void					print_nm(void);
+void			print_node_idiot(t_base *base, t_magic *magic);
 void					print_node(t_base *base, t_magic *magic);
 /*
 ** NAME : section.c
@@ -132,8 +136,6 @@ void					find_best_place(t_base *base, t_list *tmp, int i);
 /*
 ** NAME : type.c
 */
-void					check_power_pc(struct fat_header *fat,
-												struct fat_arch *arch);
 char					get_char(char *name);
 char					get_type(uint8_t n_type, t_magic *magic);
 /*
@@ -155,21 +157,30 @@ char					*val_otool(uint64_t n_value);
 /*
 ** NAME : check_corrupt.c
 */
-void					check_corruption(size_t offset, size_t size_arch);
+void					check_power_pc(struct fat_arch *arch);
+void					check_truncated(unsigned int offset,
+													unsigned int size);
+void					check_function_name(unsigned int offset,
+													unsigned int size, int type);
+void					check_corruption(unsigned int offset_seg,
+		unsigned int size_seg, unsigned int offset_sec, unsigned int size_sec);
 void					check_corrupt_lc_command(struct load_command *lc,
-												int cmd, unsigned int allcmd, int type);
+									int cmd, unsigned int allcmd, int type);
 /*
 ** NAME : solve_ppc.c
 */
 char					*val_otool_ppc(uint64_t n_value);
-void					get_content_ppc(uint32_t addr, unsigned int size, char *ptr);
-void					data_seg_32_ppc(struct load_command *lc, struct mach_header *header);
+void					get_content_ppc(uint32_t addr, unsigned int size,
+											char *ptr);
+void					pp(struct load_command *lc,
+											struct mach_header *header);
 char					*value_ppc(uint32_t n_value, int len);
-void					segment_ppc(struct load_command *lc);
+void					cc(struct load_command *lc);
 /*
 ** NAME : solve_ppc_next.c
 */
-void					solve_ppc(char *ptr);
-void					data_magic_32_ppc(int nsyms, int symoff, int stroff, int strsize, void *ptr);
+void					solve_ppc(char *ptr, unsigned int);
+void					data_magic_32_ppc(int nsyms, int symoff, int stroff,
+											void *ptr);
 
 #endif

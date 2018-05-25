@@ -26,6 +26,7 @@ t_base	*init_base(char *name)
 	base = recover_base();
 	base->archive = false;
 	base->ac = 0;
+	base->strsize = 0;
 	base->file_size = 0;
 	base->power_pc = false;
 	base->ii = false;

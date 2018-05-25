@@ -25,13 +25,9 @@ void	identify_file(char *ptr)
 		handle_32(ptr);
 	}
 	else if (magic_number == FAT_MAGIC_64 || magic_number == FAT_CIGAM_64)
-	{
 		handle_fat(ptr);
-	}
 	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
-	{
 		handle_fat(ptr);
-	}
 	else if (ft_strncmp(ptr, ARMAG, SARMAG) == 0)
 	{
 		if (recover_base()->nm == false)
@@ -40,7 +36,7 @@ void	identify_file(char *ptr)
 		handle_archive(ptr);
 	}
 	else
-		print_err(ERR_FORMAT);
+		print_err(ERR_FORMAT, 0);
 }
 
 void	parse_file(t_base *base, int ac, char **av, int i)
@@ -55,17 +51,18 @@ void	parse_file(t_base *base, int ac, char **av, int i)
 		base->ac = ac;
 		fd = 0;
 		if ((fd = open(base->name, O_RDONLY)) < 0)
-			print_err(ERR_OPEN);
+			print_err(ERR_OPEN, 0);
 		else if (fstat(fd, &file_stats) < 0)
-			print_err(ERR_FSTATS);
+			print_err(ERR_FSTATS, 0);
 		else if ((ptr = mmap(0, file_stats.st_size,
 				PROT_READ | PROT_EXEC, MAP_SHARED, fd, 0)) == MAP_FAILED)
-			print_err(ERR_MMAP);
+			print_err(ERR_MMAP, 0);
 		base->file_size = file_stats.st_size;
+		base->idiot_check = &(ptr[file_stats.st_size - 1]);
 		if (base->err == 0)
 			identify_file(ptr);
 		if (base->err == 0 && (munmap(ptr, file_stats.st_size)) < 0)
-			print_err(ERR_MUMMAP);
+			print_err(ERR_MUMMAP, 0);
 	}
 }
 
@@ -80,6 +77,12 @@ int		main(int ac, char **av)
 	{
 		base->nm = ft_strstr(av[0], "ft_nm") != NULL ? true : false;
 		parse_file(base, ac, av, i);
+	}
+	else if (ac == 1 && ft_strstr(av[0], "ft_nm") != NULL)
+	{
+		base->nm = true;
+		av[1] = "a.out";
+		parse_file(base, 2, av, i);
 	}
 	else
 	{

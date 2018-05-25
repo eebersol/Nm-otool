@@ -43,7 +43,7 @@ CFLAGS			= -Wall -Wextra -Werror
 
 all: $(NAME) $(NAME_OTOOL)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) 
 	@make -C ./libft/
 	@gcc $(CFLAGS) $(OBJ) $(LIB) $(INCLUDES) -o $(NAME)
 	@echo $(NAME) " : compiled"

@@ -22,30 +22,21 @@ void	handle_fat(char *ptr)
 	fat = (struct fat_header*)ptr;
 	i = 0;
 	arch = ((void*)ptr) + sizeof(fat);
-	offset = 0;
 	recover_base()->to_print = 1;
 	recover_base()->is_alone = endian_32(fat->nfat_arch) == 1 ? true : false;
-	while (i <= endian_32(fat->nfat_arch))
-	{		
-		check_corruption(arch->offset, arch->size);
-		check_power_pc(fat, arch);
+	while (i++ < endian_32(fat->nfat_arch))
+	{
+		check_power_pc(arch);
 		if (endian_32(arch->cputype) == CPU_TYPE_POWERPC)
-		{
-			offset = arch->offset;
-			solve_ppc(ptr + endian_32(offset));
-		}
+			solve_ppc(ptr + endian_32(arch->offset), 0);
 		if (endian_32(arch->cputype) == CPU_TYPE_X86_64)
 		{
 			offset = arch->offset;
 			break ;
 		}
 		else if (endian_32(arch->cputype) == CPU_TYPE_I386)
-		{
-			recover_base()->ii = true;
 			offset = arch->offset;
-		}
 		arch = (void*)arch + sizeof(struct fat_arch);
-		i++;
 	}
 	identify_file(ptr + endian_32(offset));
 }
@@ -93,14 +84,13 @@ void	handle_32(char *ptr)
 	while (i++ < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT)
-		{
 			recover_base()->nm == false ?
 				data_seg_32(lc, header) : segment_32(lc);
-		}
 		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;
-			data_magic_32(sym->nsyms, sym->symoff, sym->stroff, sym->strsize, (void *)ptr);
+			recover_base()->strsize = sym->strsize;
+			data_magic_32(sym->nsyms, sym->symoff, sym->stroff, (void *)ptr);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;
@@ -122,13 +112,12 @@ void	handle_64(char *ptr)
 	while (i++ < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT_64)
-		{
 			recover_base()->nm == false ? data_seg(lc, header) : segment(lc);
-		}
 		if (lc->cmd == LC_SYMTAB && recover_base()->nm == true)
 		{
 			sym = (struct symtab_command *)lc;
-			data_magic(sym->nsyms, sym->symoff, sym->stroff, sym->strsize, (void *)ptr);
+			recover_base()->strsize = sym->strsize;
+			data_magic(sym->nsyms, sym->symoff, sym->stroff, (void *)ptr);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;

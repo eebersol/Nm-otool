@@ -58,13 +58,15 @@ char				**ft_str_to_tab(char const *s)
 	i = 0;
 	n = 0;
 	nb_words = ft_count_words(s);
-	word_tab = (char **)malloc(sizeof(char *) * (nb_words + 1));
+	if (!(word_tab = (char **)malloc(sizeof(char *) * (nb_words + 1))))
+		return (NULL);
 	while (n < nb_words && word_tab)
 	{
 		while (s[i] != '\0' && (s[i] == ' ' || s[i] == '\t'))
 			i++;
 		word_len = ft_word_len(&s[i]);
-		word_tab[n] = malloc(sizeof(**word_tab) * (word_len + 1));
+		if (!(word_tab[n] = malloc(sizeof(**word_tab) * (word_len + 1))))
+			return (NULL);
 		ft_strncpy(word_tab[n], &s[i], word_len);
 		word_tab[n][word_len] = '\0';
 		while (s[i] != '\0' && (s[i] != ' ' && s[i] != '\t'))

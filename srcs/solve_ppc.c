@@ -12,8 +12,7 @@
 
 #include "../includes/nm_otool.h"
 
-
-char		*val_otool_ppc(uint64_t n_value)
+char	*val_otool_ppc(uint64_t n_value)
 {
 	t_base	*base;
 	char	*ret;
@@ -35,7 +34,7 @@ void	get_content_ppc(uint32_t addr, unsigned int size, char *ptr)
 		if (i % 16 == 0 && i != 0)
 			addr += 16;
 		str = ft_strjoin(ft_strjoin(str, itoa_base(ptr[i], 16, 2)), "");
-		if ((i+1)%4 == 0)
+		if ((i + 1) % 4 == 0)
 			str = ft_strjoin(str, " ");
 		if ((i + 1) % 16 == 0)
 		{
@@ -51,7 +50,7 @@ void	get_content_ppc(uint32_t addr, unsigned int size, char *ptr)
 		add_list(str, val_otool(endian_64(addr)));
 }
 
-void	data_seg_32_ppc(struct load_command *lc, struct mach_header *header)
+void	pp(struct load_command *lc, struct mach_header *header)
 {
 	unsigned int			i;
 	struct section			*sec;
@@ -61,10 +60,10 @@ void	data_seg_32_ppc(struct load_command *lc, struct mach_header *header)
 	sec = (struct section*)\
 			(seg + sizeof(struct segment_command*) / sizeof(void*));
 	i = 0;
-	// check_corrupt_lc_command(lc, header->ncmds, header->sizeofcmds, 32);
 	while (i < endian_32(seg->nsects) && endian_32(seg->nsects) != 0)
 	{
-		if (endian_32(sec->offset) > 0 && endian_32(sec->offset) + endian_32(sec->size) > recover_base()->file_size)
+		if (endian_32(sec->offset) > 0 && endian_32(sec->offset) +
+				endian_32(sec->size) > recover_base()->file_size)
 			exit(1);
 		if (ft_strcmp(sec->segname, "__TEXT") == 0
 			&& ft_strcmp(sec->sectname, "__text") == 0)
@@ -72,14 +71,15 @@ void	data_seg_32_ppc(struct load_command *lc, struct mach_header *header)
 			ft_putstr(ft_strjoin(recover_base()->name, "("));
 			ft_putstr(ft_strjoin(recover_base()->path_name, ")"));
 			ft_putstr(":\nContents of (__TEXT,__text) section\n");
-			get_content_ppc(endian_32(sec->addr), endian_32(sec->size), (char *)header + endian_32(sec->offset));
+			get_content_ppc(endian_32(sec->addr), endian_32(sec->size),
+				(char *)header + endian_32(sec->offset));
 		}
 		sec = (struct section *)(((void*)sec) + sizeof(struct section));
 		i++;
 	}
 }
 
-char		*value_ppc(uint32_t n_value, int len)
+char	*value_ppc(uint32_t n_value, int len)
 {
 	char	*value_l;
 	char	*value_r;
@@ -91,7 +91,7 @@ char		*value_ppc(uint32_t n_value, int len)
 	return (padding(value_len, value_l, value_r, len));
 }
 
-void	segment_ppc(struct load_command *lc)
+void	cc(struct load_command *lc)
 {
 	struct segment_command	*seg;
 	struct section			*sec;
@@ -101,9 +101,10 @@ void	segment_ppc(struct load_command *lc)
 	seg = (struct segment_command *)lc;
 	sec = (struct section *)(seg + sizeof(seg) / sizeof(void *));
 	i = 0;
-	if (seg->fileoff > 0 && recover_base()->file_size < endian_32(seg->fileoff) + endian_32(seg->filesize))
+	if (seg->fileoff > 0 && recover_base()->file_size
+		< endian_32(seg->fileoff) + endian_32(seg->filesize))
 	{
-		print_err(ERR_CORRUPT);
+		print_err(ERR_CORRUPT, 1);
 	}
 	if (seg->nsects == 0)
 	{
@@ -117,5 +118,3 @@ void	segment_ppc(struct load_command *lc)
 		sec = (struct section *)(((void*)sec) + sizeof(struct section));
 	}
 }
-
-

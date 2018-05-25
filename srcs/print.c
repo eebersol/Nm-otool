@@ -6,7 +6,7 @@
 /*   By: eebersol <eebersol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 14:44:53 by eebersol          #+#    #+#             */
-/*   Updated: 2018/03/20 12:38:23 by eebersol         ###   ########.fr       */
+/*   Updated: 2018/05/24 15:49:40 by eebersol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,33 @@ static	void	print_title(t_base *base)
 		ft_putstr(ft_strjoin("\n", ft_strjoin(base->name, ":\n")));
 }
 
-void			print_err(char *err)
+void			print_node_idiot(t_base *base, t_magic *magic)
+{
+	int i;
+
+	i = 0;
+	if (magic->type != 'X' && magic->type != 'u'
+		&& ft_strstr(magic->value, "05614542") == NULL)
+	{
+		if (magic->type != 'U')
+			ft_putstr(ft_strjoin(magic->value, " "));
+		else if (base->type_file == 2)
+			ft_putstr("         ");
+		else
+			ft_putstr("                 ");
+		ft_putchar(magic->type);
+		ft_putchar(' ');
+		while (&(magic->name_func[i]) < recover_base()->idiot_check
+			&& magic->name_func[i] != '\0')
+		{
+			ft_putchar(magic->name_func[i]);
+			i++;
+		}
+		ft_putchar('\n');
+	}
+}
+
+void			print_err(char *err, int i)
 {
 	t_base *base;
 
@@ -33,10 +59,18 @@ void			print_err(char *err)
 	{
 		err = "corrupt truncated or malformed object (offset field of";
 		err = ft_strjoin(err, " section 0 in LC_SEGMENT command ");
-		err = ft_strjoin(err, "1 extends past the end of the file)\n");
+		err = ft_strjoin(err, "1 extends past the end of the file)");
 	}
-	ft_putstr(err);
-	exit(1);
+	ft_putendl_fd(err, 2);
+	if (i == 1)
+	{
+		if (ft_strcmp(err, ERR_BAD_INDEX) == 0)
+			exit(0);
+		else
+			exit(1);
+	}
+	else
+		return ;
 }
 
 void			print_nm(void)
@@ -57,7 +91,10 @@ void			print_nm(void)
 	while (tmp)
 	{
 		magic = (t_magic*)tmp->content;
-		print_node(base, magic);
+		if (tmp->next == NULL)
+			print_node_idiot(base, magic);
+		else
+			print_node(base, magic);
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
